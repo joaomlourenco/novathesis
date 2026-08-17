@@ -9,7 +9,7 @@ Copyright (C) 2004-26 by João M. Lourenço <joao.lourenco@fct.unl.pt>
 
 <meta property="og:image" content="http://joaomlourenco.github.io/novathesis/novathesis-latex-logo-v5.svg" />
 
-# NOVAthesis LaTeX Template
+# novathesis LaTeX Template
 
 ---
 
@@ -80,7 +80,7 @@ Copyright (C) 2004-26 by João M. Lourenço <joao.lourenco@fct.unl.pt>
 
 # 1. Overview
 
-**NOVAthesis** is a complete LaTeX template for academic theses and dissertations. It provides:
+****nova**thesis** is a complete LaTeX template for academic theses and dissertations. It provides:
 
 - Ready‑to‑use cover pages compliant with each institution's rules
 - A structured, extensible LaTeX codebase
@@ -143,7 +143,7 @@ This is the preferred option, especially for large projects.
 - **macOS:** [MacTeX](www.tug.org/mactex/) or [MikTeX](miktex.org)
 - **Linux:** [TeX Live](www.tug.org) or [MikTeX](miktex.org)
 
-### 4.1.2. Download NOVAthesis
+### 4.1.2. Download novathesis
 
 If your school is [listed below](#the-novathesis-repositories), download the tailored version for your school.
 
@@ -156,7 +156,7 @@ Otherwise, download the default/main repository (last in the list).
 - <img height="16" alt="github" src="https://github.com/user-attachments/assets/9fdc8eba-7bac-4a7e-a8de-cb04299a8095" /> => Clone the git repository.
 
 
-### The NOVAthesis repositories
+### The novathesis repositories
 
 <table>
 <tr><th colspan="7">Universidade NOVA de Lisboa</th></tr>
@@ -201,12 +201,12 @@ Otherwise, download the default/main repository (last in the list).
 
 | <img height="50" alt="nova-ims" src="https://raw.githubusercontent.com/joaomlourenco/novathesis/gh-pages/Showcase/Covers/JPG/nova-ims-msc-en.jpg" />  |
 |:---------:|
-| [📦](https://www.overleaf.com/docs?snip_uri=https://raw.githubusercontent.com/pdecampossouza/nova-ims-thesis-template-2025/main/NOVAthesis%202025-2026.zip&main_document=template.tex) &nbsp;&nbsp; [<img height="16" alt="github" src="https://github.com/user-attachments/assets/9fdc8eba-7bac-4a7e-a8de-cb04299a8095" />](https://github.com/pdecampossouza/nova-ims-thesis-template-2025) &nbsp;&nbsp; [<img height="19" alt="overleaf-logo-22x25" src="https://github.com/user-attachments/assets/810de5bc-6465-4f83-b343-65da3b798586" />](https://www.overleaf.com/latex/templates/novathesis-v7-dot-10-dot-0/jhqwhtcwbmqc) |
+| [📦](https://www.overleaf.com/docs?snip_uri=https://raw.githubusercontent.com/pdecampossouza/nova-ims-thesis-template-2025/main/**nova**thesis%202025-2026.zip&main_document=template.tex) &nbsp;&nbsp; [<img height="16" alt="github" src="https://github.com/user-attachments/assets/9fdc8eba-7bac-4a7e-a8de-cb04299a8095" />](https://github.com/pdecampossouza/nova-ims-thesis-template-2025) &nbsp;&nbsp; [<img height="19" alt="overleaf-logo-22x25" src="https://github.com/user-attachments/assets/810de5bc-6465-4f83-b343-65da3b798586" />](https://www.overleaf.com/latex/templates/novathesis-v7-dot-10-dot-0/jhqwhtcwbmqc) |
 
 </td></tr>
 </table>
 
-(*) The [NOVA IMS template](https://github.com/pdecampossouza/nova-ims-thesis-template-2025) is an adaptation of the NOVAthesis template by Paulo de Campos Souza.  Please refer to the author's [project page in GitHub](https://github.com/pdecampossouza/nova-ims-thesis-template-2025) for support requests.
+(*) The [NOVA IMS template](https://github.com/pdecampossouza/nova-ims-thesis-template-2025) is an adaptation of the **nova**thesis template by Paulo de Campos Souza.  Please refer to the author's [project page in GitHub](https://github.com/pdecampossouza/nova-ims-thesis-template-2025) for support requests.
 
 
 <table>
@@ -274,7 +274,7 @@ Otherwise, download the default/main repository (last in the list).
 
 
 <table>
-<tr><th>Inst. Politécnico Lisboa</th><th>&nbsp;&nbsp;&nbsp;&nbsp;</th><th>Inst. Politécnico Setúbal</th><th>&nbsp;&nbsp;&nbsp;&nbsp;</th><th>NOVAthesis</th></tr>
+<tr><th>Inst. Politécnico Lisboa</th><th>&nbsp;&nbsp;&nbsp;&nbsp;</th><th>Inst. Politécnico Setúbal</th><th>&nbsp;&nbsp;&nbsp;&nbsp;</th><th>**nova**thesis</th></tr>
 <tr><th>ISEL</th><th></th><th>ESTS</th><th></th><th>main repo</th></tr>
 <tr><td align="center">
 
@@ -362,7 +362,7 @@ The `NT` variable accepts any comma-separated list of `\ntsetup` options and tak
 
 ## 4.2. Cloud Services (Overleaf)
 
-NOVAthesis is available as an official Overleaf template.  Despite the regular updates, the version in Overleaf, although fully operational, may be slightly outdated.
+**nova**thesis is available as an official Overleaf template.  Despite the regular updates, the version in Overleaf, although fully operational, may be slightly outdated.
 
 1. Click 📦 next to your school [above](#the-novathesis-repositories) to open the project directly in Overleaf (this uploads the ZIP archive and sets `template.tex` as the root document automatically);
 2. Compile;

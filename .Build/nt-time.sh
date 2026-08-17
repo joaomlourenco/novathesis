@@ -1,6 +1,6 @@
 #!/bin/sh
 #-----------------------------------------------------------------------------
-# NOVAthesis — nt-time.sh
+# novathesis — nt-time.sh
 #
 # Run a command and report the total wall-clock time it took.
 #

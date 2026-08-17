@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """Check that every localized string store has the entries each language needs.
 
-NOVAthesis's translated UI strings live behind the `memstore` key-value system
-(NOVAthesisFiles/StyFiles/memstore.sty): NOVAthesisFiles/Strings/strings-declare.tex
+novathesis's translated UI strings live behind the `memstore` key-value system
+(novathesisFiles/StyFiles/memstore.sty): novathesisFiles/Strings/strings-declare.tex
 declares a store per name (\\NewMemStore{X}), and each
-NOVAthesisFiles/Strings/strings-<lang>.ldf then supplies \\Set<X>(<key>)={...}
+novathesisFiles/Strings/strings-<lang>.ldf then supplies \\Set<X>(<key>)={...}
 entries for that store. Missing a *specific key* that memstore looks up at
 build time is a hard, non-expandable "unknown key" error ("Compilation
 cannot proceed"), not a silent typo -- worth catching before someone builds
@@ -12,13 +12,13 @@ a thesis in a language nobody has exercised in a while.
 
 Scope: only the "global" stores declared in strings-declare.tex are checked
 against every strings-<lang>.ldf file. School-specific memstores (declared in
-NOVAthesisFiles/Schools/**/*.clo, e.g. uminho's \\NewMemStore{OfStr}) are
+novathesisFiles/Schools/**/*.clo, e.g. uminho's \\NewMemStore{OfStr}) are
 intentionally out of scope -- those are only ever used in the one or two
 languages that particular school supports, so "must exist in every language"
 does not apply to them.
 
 Two of the sixteen languages -- zhs/zht (Simplified/Traditional Chinese) --
-are deliberately partial: NOVAthesis does not translate the whole template
+are deliberately partial: novathesis does not translate the whole template
 into Chinese, only enough to typeset a Chinese-language ABSTRACT alongside a
 thesis whose main matter is in another language (see \\@ntprintabstract in
 nt-render-matter.sty). Tracing every store actually used on that code path
@@ -90,7 +90,7 @@ def parse_setter_stores(lang_file):
 
 def check_strings(repo_root):
     """Run the check and print a report. Return True if everything is complete."""
-    strings_dir = repo_root / "NOVAthesisFiles" / "Strings"
+    strings_dir = repo_root / "novathesisFiles" / "Strings"
     declare_file = strings_dir / "strings-declare.tex"
     color = sys.stdout.isatty()
 

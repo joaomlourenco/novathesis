@@ -9,7 +9,7 @@ INFO.md
 LLM.md
 __pycache__
 
-### NOVAthesis template ###
+### novathesis template ###
 
 # Ignore all template files…
 template.*
@@ -17,12 +17,12 @@ template.*
 !template.tex
 
 # Ignore all fonts
-NOVAthesisFiles/FontStyles/Fonts
-!NOVAthesisFiles/FontStyles/Fonts/DO_NOT_REMOVE_THIS_FILE.txt
+novathesisFiles/FontStyles/Fonts
+!novathesisFiles/FontStyles/Fonts/DO_NOT_REMOVE_THIS_FILE.txt
 
 # Ignore downloaded SDG icons (fetched automatically by \ntchecksdgs from
-# https://github.com/joaomlourenco/SDGs, see NOVAthesisFiles/StyFiles/nt-core.sty)
-NOVAthesisFiles/Images/sdg-*
+# https://github.com/joaomlourenco/SDGs, see novathesisFiles/StyFiles/nt-core.sty)
+novathesisFiles/Images/sdg-*
 
 # The renamed PDF files
 # *-en.pdf
@@ -57,7 +57,7 @@ aidisclose.bib
 # *.eps
 # *.pdf
 
-# NOVAthesis keywords aux files
+# novathesis keywords aux files
 *.k??
 
 ## Generated if empty string is given at "Please type another file name for output:"

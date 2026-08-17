@@ -241,13 +241,13 @@
         distribution à des fins pédagogiques ou de recherche, non commerciales, à condition que l’auteur %
         et l’éditeur soient dûment mentionnés.}
 
-% Vide : le crédit « produit avec NOVAthesis » se trouve maintenant sur
+% Vide : le crédit « produit avec novathesis » se trouve maintenant sur
 % la page de colophon.
 \SetAcknowledgmentsString(fr)={}
 
 \SetColophonString(fr)={%
         Ce document a été composé avec \NTengineName{} et le modèle %
-        \href{https://github.com/joaomlourenco/novathesis}{NOVAthesis} %
+        \href{https://github.com/joaomlourenco/novathesis}{\novathesis} %
         (v\novathesisversion), avec la police %
         \FontPrettyName}
 

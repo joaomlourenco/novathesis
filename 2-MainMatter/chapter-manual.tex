@@ -8,13 +8,13 @@
 %% Copyright (C) 2004-26 by João M. Lourenço <joao.lourenco@fct.unl.pt>
 %%
 %% User's manual chapter: complete guide to configuring and using the
-%% NOVAthesis template.
+%% novathesis template.
 %%
 %% ----------------------------------------------------------------------------
 
 \typeout{NT FILE 2-MainMatter/chapter-manual.tex}%
 
-\chapter{NOVAthesis Template \emph{User's Manual}}
+\chapter{\texorpdfstring{\textbf{nova}thesis}{novathesis} Template \emph{User's Manual}}
 \label{cha:users_manual}
 
 \glsresetall
@@ -482,7 +482,7 @@ generated PDF.  Many have defaults that vary with \texttt{school} and \texttt{do
 \label{sub:sdgs}
 %%-----------------------------------------------------------------------
 
-NOVAthesis can print the United Nation's \ntindex[configuration!print/sdgs]{SDG} icons at the bottom of the abstract page(s).  All three options
+\novathesis\ can print the United Nation's \ntindex[configuration!print/sdgs]{SDG} icons at the bottom of the abstract page(s).  All three options
 below should be set together:
 \begin{latexcode}
 \ntsetup{print/sdgs/list={3,7,13}}    % SDG numbers to print
@@ -1148,7 +1148,7 @@ To override an automatically-generated cover with a custom file:
 \label{sub:bundled_images}
 %%-----------------------------------------------------------------------
 
-NOVAthesis bundles a set of institutional logo images in
+\novathesis\ bundles a set of institutional logo images in
 \verb!novathesisFiles/Images/!.  These files are \emph{not} in the default
 graphics search path, so reference them with the \latexinline{\DIRIMAGES}
 macro (or copy them to \verb!5-Figures/! to use just the file name):

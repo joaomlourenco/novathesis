@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""NOVAthesis biber shim: serialize concurrent biber runs with a file lock.
+"""novathesis biber shim: serialize concurrent biber runs with a file lock.
 
 Concurrent biber processes fail sporadically (likely racing on the shared
 PAR-packed binary cache, see 'biber --cache'). This shim is put on PATH by

@@ -241,13 +241,13 @@
         scopi didattici o di ricerca, non commerciali, purché siano correttamente citati l’autore e %
         l’editore.}
 
-% Vuoto: il credito "prodotto con NOVAthesis" ora è nella pagina del
+% Vuoto: il credito "prodotto con novathesis" ora è nella pagina del
 % Colophon.
 \SetAcknowledgmentsString(it)={}
 
 \SetColophonString(it)={%
         Questo documento è stato composto con \NTengineName{} e il modello %
-        \href{https://github.com/joaomlourenco/novathesis}{NOVAthesis} %
+        \href{https://github.com/joaomlourenco/novathesis}{\novathesis} %
         (v\novathesisversion), con il carattere %
         \FontPrettyName}
 

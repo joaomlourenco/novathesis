@@ -241,13 +241,13 @@
         zezwalania na jej kopiowanie i dystrybucję w niekomercyjnych celach dydaktycznych lub % 
         badawczych, pod warunkiem właściwego wskazania autora i wydawcy.}
 
-% Puste: podziękowanie "przygotowano przy użyciu NOVAthesis" znajduje się
+% Puste: podziękowanie "przygotowano przy użyciu novathesis" znajduje się
 % teraz na stronie kolofonu.
 \SetAcknowledgmentsString(pl)={}
 
 \SetColophonString(pl)={%
         Ten dokument został złożony za pomocą \NTengineName{} oraz szablonu %
-        \href{https://github.com/joaomlourenco/novathesis}{NOVAthesis} %
+        \href{https://github.com/joaomlourenco/novathesis}{\novathesis} %
         (v\novathesisversion), krojem pisma %
         \FontPrettyName}
 

@@ -241,13 +241,13 @@
         con fines docentes o de investigación no comerciales, siempre que se indique adecuadamente % 
         la autoría y la editorial.}
 
-% Vacío: el crédito "elaborado con NOVAthesis" está ahora en la página
+% Vacío: el crédito "elaborado con novathesis" está ahora en la página
 % de Colofón.
 \SetAcknowledgmentsString(es)={}
 
 \SetColophonString(es)={%
         Este documento se ha compuesto con \NTengineName{} y la plantilla %
-        \href{https://github.com/joaomlourenco/novathesis}{NOVAthesis} %
+        \href{https://github.com/joaomlourenco/novathesis}{\novathesis} %
         (v\novathesisversion), con el tipo de letra %
         \FontPrettyName}
 

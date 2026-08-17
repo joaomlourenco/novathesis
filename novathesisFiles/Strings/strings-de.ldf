@@ -241,13 +241,13 @@
         und Verbreitung zu nicht-kommerziellen Lehr- und Forschungszwecken zu gestatten, sofern der %
         Autor und der Herausgeber ordnungsgemäß genannt werden.}
 
-% Leer: der Hinweis "erstellt mit NOVAthesis" steht jetzt auf der
+% Leer: der Hinweis "erstellt mit novathesis" steht jetzt auf der
 % Kolophon-Seite.
 \SetAcknowledgmentsString(de)={}
 
 \SetColophonString(de)={%
         Dieses Dokument wurde mit \NTengineName{} und der %
-        \href{https://github.com/joaomlourenco/novathesis}{NOVAthesis}-Vorlage %
+        \href{https://github.com/joaomlourenco/novathesis}{\novathesis}-Vorlage %
         (v\novathesisversion) gesetzt, in der Schriftart %
         \FontPrettyName}
 

@@ -241,7 +241,7 @@
         permitir a sua cópia e distribuição para fins educacionais ou de investigação, não-comerciais, %
         desde que seja dado o devido crédito ao autor e ao editor.}
 
-% Vazio: o crédito "produzido com o NOVAthesis" está agora na página de
+% Vazio: o crédito "produzido com o novathesis" está agora na página de
 % Colofão (\ntprintcolophon) em vez de aqui.
 \SetAcknowledgmentsString(pt)={}
 
@@ -251,7 +251,7 @@
 
 \SetColophonString(pt)={%
         Este documento foi composto com o \NTengineName{} e o modelo %
-        \href{https://github.com/joaomlourenco/novathesis}{NOVAthesis} %
+        \href{https://github.com/joaomlourenco/novathesis}{\novathesis} %
         (v\novathesisversion), com o tipo de letra %
         \FontPrettyName}
 

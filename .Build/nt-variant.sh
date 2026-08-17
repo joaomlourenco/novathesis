@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 #-----------------------------------------------------------------------------
-# NOVAthesis — nt-variant.sh
+# novathesis — nt-variant.sh
 # Version 8.1.0 (2026-08-16)
 #
 # Build one (or all) school variants of the template WITHOUT touching the
 # working copy. Settings are injected at the command line through the
-# \ntoverride mechanism (see NOVAthesisFiles/StyFiles/nt-setup.sty), so no
+# \ntoverride mechanism (see novathesisFiles/StyFiles/nt-setup.sty), so no
 # temporary workspace and no config patching are needed.
 #
 # Usage:

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Verify the glossaries of a built NOVAthesis document.
+"""Verify the glossaries of a built novathesis document.
 
 A build can succeed, produce the right page count, and still be wrong: with
 bib2gls the 'selection' resource option decides which entries are included, so

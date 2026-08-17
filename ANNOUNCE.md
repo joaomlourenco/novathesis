@@ -1,6 +1,6 @@
-# Announcing NOVAthesis v8.0.1
+# Announcing novathesis v8.0.1
 
-We are happy to announce the release of **NOVAthesis v8.0.1**, a release focused on speed, on a simpler build system, and on documentation you can trust.
+We are happy to announce the release of ****nova**thesis v8.0.1**, a release focused on speed, on a simpler build system, and on documentation you can trust.
 
 This is a **major** release: glossaries changed their underlying technology, and existing documents need a short, guided migration.
 

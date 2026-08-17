@@ -241,12 +241,12 @@
         permetre’n la còpia i distribució amb finalitats docents o de recerca, no comercials, % 
         sempre que es citi degudament l’autor i l’editor.}
 
-% Buit: el crèdit "produït amb NOVAthesis" ara és a la pàgina de Colofó.
+% Buit: el crèdit "produït amb novathesis" ara és a la pàgina de Colofó.
 \SetAcknowledgmentsString(cat)={}
 
 \SetColophonString(cat)={%
         Aquest document s'ha compost amb el \NTengineName{} i la plantilla %
-        \href{https://github.com/joaomlourenco/novathesis}{NOVAthesis} %
+        \href{https://github.com/joaomlourenco/novathesis}{\novathesis} %
         (v\novathesisversion), amb el tipus de lletra %
         \FontPrettyName}
 

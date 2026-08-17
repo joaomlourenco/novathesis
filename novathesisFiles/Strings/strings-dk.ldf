@@ -241,12 +241,12 @@
         distribution til ikke-kommercielle undervisnings- og forskningsformål, forudsat at der gives %
         behørig kredit til forfatteren og udgiveren.}
 
-% Tom: krediteringen "udarbejdet med NOVAthesis" er nu på Kolofon-siden.
+% Tom: krediteringen "udarbejdet med novathesis" er nu på Kolofon-siden.
 \SetAcknowledgmentsString(dk)={}
 
 \SetColophonString(dk)={%
         Dette dokument er sat med \NTengineName{} og skabelonen %
-        \href{https://github.com/joaomlourenco/novathesis}{NOVAthesis} %
+        \href{https://github.com/joaomlourenco/novathesis}{\novathesis} %
         (v\novathesisversion), med skrifttypen %
         \FontPrettyName}
 

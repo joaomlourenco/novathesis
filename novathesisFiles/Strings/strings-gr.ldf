@@ -240,13 +240,13 @@
 % --------------------------------------------------------------------
 %%% Acknowledgements
 % --------------------------------------------------------------------
-% Κενό: η αναφορά "δημιουργήθηκε με το NOVAthesis" βρίσκεται πλέον στη
+% Κενό: η αναφορά "δημιουργήθηκε με το novathesis" βρίσκεται πλέον στη
 % σελίδα Κολοφώνα.
 \SetAcknowledgmentsString(gr)={}
 
 \SetColophonString(gr)={%
         Το παρόν έγγραφο στοιχειοθετήθηκε με το \NTengineName{} και το πρότυπο %
-        \href{https://github.com/joaomlourenco/novathesis}{NOVAthesis} %
+        \href{https://github.com/joaomlourenco/novathesis}{\novathesis} %
         (v\novathesisversion), με τη γραμματοσειρά %
         \FontPrettyName}
 

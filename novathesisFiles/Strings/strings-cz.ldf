@@ -240,12 +240,12 @@
         jakož i zveřejňovat ji prostřednictvím vědeckých repozitářů a povolit její kopírování %
         a šíření pro vzdělávací nebo výzkumné, nekomerční účely, za podmínky uvedení autora a vydavatele.}
 
-% Prázdné: poděkování "vytvořeno s NOVAthesis" je nyní na stránce Tiráž.
+% Prázdné: poděkování "vytvořeno s novathesis" je nyní na stránce Tiráž.
 \SetAcknowledgmentsString(cz)={}
 
 \SetColophonString(cz)={%
         Tento dokument byl sazen pomocí \NTengineName{} a šablony %
-        \href{https://github.com/joaomlourenco/novathesis}{NOVAthesis} %
+        \href{https://github.com/joaomlourenco/novathesis}{\novathesis} %
         (v\novathesisversion), písmem %
         \FontPrettyName}
 

@@ -431,7 +431,7 @@
           }
           {
             % Fallback if fontspec isn't loaded or engine is pdfLaTeX
-            \typeout { NOVAthesis:~fontspec~not~loaded.%
+            \typeout { novathesis:~fontspec~not~loaded.%
               ~Skipping~font~check~for~##1. }
           }
       }
@@ -440,7 +440,7 @@
     \bool_if:NF \l__nt_fontcase_found_bool
       {
         \typeout
-          { NOVAthesis:~Warning:~No~fonts~from~the~list~{ #2 }~were~found. }
+          { novathesis:~Warning:~No~fonts~from~the~list~{ #2 }~were~found. }
       }
   }
 
@@ -848,7 +848,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % --------------------------------------------------------
-% The NOVAthesis logo
+% The novathesis logo
 % --------------------------------------------------------
 % 1. Define the box register
 \newsavebox{\novathesisbox}
@@ -861,7 +861,7 @@
 
 % 3. Define the macros to use the box
 \def\novathesisimg{\usebox{\novathesisbox}}
-\def\novathesistxt{\textsl{novathesis}}
+\def\novathesistxt{\textbf{nova}thesis}
 
 % 4. Select the output method
 % Use \providebox or similar if needed, but \newcommand works here
@@ -1274,7 +1274,7 @@
 % print/sdgs/list and print/sdgs/type below).
 %
 % Source: https://github.com/joaomlourenco/SDGs.  The upstream folder for
-% a language is simply its NOVAthesis language code in UPPER CASE (en ->
+% a language is simply its novathesis language code in UPPER CASE (en ->
 % EN, pt -> PT, ...), so adding a language upstream needs NO change here,
 % as long as the new folder is named after the matching language code.
 % Inside "<LANG>/PDF/" the repo nests one folder per colour variant

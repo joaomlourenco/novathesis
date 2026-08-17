@@ -1,5 +1,5 @@
 #-----------------------------------------------------------------------------
-# NOVAthesis — Makefile
+# novathesis — Makefile
 # Version 8.1.0 (2026-08-16)
 #
 # The build engine is latexmk; all LaTeX-specific behavior (engine defaults,

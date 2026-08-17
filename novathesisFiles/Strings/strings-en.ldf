@@ -242,7 +242,7 @@
         allow its copying and distribution for non-commercial educational or research %
         purposes, provided that proper credit is given to the author and the publisher.}
 
-% Empty: the "produced with NOVAthesis" credit now lives on the Colophon
+% Empty: the "produced with novathesis" credit now lives on the Colophon
 % page (\ntprintcolophon) instead of here -- see the comment on
 % \ntprintacknowledgementsblock in nt-render-matter.sty. Set your own
 % text if you use \ntprintacknowledgementsblock for something else.
@@ -254,7 +254,7 @@
 
 \SetColophonString(en)={%
         This document was typeset with \NTengineName{} and the %
-        \href{https://github.com/joaomlourenco/novathesis}{NOVAthesis} %
+        \href{https://github.com/joaomlourenco/novathesis}{\novathesis} %
         template (v\novathesisversion), set in %
         \FontPrettyName}
 

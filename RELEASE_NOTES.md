@@ -1,6 +1,6 @@
-# NOVAthesis Template Release Notes (v1.0.0 - v8.0.1)
+# novathesis Template Release Notes (v1.0.0 - v8.0.1)
 
-This document summarizes the changes and improvements made to the NOVAthesis template from version **1.0.0** to the current version **8.0.1**.
+This document summarizes the changes and improvements made to the **nova**thesis template from version **1.0.0** to the current version **8.0.1**.
 
 ---
 
@@ -259,7 +259,7 @@ A leftover `.tex` entry file now **stops the build** with an error naming the ca
     *   Replaced the options system with a command `\ntsetup{...}`.
     *   Improved file loading and hook system.
 *   **Visuals:**
-    *   New logo for NOVAthesis.
+    *   New logo for **nova**thesis.
     *   Updated school logos to vector formats where possible.
 
 ---

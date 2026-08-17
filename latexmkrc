@@ -1,4 +1,4 @@
-# NOVAthesis — latexmkrc
+# novathesis — latexmkrc
 # Perl configuration file, auto-loaded by latexmk from the project root.
 
 # ── Auxiliary directory ───────────────────────────────────────────────────────
@@ -6,7 +6,7 @@
 # Note: AUXDIR deletion (make clean) also removes the minted cache inside it.
 $aux_dir = $ENV{AUXDIR} // './AUXDIR';
 
-# ── TEXINPUTS: expose NOVAthesis internal packages to kpathsea ───────────────
+# ── TEXINPUTS: expose novathesis internal packages to kpathsea ───────────────
 # Adding StyFiles and Strings as explicit directories means kpathsea finds
 # internal .sty/.ldf files by bare name (e.g. \RequirePackage{options-ext}).
 # Without this, kpathsea falls back to the \input@path recursive search which
@@ -18,7 +18,7 @@ $ENV{TEXINPUTS} = './novathesisFiles/StyFiles/:./novathesisFiles/Strings/:'
 # ── Dependency tracking ───────────────────────────────────────────────────────
 $recorder = 1;
 
-# ── Default engine: LuaLaTeX (recommended for NOVAthesis) ────────────────────
+# ── Default engine: LuaLaTeX (recommended for novathesis) ────────────────────
 # 1=pdflatex  4=lualatex  5=xelatex
 $pdf_mode = 4;
 

@@ -241,13 +241,13 @@
         na nekomerčné vzdelávacie alebo výskumné účely za predpokladu, že bude riadne uvedený %
         autor a vydavateľ.}
 
-% Prázdne: poďakovanie "vytvorené pomocou NOVAthesis" je teraz na stránke
+% Prázdne: poďakovanie "vytvorené pomocou novathesis" je teraz na stránke
 % Tiráž.
 \SetAcknowledgmentsString(sk)={}
 
 \SetColophonString(sk)={%
         Tento dokument bol vysádzaný pomocou \NTengineName{} a šablóny %
-        \href{https://github.com/joaomlourenco/novathesis}{NOVAthesis} %
+        \href{https://github.com/joaomlourenco/novathesis}{\novathesis} %
         (v\novathesisversion), písmom %
         \FontPrettyName}
 

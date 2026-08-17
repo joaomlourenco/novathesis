@@ -247,13 +247,13 @@
         niet-commerciële onderwijs- en onderzoeksdoeleinden toe te staan, mits de auteur en de %
         uitgever correct worden vermeld.}
 
-% Leeg: de vermelding "opgesteld met NOVAthesis" staat nu op de
+% Leeg: de vermelding "opgesteld met novathesis" staat nu op de
 % Colofon-pagina.
 \SetAcknowledgmentsString(nl)={}
 
 \SetColophonString(nl)={%
         Dit document is gezet met \NTengineName{} en de %
-        \href{https://github.com/joaomlourenco/novathesis}{NOVAthesis} %
+        \href{https://github.com/joaomlourenco/novathesis}{\novathesis} %
         sjabloon (v\novathesisversion), in het lettertype %
         \FontPrettyName}
 

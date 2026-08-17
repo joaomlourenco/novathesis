@@ -241,13 +241,13 @@
         поширення в навчальних або науково-дослідних, некомерційних цілях за умови належного % 
         посилання на автора та видавця.}
 
-% Порожньо: подяка "створено за допомогою NOVAthesis" тепер на сторінці
+% Порожньо: подяка "створено за допомогою novathesis" тепер на сторінці
 % Колофон.
 \SetAcknowledgmentsString(uk)={}
 
 \SetColophonString(uk)={%
         Цей документ набрано за допомогою \NTengineName{} та шаблону %
-        \href{https://github.com/joaomlourenco/novathesis}{NOVAthesis} %
+        \href{https://github.com/joaomlourenco/novathesis}{\novathesis} %
         (v\novathesisversion), шрифтом %
         \FontPrettyName}
 

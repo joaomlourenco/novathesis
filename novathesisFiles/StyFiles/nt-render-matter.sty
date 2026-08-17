@@ -583,7 +583,7 @@
     {\IfFileExists{#1.tex}
        {\ClassError{novathesis}
           {Glossary source '#1.tex' is in the old (7.10.x) format}
-          {NOVAthesis 8.0 keeps glossary entries in .bib files, read by
+          {novathesis 8.0 keeps glossary entries in .bib files, read by
            bib2gls, instead of .tex files read by makeglossaries.^^J
            Run 'make glsbib' to convert your entry files, then CHECK THE SORT
            KEYS: the converter silently drops them, which reorders any entry
@@ -724,7 +724,7 @@
 }
 
 % No longer called automatically from \ntprintcopyright: it used to carry
-% the "produced with NOVAthesis" mini-colophon (\SetAcknowledgmentsString),
+% the "produced with novathesis" mini-colophon (\SetAcknowledgmentsString),
 % which is now empty in every language file -- that credit lives on the
 % Colophon page instead, and duplicating it here served no one. The
 % mechanism itself (a small footnote-style block + a local citation list)
@@ -791,7 +791,7 @@
 % Fully multilingual: \GetBkmString(colophon,...) for the page title
 % and \GetColophonString / \GetColophonPdfaString /
 % \GetColophonNotPdfaString / \GetColophonBuildString (all defined per
-% language in NOVAthesisFiles/Strings/strings-*.ldf) for the body, same
+% language in novathesisFiles/Strings/strings-*.ldf) for the body, same
 % as every other template-generated string, keyed by \@LANG@MAIN. No
 % zhs/zht fallback needed: lang/main is a choice restricted to the same
 % 14 languages these strings cover, so \@LANG@MAIN can never be zhs/zht

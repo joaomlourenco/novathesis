@@ -10,9 +10,9 @@ OUT=.needlualatex
 
 # Collect all affected identifiers
 NEED_LUALATEX_ALL="$(
-  $GREP -rl "is not compatible with pdfLaTeX" NOVAthesisFiles/FontStyles |
+  $GREP -rl "is not compatible with pdfLaTeX" novathesisFiles/FontStyles |
   cut -d / -f 3 | cut -d . -f 1 |
-  $GREP -ril -f - NOVAthesisFiles/Schools |
+  $GREP -ril -f - novathesisFiles/Schools |
   $GREP .ldf |
   sed -e 's,.*/,,' -e 's,-defaults\.ldf,,' |
   tr - /
@@ -22,7 +22,7 @@ NEED_LUALATEX_ALL="$(
 for word in $NEED_LUALATEX_ALL; do
   case "$word" in
     */*) echo $word ;;
-    *)   find "NOVAthesisFiles/Schools/$word" -type d -mindepth 1 -maxdepth 1 -print \
+    *)   find "novathesisFiles/Schools/$word" -type d -mindepth 1 -maxdepth 1 -print \
 			| grep -v '/Images' \
 			| cut -d / -f 3-4 ;;
   esac
