@@ -94,6 +94,18 @@
 %%  ADD YOUR PACKAGES AND OTHER CUSTOMIZATIONS HERE
 %%============================================================
 
+% Optional "chemical" glossary example (paired with 1-FrontMatter/chemical.bib
+% and the commented \ntaddfile{glossaries}[symbols]{chemical} line in
+% 0-Config/4_files.tex). A NEW type beyond the 3 built-in ones
+% (glossary/acronym/symbols) must be declared once, before it is used, or
+% bib2gls fails with "Glossary type `chemical' has not been defined". Use
+% plain \newglossary, not \newignoredglossary: the latter is excluded from
+% \forallglossaries (and hence from novathesis' automatic printing loop),
+% which is the wrong choice for a list meant to be printed like any other.
+% The file extensions are never actually opened under bib2gls's "record"
+% mode, so their names don't matter -- keep them short and unique.
+% \newglossary[chg]{chemical}{chs}{cho}{Chemical Symbols}
+
 % \usepackage[orphans/prevent, widows/prevent]{widows-and-orphans} % add warnings about widows and orphans to “template.log”
 % \usepackage{refcheck}     % list used and unused labels
 

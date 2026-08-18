@@ -116,11 +116,22 @@
 %     make glsbib
 % to convert your entry files, then re-add any 'sort' keys -- the converter
 % drops them.  See the "Migrating from 7.10.x" appendix of the manual.
+%
+% Want an ENTIRELY SEPARATE list (its own heading, own group headings,
+% printed on its own) instead of folding entries into glossary/acronym/
+% symbols? Register the file under any of those three existing keys (only
+% "glossary", "acronym" and "symbols" are ever scanned for files -- a key
+% novathesis doesn't recognize is silently never loaded), but give its
+% entries a DIFFERENT 'type={...}' field inside the .bib file itself: that
+% field, not the key here, decides which glossary an entry ends up in. The
+% type still needs declaring once with \newglossary (see chemical.bib and
+% 0-Config/5_packages.tex) before bib2gls can file entries under it --
+% without that this errors "Glossary type `<type>' has not been defined".
 %-------------------------------------------------------------
 \ntaddfile{glossaries}[glossary]{glossary}
 \ntaddfile{glossaries}[acronym]{acronyms}
 \ntaddfile{glossaries}[symbols]{symbols}
-% \ntaddfile{glossaries}[symbols]{chemical}
+% \ntaddfile{glossaries}[symbols]{chemical} % see 0-Config/5_packages.tex
 
 
 
