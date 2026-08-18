@@ -359,9 +359,23 @@ Made with [contrib.rocks](https://contrib.rocks).
 
 # 12. Say thank you! (and how to cite)
 
+<table>
+<tr>
+<td valign="top">
+
 1. **Star this repository** by clicking the (⭐️) at the top right of the [project's page](https://github.com/joaomlourenco/novathesis).
 2. **Make a [small donation](https://paypal.me/novathesis)** (*pay me a beer!*)
 3. **Cite novathesis** — see below.
+
+</td>
+<td align="center" valign="middle">
+
+<img src="https://github.com/user-attachments/assets/8434a462-3599-4d3c-a2fd-04995db03fe3" width="100"/><br/>
+[![GitHub license](https://img.shields.io/badge/SAY%20THANKS-€5-orange.svg)](https://www.paypal.com/donate/?hosted_button_id=8WA8FRVMB78W8)
+
+</td>
+</tr>
+</table>
 
 ### How to cite
 
@@ -386,8 +400,4 @@ Anywhere else, use:
 > J. M. Lourenço. *novathesis: A LaTeX Template for Academic Theses and Dissertations.* NOVA University Lisbon, 2026. doi: 10.5281/zenodo.21938603
 
 GitHub's **“Cite this repository”** button (right-hand sidebar) generates the same reference in BibTeX or APA, from [`CITATION.cff`](CITATION.cff).
-
-<img src="https://github.com/user-attachments/assets/8434a462-3599-4d3c-a2fd-04995db03fe3" width="100" />
-
-[![GitHub license](https://img.shields.io/badge/SAY%20THANKS-€5-orange.svg)](https://www.paypal.com/donate/?hosted_button_id=8WA8FRVMB78W8)
 
