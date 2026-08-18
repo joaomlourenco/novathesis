@@ -834,6 +834,20 @@
 % MISC
 \NTOptNewToggle{glossaries/list/reverse}{true}
 \NTOptNewValue{glossaries/layout}{lX}
+% Per-type letter-group headings ("A", "B", …) before each alphabetic group.
+% A list of glossary type names (glossary, acronym, symbols, or any custom
+% type added via \ntaddfile{glossaries}[<type>]{...}); off for every type
+% by default. Multiple types need an extra pair of braces to protect the
+% comma from \ntsetup's own top-level comma split, e.g.
+%   \ntsetup{glossaries/groupheadings={acronym,symbols}}
+\NTOptNewList{glossaries/groupheadings}{}
+% Per-type title override, e.g. rename "Symbols" to "List of Symbols":
+%   \ntsetup{glossaries/titles={symbols=List of Symbols}}
+% "type=Title" pairs, comma-separated; braces required around the whole
+% value for the same reason as glossaries/groupheadings above. Neither the
+% type name nor the title text may contain a literal "," or "=" (the parser
+% is a simple split, not a full tokenizer).
+\NTOptNewValue{glossaries/titles}{}
 \NTOptNewToggle{tocintoc}{true}
 \NTOptNewToggle{pdfa}{true}  % auto-enable PDF/A-2b when docstatus=final
 % NUMBERING

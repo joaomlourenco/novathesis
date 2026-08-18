@@ -51,7 +51,9 @@
       \expandafter\xltabular\expandafter{\expandafter\linewidth\expandafter}\expandafter{\LAYOUT}}
      {\endxltabular}%
   \renewcommand*{\glossaryheader}{}%
-  \renewcommand*{\glsgroupheading}[1]{}%
+  \renewcommand*{\glsgroupheading}[1]{%
+    \multicolumn{2}{@{}l@{}}{\bfseries\glsgetgrouptitle{##1}}\tabularnewline
+  }%
   \renewcommand{\glossentry}[2]{%
     \glsentryitem{##1}\glstarget{##1}{\glossentryname{##1}} &
     \glossentrydesc{##1}\glspostdescription\space ##2\tabularnewline
@@ -107,7 +109,9 @@
     {\xltabular{\linewidth}{lXp{\glspagelistwidth}}}%
     {\endxltabular}%
   \renewcommand*{\glossaryheader}{}%
-  \renewcommand*{\glsgroupheading}[1]{}%
+  \renewcommand*{\glsgroupheading}[1]{%
+    \multicolumn{3}{@{}l@{}}{\bfseries\glsgetgrouptitle{##1}}\tabularnewline
+  }%
   \renewcommand{\glossentry}[2]{%
     \glsentryitem{##1}\glstarget{##1}{\glossentryname{##1}} &
     \glossentrydesc{##1} & ##2\tabularnewline
@@ -159,7 +163,9 @@
     {\xltabular{\linewidth}{llll}}%
     {\endxltabular}%
   \renewcommand*{\glossaryheader}{}%
-  \renewcommand*{\glsgroupheading}[1]{}%
+  \renewcommand*{\glsgroupheading}[1]{%
+    \multicolumn{4}{@{}l@{}}{\bfseries\glsgetgrouptitle{##1}}\tabularnewline
+  }%
   \renewcommand{\glossentry}[2]{%
     \glsentryitem{##1}\glstarget{##1}{\glossentryname{##1}} &
     \glossentrydesc{##1} &

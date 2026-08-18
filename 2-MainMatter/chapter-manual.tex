@@ -619,6 +619,12 @@ label in the margin.
 % Glossary column widths
 \ntsetup{glossaries/layout={>{\raggedright}p{0.2\textwidth}X}}
 
+% Show letter-group headings before each alphabetic group (default: none)
+\ntsetup{glossaries/groupheadings={acronym,symbols}}
+
+% Rename a glossary's printed/TOC title (default: unchanged)
+\ntsetup{glossaries/titles={symbols=List of Symbols}}
+
 % Include the Table of Contents as an entry in itself (default: true)
 \ntsetup{tocintoc=false}
 
@@ -628,6 +634,41 @@ label in the margin.
 % Debug helpers (print grid and bounding boxes on cover/spine)
 \ntsetup{debug={cover,spine}}
 \end{latexcode}
+
+\paragraph{Letter-group headings.} Glossary, acronym, and symbols lists are
+always alphabetically grouped by first letter, but by default no heading is
+printed before each group. To show a bold heading (\enquote{A},
+\enquote{B}, \dots) before each letter group, opt in per glossary type with
+\texttt{glossaries/groupheadings}:
+\begin{latexcode}
+% Show group headings only for the acronyms and symbols lists
+\ntsetup{glossaries/groupheadings={acronym,symbols}}
+\end{latexcode}
+Valid type names are \texttt{glossary}, \texttt{acronym}, \texttt{symbols},
+or any custom type registered with
+\latexinline{\ntaddfile{glossaries}[<type>]{...}}. More than one type needs
+the extra pair of braces shown above, to protect the comma from
+\latexinline{\ntsetup}'s own top-level comma splitting; a single type does
+not, e.g.\ \latexinline{\ntsetup{glossaries/groupheadings=acronym}}.
+
+\paragraph{Renaming a glossary's title.} To rename the printed (and
+table-of-contents) title of a glossary type -- for example \enquote{Symbols}
+to \enquote{List of Symbols} -- use \texttt{glossaries/titles} with a
+comma-separated list of \texttt{type=Title} pairs:
+\begin{latexcode}
+\ntsetup{glossaries/titles={symbols=List of Symbols,
+                            acronym=List of Abbreviations}}
+\end{latexcode}
+As with \texttt{glossaries/groupheadings}, wrap multiple pairs in one extra
+pair of braces (a single pair does not need it). Neither the type name nor
+the title text may contain a literal comma or equals sign -- the parser is a
+simple split, not a full tokenizer.
+
+\paragraph{The un-typed \enquote{main} glossary.} Internally,
+\texttt{bib2gls} calls the un-typed glossary you feed via
+\latexinline{\ntaddfile{glossaries}[glossary]{...}} \texttt{main}, not
+\texttt{glossary}. Both options above accept \texttt{glossary} as an alias
+for it, so you never need to write \texttt{main} yourself.
 
 
 %%=======================================================================
