@@ -197,13 +197,15 @@ The `Makefile` is a thin wrapper around `latexmk` and provides several targets t
   - `make xe`: Build using `xelatex`.
 - **Viewing & Logs:**
   - `make v` or `make view`: Build the PDF and open it in your default viewer.
-  - `make watch`: Rebuild automatically every time a file is saved.
+  - `make watch`: Rebuild automatically every time a file is saved (LuaLaTeX).
+  - `make watch-pdf` / `make watch-xe`: Same, with pdfLaTeX / XeLaTeX.
   - `make log`: Show the LaTeX log file.
 - **Cleaning:**
-  - `make clean`: Remove build artifacts (keeps the PDF).
+  - `make clean`: Remove build artifacts (keeps the PDF and `AUXDIR/matrix/`).
   - `make distclean`: Also remove the PDF and SyncTeX files.
 - **Help:**
   - `make help`: Display a help message with all targets and variables.
+  - `make help-dev`: Maintainer-only targets (`school`, `matrix`, `zip`, version bumps, …) — not shipped in releases, only available from a git checkout.
 
 The behavior can be adjusted with variables, e.g.:
 
@@ -211,9 +213,11 @@ The behavior can be adjusted with variables, e.g.:
 make V=1                                  # verbose (raw LaTeX output)
 make NT="doctype=msc,lang=pt"             # override any \ntsetup option
 make view VIEWER="open -a Skim"           # choose the PDF viewer
+make BATCH=1                              # never stop at errors (good for CI)
+make TL=2024                              # build against a specific TeX Live release
 ```
 
-The `NT` variable accepts any comma-separated list of `\ntsetup` options and takes precedence over `0-Config/1_novathesis.tex`, without editing any file. This is handy for testing another school, language, or document type.
+The `NT` variable accepts any comma-separated list of `\ntsetup` options and takes precedence over `0-Config/1_novathesis.tex`, without editing any file. This is handy for testing another school, language, or document type. Other variables (`FILE`, `FASTWRITES`, `PAGER`, `FLAGS`) are documented in the header comment of the `Makefile` itself.
 
 ### 4.1.5. Configure & Recompile
 
