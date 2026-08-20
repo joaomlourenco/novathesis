@@ -1,0 +1,251 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% ulisboa/ff/ulisboa-ff-defaults.clo
+%% NOVA thesis configuration file
+%%
+%% Customization for ULISBOA-FFUL (Faculdade de Farmácia) (strings and cover)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\typeout{NT FILE ulisboa/ff/ulisboa-ff-defaults.clo}%
+
+
+%%=======================================================================
+%% METADATA & GLOBAL PROPERTIES
+%%=======================================================================
+
+% Times New Roman works with pdfLaTeX too, so all engines are accepted
+\AddValidProcessor{ulisboa/ff}{pdf,lua,xe}
+
+% ULISBOA/FF
+% The modality of the final work, printed on the cover/title page
+% (see FFUL's Regulamento Geral do Ciclo de Estudos conducente ao Grau de
+% Mestre, art.º 40.º): Dissertação, Relatório de Estágio or Trabalho de
+% Projeto.
+\NTOptNewChoice{ulisboa/ff/modality}{dissertation, report, project}{dissertation}
+
+\ntsetup{style/font=times}
+\ntsetup{style/chapter=fmv}
+% "lang/cover" defaults to "en" and, like every other school, cannot be
+% overridden from within this file: \@LANG@COVER is frozen (nt-setup.sty)
+% before school .clo files are loaded. If you want a Portuguese cover
+% regardless of the main document language, set
+% "\ntsetup{lang/cover=pt}" yourself in 0-Config/1_novathesis.tex.
+\ntsetup{print/frontpage=true}
+\ntsetup{print/statement=true}
+
+\ntaddfile{statement}[en]{ulisboa-ff/ulisboa-ff-statement-en}
+\ntaddfile{statement}[pt]{ulisboa-ff/ulisboa-ff-statement-pt}
+
+
+%%=======================================================================
+%% COLORS
+%%=======================================================================
+
+% Institutional colors, from the FFUL Manual de Normas Gráficas
+\definecolor{ffpurple}{RGB}{84,55,136}
+\definecolor{ffviolet}{RGB}{116,109,172}
+
+% Hyperlinks use the FFUL logo's purple
+\ntsetup{color/links=ffpurple}
+
+
+%%=======================================================================
+%% STRINGS (UNIVERSITY & SCHOOL)
+%%=======================================================================
+
+% Faculty / School
+\SetSchool*(pt)={Faculdade de Farmácia}
+\SetSchool*(en)={Faculty of Pharmacy}
+\SetSchool*(fr)={Faculty of Pharmacy}
+\SetSchool*(it)={Faculty of Pharmacy}
+
+\NewMemStore{AdvisersLabel}
+\SetAdvisersLabel*(phd,pt)={Tese orientada por:}
+\SetAdvisersLabel*(phd,en)={Thesis supervised by:}
+\SetAdvisersLabel*(phdprop,pt)={Tese orientada por:}
+\SetAdvisersLabel*(phdprop,en)={Thesis supervised by:}
+\SetAdvisersLabel*(phdplan,pt)={Tese orientada por:}
+\SetAdvisersLabel*(phdplan,en)={Thesis supervised by:}
+\SetAdvisersLabel*(msc,pt)={Dissertação orientada por:}
+\SetAdvisersLabel*(msc,en)={Dissertation supervised by:}
+\SetAdvisersLabel*(mscplan,pt)={Dissertação orientada por:}
+\SetAdvisersLabel*(mscplan,en)={Dissertation supervised by:}
+\SetAdvisersLabel*(de)={TBD}
+\SetAdvisersLabel*(es)={TBD}
+\SetAdvisersLabel*(fr)={TBD}
+\SetAdvisersLabel*(it)={TBD}
+
+\NewMemStore{ProvisionalString}
+\SetProvisionalString*(pt)={Documento Provisório}
+\SetProvisionalString*(en)={Provisional Document}
+\SetProvisionalString*(de)={TBD}
+\SetProvisionalString*(es)={TBD}
+\SetProvisionalString*(fr)={TBD}
+\SetProvisionalString*(it)={TBD}
+
+% Wording for the work modality, as it appears at the start of the
+% "orientado(a) pelo(a) Professor(a) Doutor(a) ..." sentence on the cover
+% (see Anexos I-IV of FFUL's "Orientações Gerais" for MICF, and the FFUL
+% cover model for the general Mestrado).
+\NewMemStore{FFModalityString}
+\SetFFModalityString*(pt,dissertation)={Dissertação}
+\SetFFModalityString*(en,dissertation)={Dissertation}
+\SetFFModalityString*(pt,report)={Relatório de Estágio}
+\SetFFModalityString*(en,report)={Internship Report}
+\SetFFModalityString*(pt,project)={Trabalho de Projeto}
+\SetFFModalityString*(en,project)={Project Work}
+
+\NewMemStore{FFAdvisedByString}
+\SetFFAdvisedByString*(pt)={orientado(a) pelo(a) Professor(a) Doutor(a)}
+\SetFFAdvisedByString*(en)={supervised by Professor Doctor}
+
+\NewMemStore{FFCoadvisedByString}
+\SetFFCoadvisedByString*(pt)={e coorientado(a) pelo(a) Professor(a) Doutor(a)}
+\SetFFCoadvisedByString*(en)={and co-supervised by Professor Doctor}
+
+
+%%=======================================================================
+%% ADVISER SENTENCE (used on the cover and title page)
+%%=======================================================================
+
+% Prints the comma-separated "Name, Position" list for every person
+% registered under {adviser}{#1} (role "a" or "c"), joining multiple
+% entries with "e"/"and".
+\newcommand{\@ntffPrintOnePerson}[5]{%
+  % #1=title #2=name #3=position #4=institution #5=gender
+  \@ntffsep
+  #2\IfStrEq{#3}{}{}{, #3}%
+  \def\@ntffsep{~\GetAndString(\@LANG@COVER)~}%
+}
+\newcommand{\@ntffAdviserList}[1]{%
+  \def\@ntffsep{}%
+  \ntforeachperson{adviser}{#1}{\@ntffPrintOnePerson}%
+}
+
+% Full sentence: "<Modality> orientado(a) pelo(a) Professor(a) Doutor(a)
+% <name>, <position> [e coorientado(a) pelo(a) Professor(a) Doutor(a)
+% <name>, <position>]."
+\newcommand{\FFULAdviserSentence}{%
+  \GetFFModalityString(\@LANG@COVER,\option{/novathesis/ulisboa/ff/modality})~%
+  \GetFFAdvisedByString(\@LANG@COVER)~%
+  \@ntffAdviserList{a}%
+  \ifnum\ntpersoncount{adviser}{c}>0
+    ~\GetFFCoadvisedByString(\@LANG@COVER)~%
+    \@ntffAdviserList{c}%
+  \fi
+  .%
+}
+
+
+%%=======================================================================
+%% LAYOUT (MARGINS)
+%%=======================================================================
+
+% Minimum margins required by FFUL's regulations (art.º 40.º): 2.5 cm on
+% all four sides
+\SetMargin*(screen,top)={2.5cm}
+\SetMargin*(screen,bottom)={2.5cm}
+\SetMargin*(screen,left)={2.5cm}
+\SetMargin*(screen,right)={2.5cm}
+\SetMargin*(paper,top)={2.5cm}
+\SetMargin*(paper,bottom)={2.5cm}
+\SetMargin*(paper,left)={2.5cm}
+\SetMargin*(paper,right)={2.5cm}
+
+\SetMargin*(cover,top)={2.5cm}
+\SetMargin*(cover,bottom)={2.5cm}
+\SetMargin*(cover,left)={2.5cm}
+\SetMargin*(cover,right)={2.5cm}
+
+
+%%=======================================================================
+%% SPINE
+%%=======================================================================
+
+\SpineSetup[%
+]{%
+  box/logo/bg/image           = {ulisboa-ff-logo-color},
+  box/logo/bg/image/angle     = {-90},
+  box/date/len                = {2.0cm},
+  box/title/len               = {18.9cm},
+  box/author/len              = {4.0cm},
+  box/logo/len                = {1.5cm},
+  % debug,
+}
+
+
+%%=======================================================================
+%% UTILITIES & HOOKS
+%%=======================================================================
+
+\SetThesisCover(textfont)={\sffamily}
+\NTAddToHook{cover/text/pre}{\sffamily}
+
+
+%%=======================================================================
+%% COVER 1 & 2 ELEMENTS
+%%=======================================================================
+
+% University / School
+\ntaddtocover[vspace=2mm, height=1.6cm, valign=c]{1-1,2-1}{%
+  \fontsize{14}{16}\selectfont%
+  \GetUniversity(\@LANG@COVER)\\[1mm]%
+  \GetSchool(\@LANG@COVER)%
+}
+
+% Logos: ULisboa's vertical lockup + the FFUL insignia, side by side, as
+% shown in FFUL's Manual de Normas Gráficas ("Identidades em Convivência",
+% vertical version -- the preferred layout)
+\ntaddtocover[vspace=0.4cm, height=3.2cm, valign=t]{1-1,2-1}{%
+  \includegraphics[height=3.2cm,align=c]{ulisboa-vertical-color}%
+  \hspace{14mm}%
+  \includegraphics[height=3.2cm,align=c]{ulisboa-ff-logo-color}%
+}
+
+% Title of the work
+\ntaddtocover[vspace=8mm, height=3cm, valign=c]{1-1,2-1}{%
+  \fontsize{14}{17}\selectfont%
+  \textbf{\GetDocTitle(\@LANG@MAIN,main)}%
+}
+
+% Doc status ("Documento Provisório", provisional docs only)
+\ntaddtocover[vspace=0mm, height=0.8cm, valign=c]{1-1,2-1}{%
+  \ifdocprovisional{\emph{\GetProvisionalString(\@LANG@COVER)}}{}%
+  \ifdocworking{Draft: \today}{}%
+}
+
+% Candidate name
+\ntaddtocover[vspace=4mm, height=1.2cm, valign=c]{1-1,2-1}{%
+  \fontsize{13}{15}\selectfont%
+  \textbf{\GetDocAuthor(name)}%
+}
+
+% Presentation purpose (title page only, not on the front cover); mirrors
+% FFUL's official title-page wording: "Trabalho Final de <degree>
+% apresentado(a) à Universidade de Lisboa através da Faculdade de Farmácia"
+\ntaddtocover[vspace=6mm, height=1.6cm, valign=c]{2-1}{%
+  \fontsize{10}{12}\selectfont%
+  \IfStrEq{\@LANG@COVER}{pt}{Trabalho Final de}{Final Work of}~%
+  \GetDegreeName(\@LANG@COVER)~%
+  \IfStrEq{\@LANG@COVER}{pt}{apresentado(a) à}{submitted to}~%
+  \GetUniversity(\@LANG@COVER)~%
+  \IfStrEq{\@LANG@COVER}{pt}{através da}{through the}~%
+  \GetSchool(\@LANG@COVER)%
+}
+
+% Adviser sentence
+\ntaddtocover[vspace=4mm, height=2.2cm, valign=c]{1-1,2-1}{%
+  \fontsize{10}{12}\selectfont%
+  \FFULAdviserSentence%
+}
+
+% Degree designation
+\ntaddtocover[vspace=6mm, height=1.5cm, valign=c]{1-1,2-1}{%
+  \fontsize{12}{14}\selectfont%
+  \textbf{\GetDegreeName(\@LANG@COVER)}%
+}
+
+% Date
+\ntaddtocover[vfill=1]{1-1,2-1}{%
+  \fontsize{12}{14}\selectfont%
+  \PrintDateISO{\GetDocDate(submission,year)}%
+}
