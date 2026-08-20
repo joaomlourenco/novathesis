@@ -1349,7 +1349,33 @@ make BATCH=1                    # batch mode, never stops at errors
 make TL=2024                    # use the TeX Live 2024 release
 make NT="doctype=msc,lang=pt"   # override \ntsetup options (see below)
 make FILE=mythesis              # explicit root file
+make SIZE=10                    # cap the final PDF at ~10MB (see below)
 \end{bashcode}
+
+\paragraph{Capping the File Size.}
+\label{sub:make_size}
+Some submission systems (repositories, conference portals, \dots) enforce a
+maximum \gls{PDF} size. \verb!SIZE=x! (megabytes) shrinks the build to fit:
+after the normal \LaTeX{} run, \novathesis{} binary-searches, via
+Ghostscript, the lowest raster-image resolution that keeps the \gls{PDF}
+under \texttt{x}~MB, and re-embeds every image at that resolution. Vector
+graphics, fonts and text are untouched — only raster images (photos,
+screenshots, rasterised plots) are resampled, so a document with little or
+no raster content may never reach a very small target; when that happens
+the build still succeeds, with a warning, producing the smallest \gls{PDF}
+it could reach.
+
+\begin{bashcode}
+make SIZE=10           # build, then shrink to about 10MB
+make lua SIZE=5 NT="lang=pt"
+\end{bashcode}
+
+\noindent Requires Ghostscript (\texttt{gs}) on \texttt{PATH}. The
+pre-shrink build is kept as \verb!<FILE>.pdf.orig! next to the shrunk
+\verb!<FILE>.pdf!, so re-running \texttt{make} without \verb!SIZE! restores
+full quality. Because downsampling rewrites every image stream,
+re-validate \gls{PDFA} compliance (Section~\ref{sub:pdfa}) if you combine
+\verb!SIZE! with \verb!docstatus=final!.
 
 \paragraph{Overrides.} The \verb!NT! variable accepts any comma-separated
 list of \latexinline{\ntsetup} options; they take precedence over the values
