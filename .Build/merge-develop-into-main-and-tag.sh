@@ -7,8 +7,9 @@ git pull origin main
 # 3. Merge develop into main without fast-forward
 git merge develop --no-ff -m "Merge develop into main"
 
-# 4. Extract the latest tag and reassign it to current HEAD
-TAG=$(git describe --tags --abbrev=0)
+# 4. Extract the version from nt-version.sty and (re)tag current HEAD
+VERSION=$(sed -n 's/.*\\novathesisversion}{\([^}]*\)}.*/\1/p' novathesisFiles/StyFiles/nt-version.sty)
+TAG="v${VERSION}"
 git tag -f "$TAG" HEAD
 
 # 5. Push main and the force-updated tag to upstream
