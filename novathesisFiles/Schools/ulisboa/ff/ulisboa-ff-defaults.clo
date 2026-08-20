@@ -3,6 +3,8 @@
 %% NOVA thesis configuration file
 %%
 %% Customization for ULISBOA-FFUL (Faculdade de Farmácia) (strings and cover)
+%%
+%% School support contributed by Afonso Nóbrega (https://github.com/nobrega8)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \typeout{NT FILE ulisboa/ff/ulisboa-ff-defaults.clo}%
@@ -178,8 +180,6 @@
 %%=======================================================================
 
 \SetThesisCover(textfont)={\sffamily}
-\NTAddToHook{cover/text/pre}{\sffamily}
-
 
 %%=======================================================================
 %% COVER 1 & 2 ELEMENTS
@@ -195,14 +195,14 @@
 % Logos: ULisboa's vertical lockup + the FFUL insignia, side by side, as
 % shown in FFUL's Manual de Normas Gráficas ("Identidades em Convivência",
 % vertical version -- the preferred layout)
-\ntaddtocover[vspace=0.4cm, height=3.2cm, valign=t]{1-1,2-1}{%
-  \includegraphics[height=3.2cm,align=c]{ulisboa-vertical-color}%
-  \hspace{14mm}%
-  \includegraphics[height=3.2cm,align=c]{ulisboa-ff-logo-color}%
+\ntaddtocover[vspace=7.25mm, height=3.2cm, valign=t]{1-1,2-1}{%
+  \includegraphics[height=25.5mm,align=c]{ulisboa-vertical-color}%
+  \hspace{22mm}%
+  \includegraphics[height=23mm,align=c]{ulisboa-ff-logo-color}%
 }
 
 % Title of the work
-\ntaddtocover[vspace=8mm, height=3cm, valign=c]{1-1,2-1}{%
+\ntaddtocover[vspace=5mm, height=3cm, valign=c]{1-1,2-1}{%
   \fontsize{14}{17}\selectfont%
   \textbf{\GetDocTitle(\@LANG@MAIN,main)}%
 }
