@@ -28,6 +28,13 @@
 #                      for a pdf/xe document that overshoots the 16 write
 #                      streams ("No room for a new \write"); no-op for LuaLaTeX
 #   TL=2024            use /usr/local/texlive/2024 for this run
+#   SIZE=x             after building, downsample raster images (via
+#                      Ghostscript) until the final PDF is at most x
+#                      megabytes -- handy for submission systems with a
+#                      file-size cap. Requires 'gs'; skipped with a
+#                      warning if the target isn't reachable by
+#                      downsampling alone. Original build kept as
+#                      <FILE>.pdf.orig
 #   VIEWER=...         PDF viewer for 'make view'
 #   PAGER=...          pager for 'make log' (default: less)
 #   FLAGS=...          extra latexmk flags, passed through
@@ -118,6 +125,7 @@ build:
 	$(TIMER) $(RUN) $(LATEXMK) $(ENG) $(LMKFLAGS) $(BASE).tex
 	@cp -f $(AUXDIR)/$(BASE).pdf . 2>/dev/null || true
 	@cp -f $(AUXDIR)/$(BASE).synctex.gz . 2>/dev/null || true
+	@if [ -n "$(SIZE)" ]; then .Build/nt-shrink-pdf.sh "$(SIZE)" "$(BASE).pdf"; fi
 
 # --- Convenience targets --------------------------------------------------------
 ifeq ($(shell uname),Darwin)

@@ -31,6 +31,9 @@ novathesisFiles/Images/sdg-*
 # Ignore temp files
 .Build/.*
 .needlualatex
+
+# Pre-shrink PDF backup kept by 'make SIZE=x' (see .Build/nt-shrink-pdf.sh)
+*.pdf.orig
 aidisclose.bib
 
 ### LaTeX ###
