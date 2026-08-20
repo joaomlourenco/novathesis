@@ -1,6 +1,13 @@
-# novathesis Template Release Notes (v1.0.0 - v8.0.1)
+# novathesis Template Release Notes (v1.0.0 - v8.2.0)
 
-This document summarizes the changes and improvements made to the **nova**thesis template from version **1.0.0** to the current version **8.0.1**.
+This document summarizes the changes and improvements made to the **nova**thesis template from version **1.0.0** to the current version **8.2.0**.
+
+---
+
+## v8.2.0 (2026-08-21)
+
+### What's new
+*   **New school: ULisboa FFUL** (Faculdade de Farmácia da Universidade de Lisboa) — cover, spine, and the modality choice required on its title page (`dissertation`, `report`, or `project`, per FFUL's *Regulamento Geral do Ciclo de Estudos conducente ao Grau de Mestre*, art.º 40.º). Contributed by [Afonso Nóbrega](https://github.com/nobrega8).
 
 ---
 
