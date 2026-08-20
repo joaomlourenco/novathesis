@@ -90,7 +90,7 @@ and full documentation — see the website.
 
 # 1. Overview
 
-****nova**thesis** is a complete LaTeX template for academic theses and dissertations. It provides:
+**nova**thesis** is a complete LaTeX template for academic theses and dissertations. It provides:
 
 - Ready‑to‑use cover pages compliant with each institution's rules
 - A structured, extensible LaTeX codebase
