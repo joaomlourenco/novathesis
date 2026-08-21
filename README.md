@@ -1,6 +1,6 @@
 <!--
 -----------------------------------------------------------------------------
-NOVATHESIS — README.md
+novathesis — README.md
 
 Version 8.2.0 (2026-08-21)
 Copyright (C) 2004-26 by João M. Lourenço <joao.lourenco@fct.unl.pt>
