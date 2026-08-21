@@ -37,6 +37,35 @@
 \ntaddfile{statement}[en]{ulisboa-ff/ulisboa-ff-statement-en}
 \ntaddfile{statement}[pt]{ulisboa-ff/ulisboa-ff-statement-pt}
 
+% FFUL follows the health-sciences convention and requires the Vancouver
+% citation style; this overrides whatever style block is (un)commented in
+% 0-Config/2_biblatex.tex (loaded before school .clo files, so this wins).
+\ntbibsetup{
+  style = vancouver,
+}
+
+% biblatex-vancouver only restyles the bibliography list (vancouver.bbx);
+% its .cbx is just an alias for the stock "numeric" citation style, so
+% \cite/\cites still print bracketed numbers ("[1]"). FFUL wants the
+% classic Vancouver in-text look instead: bare superscript numbers, no
+% brackets. \RequirePackage{biblatex} only runs once "afterloading/
+% schoolconfig" fires (right after this .clo finishes loading, see
+% nt-setup.sty), so \DeclareCiteCommand/\mkbibsuperscript aren't defined
+% yet here -- append to that same hook to redefine \cite/\cites right
+% after biblatex (and vancouver.cbx) have loaded, so this runs last and
+% wins. Mirrors numeric.cbx's own \cite/\supercite definitions verbatim,
+% just swapping the \mkbibbrackets wrapper for \mkbibsuperscript so
+% prenote/postnote handling (e.g. \cite[p.~5]{key}) still works.
+\NTAddToHook{afterloading/schoolconfig}{%
+  \DeclareCiteCommand{\cite}[\mkbibsuperscript]
+    {\usebibmacro{prenote}}
+    {\usebibmacro{citeindex}%
+     \usebibmacro{cite}}
+    {\multicitedelim}
+    {\usebibmacro{postnote}}
+  \DeclareMultiCiteCommand{\cites}[\mkbibsuperscript]{\cite}{\multicitedelim}
+}
+
 
 %%=======================================================================
 %% COLORS
@@ -166,7 +195,7 @@
 \SpineSetup[%
 ]{%
   box/logo/bg/image           = {ulisboa-ff-logo-color},
-  box/logo/bg/image/angle     = {-90},
+  box/logo/bg/image/angle     = {90},
   box/date/len                = {2.0cm},
   box/title/len               = {18.9cm},
   box/author/len              = {4.0cm},
@@ -186,7 +215,7 @@
 %%=======================================================================
 
 % University / School
-\ntaddtocover[vspace=2mm, height=1.6cm, valign=c]{1-1,2-1}{%
+\ntaddtocover[vspace=2.5mm, height=1.6cm, valign=c]{1-1,2-1}{%
   \fontsize{14}{16}\selectfont%
   \GetUniversity(\@LANG@COVER)\\[1mm]%
   \GetSchool(\@LANG@COVER)%
@@ -195,14 +224,14 @@
 % Logos: ULisboa's vertical lockup + the FFUL insignia, side by side, as
 % shown in FFUL's Manual de Normas Gráficas ("Identidades em Convivência",
 % vertical version -- the preferred layout)
-\ntaddtocover[vspace=7.25mm, height=3.2cm, valign=t]{1-1,2-1}{%
-  \includegraphics[height=25.5mm,align=c]{ulisboa-vertical-color}%
-  \hspace{22mm}%
-  \includegraphics[height=23mm,align=c]{ulisboa-ff-logo-color}%
+\ntaddtocover[vspace=17.5mm, height=3.2cm, valign=t]{1-1,2-1}{%
+  \includegraphics[height=37mm,align=c]{ulisboa-vertical-color}%
+  \hspace{14mm}%
+  \includegraphics[height=37mm,align=c]{ulisboa-ff-logo-color}%
 }
 
 % Title of the work
-\ntaddtocover[vspace=5mm, height=3cm, valign=c]{1-1,2-1}{%
+\ntaddtocover[vspace=13mm, height=3cm, valign=c]{1-1,2-1}{%
   \fontsize{14}{17}\selectfont%
   \textbf{\GetDocTitle(\@LANG@MAIN,main)}%
 }
@@ -210,11 +239,11 @@
 % Doc status ("Documento Provisório", provisional docs only)
 \ntaddtocover[vspace=0mm, height=0.8cm, valign=c]{1-1,2-1}{%
   \ifdocprovisional{\emph{\GetProvisionalString(\@LANG@COVER)}}{}%
-  \ifdocworking{Draft: \today}{}%
+  \ifdocworking{\color{ffpurple}Draft: \today}{}%
 }
 
 % Candidate name
-\ntaddtocover[vspace=4mm, height=1.2cm, valign=c]{1-1,2-1}{%
+\ntaddtocover[vspace=17mm, height=1.2cm, valign=c]{1-1,2-1}{%
   \fontsize{13}{15}\selectfont%
   \textbf{\GetDocAuthor(name)}%
 }
@@ -222,7 +251,7 @@
 % Presentation purpose (title page only, not on the front cover); mirrors
 % FFUL's official title-page wording: "Trabalho Final de <degree>
 % apresentado(a) à Universidade de Lisboa através da Faculdade de Farmácia"
-\ntaddtocover[vspace=6mm, height=1.6cm, valign=c]{2-1}{%
+\ntaddtocover[vspace=4mm, height=1.6cm, valign=c]{2-1}{%
   \fontsize{10}{12}\selectfont%
   \IfStrEq{\@LANG@COVER}{pt}{Trabalho Final de}{Final Work of}~%
   \GetDegreeName(\@LANG@COVER)~%
@@ -233,18 +262,21 @@
 }
 
 % Adviser sentence
-\ntaddtocover[vspace=4mm, height=2.2cm, valign=c]{1-1,2-1}{%
+\ntaddtocover[vspace=19mm, height=2.2cm, valign=c]{1-1,2-1}{%
   \fontsize{10}{12}\selectfont%
   \FFULAdviserSentence%
 }
 
 % Degree designation
-\ntaddtocover[vspace=6mm, height=1.5cm, valign=c]{1-1,2-1}{%
+\ntaddtocover[vspace=17.5mm, height=1.5cm, valign=c]{1-1,2-1}{%
   \fontsize{12}{14}\selectfont%
   \textbf{\GetDegreeName(\@LANG@COVER)}%
 }
 
 % Date
+% vfill (not a fixed vspace) so the bottom margin stays identical on both
+% 1-1 and 2-1 even though 2-1 carries one extra element (the "presentation
+% purpose" sentence above) that 1-1 doesn't have.
 \ntaddtocover[vfill=1]{1-1,2-1}{%
   \fontsize{12}{14}\selectfont%
   \PrintDateISO{\GetDocDate(submission,year)}%
