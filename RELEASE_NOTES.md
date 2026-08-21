@@ -7,7 +7,22 @@ This document summarizes the changes and improvements made to the **nova**thesis
 ## v8.2.0 (2026-08-21)
 
 ### What's new
-*   **New school: ULisboa FFUL** (Faculdade de Farmácia da Universidade de Lisboa) — cover, spine, and the modality choice required on its title page (`dissertation`, `report`, or `project`, per FFUL's *Regulamento Geral do Ciclo de Estudos conducente ao Grau de Mestre*, art.º 40.º). Contributed by [Afonso Nóbrega](https://github.com/nobrega8).
+*   **New school: ULisboa FFUL** (Faculdade de Farmácia da Universidade de Lisboa) — cover, spine, statement pages and the `modality` choice (`dissertation`, `report`, `project`), with its own citation style. Contributed by **Afonso Nóbrega** ([nobrega8](https://github.com/nobrega8)); select it with `\ntsetup{school=ulisboa/fful}`.
+*   **Oversized images are downsampled automatically** so a thesis can be kept under a submission size limit without editing the figures by hand.
+*   **The shipped example PDF is now the manual itself** (`novathesis-manual.pdf`), rather than one school's compiled cover — what you get is the documentation you actually want to read.
+
+### What was improved
+*   **`make matrix` ends with a summary:** how many variants built, how many failed, and each failure with its first TeX error, so a long regression run states its own result instead of leaving you to count PDFs against logs.
+*   **The release version comes from `nt-version.sty`** instead of `git describe`, so an archive built outside a git checkout still reports the right version.
+*   **README rewritten** around the project website: a description and quick links in the header, and the per-school tables trimmed now that [novathesis.org](https://novathesis.org) carries them.
+*   **The insignia matches the brand accent** (`#D94329`); two insignia files previously disagreed with each other.
+*   **The rebrand is complete.** The all-caps `NOVATHESIS` in every source file's header banner is now lowercase, finishing what v8.1.0 started.
+
+### What was fixed
+*   **`\hbar` (and other AMS symbols) broke under pdfLaTeX with `style/font=times`.** `mathptmx` redefines `\hbar`, and `amssymb` — pulled in for `\checkmark` whenever the math font does not provide one — was loaded after it, leaving a self-referential macro that errored at first use. `amssymb` now loads first. Only the pdfLaTeX engine was affected; the Xe/LuaLaTeX branch loads `newtxmath`, which defines `\checkmark`.
+*   **FFUL's school id is `ulisboa/fful` throughout.** It was briefly `ulisboa/ff`; the directory, the defaults file and every internal reference now agree, so the class no longer fails with *"Missing file … ulisboa-fful-defaults.clo"*. The old id was never part of a tagged release.
+*   uminho: the I3Bs school name read *"Research Institute 13Bs"* — digit one instead of the letter I.
+*   The class error message *"Cann not load the font"* is now *"Cannot load the font"*.
 
 ---
 
