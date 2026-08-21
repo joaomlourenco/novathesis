@@ -49,7 +49,7 @@ Compliant covers, spines and formatting for 20+ Portuguese institutions.
 <a href="https://novathesis.org"><strong>novathesis.org</strong></a> ·
 <a href="https://novathesis.org/en/schools">Find your school</a> ·
 <a href="https://novathesis.org/en/start">Get started</a> ·
-<a href="https://novathesis.org/en/showcase">Showcase</a>
+<a href="https://novathesis.org/en/showcase">Showcase</a>	
 </div>
 
 ### 🌐 [novathesis.org](https://novathesis.org) — find your school, get started, browse the showcase, and read the docs
