@@ -52,6 +52,8 @@ Compliant covers, spines and formatting for 20+ Portuguese institutions.
 <a href="https://novathesis.org/en/showcase">Showcase</a>	
 </div>
 
+---
+
 This README covers the essentials for working directly in this repository. For everything else —
 picking a pre-configured starter for your institution, a guided setup walkthrough, sample covers,
 and full documentation — see the website.
