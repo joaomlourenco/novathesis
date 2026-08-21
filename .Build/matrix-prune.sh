@@ -12,11 +12,12 @@
 # Rules, in priority order — the first that matches decides, so every file is
 # reported with exactly one reason:
 #
-#   1. uminho          keep only uminho-eeng-msc-en-lua.pdf, drop the rest
+#   1. uminho          keep only the uminho-eeng school, drop the other uminho
+#                      schools; rules 2 and 3 still apply to what is left
 #   2. Portuguese      drop *-pt-*   (the English variants are the samples)
 #   3. pdfLaTeX PDF    drop *pdf.pdf (the LuaLaTeX output is the reference)
 #   4. superseded msc  drop A-msc-B when A-phd-B exists
-#   5. nova-fct        exempt from rule 4: both degrees are kept
+#   5. both degrees    nova-fct and uminho-eeng are exempt from rule 4
 #
 # A matrix id is <school>-<doctype>-<lang>-<engine>, and school names contain
 # dashes (nova-fct-di-adc, nova-itqb-gray), so fields are counted from the END.
@@ -27,7 +28,8 @@ set -uo pipefail
 shopt -s nullglob            # an unmatched glob yields nothing instead of erroring
 
 DRYRUN=0
-KEEPER=uminho-eeng-msc-en-lua.pdf
+UMINHO_KEEP=uminho-eeng          # the only uminho school kept
+BOTH_DEGREES=('nova-fct' "$UMINHO_KEEP")   # exempt from the msc/phd rule
 
 usage() { sed -n '3,28p' "$0" | sed 's/^# \{0,1\}//'; exit "${1:-0}"; }
 
@@ -47,8 +49,8 @@ files=(*)
 # Deleting every uminho file because the keeper happens to be absent (a filtered
 # run, say) would be silent data loss -- so skip rule 1 instead.
 uminho_rule=1
-if [ ! -e "$KEEPER" ] && compgen -G 'uminho-*' >/dev/null; then
-  printf 'warning: %s is not here, so uminho files are left alone\n\n' "$KEEPER" >&2
+if ! compgen -G "$UMINHO_KEEP-*" >/dev/null && compgen -G 'uminho-*' >/dev/null; then
+  printf 'warning: no %s-* files here, so uminho files are left alone\n\n' "$UMINHO_KEEP" >&2
   uminho_rule=0
 fi
 
@@ -58,13 +60,17 @@ reason() { # <file> -> prints the reason, or nothing if the file is kept
   doctype=${f%-*}; doctype=${doctype%-*}; doctype=${doctype##*-}
   school=${f%-*}; school=${school%-*}; school=${school%-*}
 
-  if [ "$uminho_rule" = 1 ] && [[ $school == uminho* ]]; then
-    [ "$f" = "$KEEPER" ] || printf 'uminho: only %s is kept' "$KEEPER"
-    return
+  # other uminho schools go first; uminho-eeng falls through to the rules below
+  if [ "$uminho_rule" = 1 ] && [[ $school == uminho* ]] && [ "$school" != "$UMINHO_KEEP" ]; then
+    printf 'uminho: only %s is kept' "$UMINHO_KEEP"; return
   fi
-  if [ "$lang" = pt ];       then printf 'Portuguese variant';   return; fi
-  if [[ $f == *pdf.pdf ]];   then printf 'pdfLaTeX engine PDF';  return; fi
-  if [ "$doctype" = msc ] && [ "$school" != nova-fct ]; then
+  if [ "$lang" = pt ];     then printf 'Portuguese variant';  return; fi
+  if [[ $f == *pdf.pdf ]]; then printf 'pdfLaTeX engine PDF'; return; fi
+  if [ "$doctype" = msc ]; then
+    local keep
+    for keep in "${BOTH_DEGREES[@]}"; do
+      [ "$school" = "$keep" ] && return            # both degrees wanted
+    done
     local twin="$school-phd-${f#"$school"-msc-}"
     [ -e "$twin" ] && printf 'msc superseded by %s' "$twin"
   fi
