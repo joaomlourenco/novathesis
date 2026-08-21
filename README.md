@@ -42,6 +42,14 @@ Copyright (C) 2004-26 by João M. Lourenço <joao.lourenco@fct.unl.pt>
 </picture>
 <br/>
 <img src="https://raw.githubusercontent.com/joaomlourenco/novathesis/main/novathesisFiles/Images/novathesis-text-on-white.svg" width="360" alt="novathesis"/>
+<br><br>
+<strong>A LaTeX template for MSc dissertations and PhD theses</strong><br>
+Compliant covers, spines and formatting for 20+ Portuguese institutions.
+<br><br>
+<a href="https://novathesis.org"><strong>novathesis.org</strong></a> ·
+<a href="https://novathesis.org/en/schools">Find your school</a> ·
+<a href="https://novathesis.org/en/start">Get started</a> ·
+<a href="https://novathesis.org/en/showcase">Showcase</a>
 </div>
 
 ### 🌐 [novathesis.org](https://novathesis.org) — find your school, get started, browse the showcase, and read the docs
