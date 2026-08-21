@@ -186,6 +186,37 @@ list_variants() {
 }
 
 #--- single variant build ------------------------------------------------------
+#--- per-variant outcome recording (matrix summary) ------------------------------
+# One file per variant id, like NT_TIMINGS_DIR: parallel workers never contend.
+# A no-op outside matrix mode, where NT_RESULTS_DIR is unset.
+nt_record() { # <ok|fail> <id> <secs> <reason>
+  [ -n "${NT_RESULTS_DIR:-}" ] || return 0
+  printf '%s\t%s\t%s\t%s\n' "$1" "$2" "$3" "$4" > "$NT_RESULTS_DIR/$2"
+}
+
+# First real TeX error from the logs, condensed to one line, so the summary can
+# say WHY a variant failed instead of only that it did.  Two wrinkles: with
+# -file-line-error the message starts "file:line: ", and TeX hard-wraps the log
+# at 79 columns -- so the next line is glued on before trimming, otherwise
+# "Missing file 'x.clo'" arrives as "Missing fi".  The file:line form is
+# preferred over "! ..." because the latter also matches math in error context.
+nt_reason() { # <log> <build.out>
+  local f msg
+  for f in "$@"; do
+    [ -f "$f" ] || continue
+    msg=$(awk '/^[^ ]*:[0-9]+: /{ l=$0; if ((getline n) > 0) l = l n; print l; exit }' "$f")
+    [ -n "$msg" ] || msg=$(awk '/^! /{ l=substr($0,3)
+                                       if ((getline n) > 0 && n !~ /^(l\.|$)/) l = l n
+                                       print l; exit }' "$f")
+    if [ -n "$msg" ]; then
+      printf '%s' "$msg" |
+        sed -e 's|^[^ ]*:[0-9]*: ||' -e 's/  */ /g' -e 's/ *$//' | cut -c1-70
+      return 0
+    fi
+  done
+  printf 'build error'
+}
+
 build_one() { # <school> <doctype> <lang> <engine> [shared-aux-dir]
   local school=$1 dt=$2 lg=$3 eng=$4
   local id engflag aux ovr ovrrel owns_aux jobname rc=0 t0 t1
@@ -271,11 +302,13 @@ build_one() { # <school> <doctype> <lang> <engine> [shared-aux-dir]
     if [ -n "${NT_TIMINGS_DIR:-}" ]; then
       printf '%s\t%s\n' "$id" "$((t1 - t0))" > "$NT_TIMINGS_DIR/$id"
     fi
+    nt_record ok "$id" "$((t1 - t0))" ''
   else
     if [ -f "$aux/$id.glossary.out" ]; then
       cp -f "$aux/$id.glossary.out" "$OUTDIR/$id.glossary.out" 2>/dev/null || true
       printf '%s✗ %s  (%ss)  — glossary check failed:%s\n' "$C_RED" "$id" "$((t1 - t0))" "$C_RESET" >&2
       sed 's/^/    /' "$aux/$id.glossary.out" >&2
+      nt_record fail "$id" "$((t1 - t0))" 'glossary check'
       return 1
     fi
     # Save whatever diagnostics exist, and report ONLY what was actually saved
@@ -293,6 +326,7 @@ build_one() { # <school> <doctype> <lang> <engine> [shared-aux-dir]
     else
       printf '%s✗ %s  (%ss)  — FAILED, and no log could be saved%s\n' "$C_RED" "$id" "$((t1 - t0))" "$C_RESET" >&2
     fi
+    nt_record fail "$id" "$((t1 - t0))" "$(nt_reason "$OUTDIR/$id.log" "$OUTDIR/$id.build.out")"
   fi
   # In matrix mode, drop this variant's aux dir now that its PDF (or logs) are
   # in the output folder — keeps disk bounded across a large matrix.  A single
@@ -341,10 +375,12 @@ if [ "$ALL" = 1 ]; then
   # time (one file per id -> no locking), merged afterwards into a persistent
   # cost DB used to order units longest-first.
   NT_TIMINGS_DIR=$(mktemp -d)
+  NT_RESULTS_DIR=$(mktemp -d)
   COSTDB="$HERE/.matrix-costs.tsv"; touch "$COSTDB"
   export NT_STATUS="$STATUS" NT_EXTRA="$EXTRA" NT_OUTDIR="$OUTDIR" \
          NT_DRYRUN="$DRYRUN" NT_VERBOSE="$VERBOSE" NT_CLEAN_AUX=1 \
-         NT_WARM="${NT_WARM:-1}" NT_TIMINGS_DIR="$NT_TIMINGS_DIR" PATH
+         NT_WARM="${NT_WARM:-1}" NT_TIMINGS_DIR="$NT_TIMINGS_DIR" \
+         NT_RESULTS_DIR="$NT_RESULTS_DIR" PATH
 
   # Split the ordered variant list into one file per group×engine unit;
   # units run in parallel (up to JOBS), their contents strictly in order.
@@ -416,7 +452,29 @@ if [ "$ALL" = 1 ]; then
       END { for (id in new) if (!(id in seen)) print id "\t" new[id] }
     ' "$NT_TIMINGS_DIR/.new" "$COSTDB" > "$COSTDB.tmp" && mv "$COSTDB.tmp" "$COSTDB"
   fi
-  rm -rf "$UNITS" "$NT_TIMINGS_DIR"
+  # ---- summary ---------------------------------------------------------------
+  # Counted from the recorded outcomes, not from the files in OUTDIR: a variant
+  # that dies before writing any log would otherwise vanish from the tally.
+  # One awk pass, no grep pipeline -- 'grep -c' with no match exits 1, and under
+  # 'set -o pipefail' that would abort the whole run right at the finish line.
+  built=0; failed=0
+  if ls "$NT_RESULTS_DIR"/* >/dev/null 2>&1; then
+    counts=$(awk -F'\t' '$1=="ok"{o++} $1=="fail"{f++} END{printf "%d %d", o+0, f+0}' \
+             "$NT_RESULTS_DIR"/*)
+    built=${counts% *}; failed=${counts#* }
+  fi
+  missing=$((total - built - failed))
+  printf '\n%s%s▶ Matrix summary: %s/%s built' "$C_BOLD" "$C_BLUE" "$built" "$total" >&2
+  if [ "$failed" -gt 0 ]; then printf ', %s failed' "$failed" >&2; fi
+  if [ "$missing" -gt 0 ]; then printf ', %s never ran' "$missing" >&2; fi
+  printf '%s\n' "$C_RESET" >&2
+  if [ "$failed" -gt 0 ]; then
+    printf '%s  failed:%s\n' "$C_RED" "$C_RESET" >&2
+    awk -F'\t' '$1=="fail" {printf "    %-38s %s\n", $2, $4}' "$NT_RESULTS_DIR"/* |
+      sort >&2
+    printf '  logs → %s\n' "$OUTDIR" >&2
+  fi
+  rm -rf "$UNITS" "$NT_TIMINGS_DIR" "$NT_RESULTS_DIR"
   exit $rc
 fi
 

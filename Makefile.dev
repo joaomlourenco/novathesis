@@ -34,6 +34,8 @@
 #                      whole units, each under its own jobname so per-jobname
 #                      caches (minted, ...) don't collide; biber lock auto-on if
 #                      JOBS>1. Units are dispatched longest-first using measured
+#                      Ends with a summary line: how many variants built, how
+#                      many failed, and each failure with its first TeX error.
 #                      times cached in .Build/.matrix-costs.tsv (delete to reset;
 #                      NT_COST_DEFAULT weights unseen variants). PDFs (named
 #                      univ-school-doctype-lang-engine.pdf) go into
