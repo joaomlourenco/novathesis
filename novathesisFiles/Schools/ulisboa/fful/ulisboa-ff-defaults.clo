@@ -1,5 +1,5 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% ulisboa/ff/ulisboa-ff-defaults.clo
+%% ulisboa/fful/ulisboa-ff-defaults.clo
 %% NOVA thesis configuration file
 %%
 %% Customization for ULISBOA-FFUL (Faculdade de Farmácia) (strings and cover)
@@ -7,7 +7,7 @@
 %% School support contributed by Afonso Nóbrega (https://github.com/nobrega8)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\typeout{NT FILE ulisboa/ff/ulisboa-ff-defaults.clo}%
+\typeout{NT FILE ulisboa/fful/ulisboa-ff-defaults.clo}%
 
 
 %%=======================================================================
@@ -15,14 +15,14 @@
 %%=======================================================================
 
 % Times New Roman works with pdfLaTeX too, so all engines are accepted
-\AddValidProcessor{ulisboa/ff}{pdf,lua,xe}
+\AddValidProcessor{ulisboa/fful}{pdf,lua,xe}
 
-% ULISBOA/FF
+% ulisboa/fful
 % The modality of the final work, printed on the cover/title page
 % (see FFUL's Regulamento Geral do Ciclo de Estudos conducente ao Grau de
 % Mestre, art.º 40.º): Dissertação, Relatório de Estágio or Trabalho de
 % Projeto.
-\NTOptNewChoice{ulisboa/ff/modality}{dissertation, report, project}{dissertation}
+\NTOptNewChoice{ulisboa/fful/modality}{dissertation, report, project}{dissertation}
 
 \ntsetup{style/font=times}
 \ntsetup{style/chapter=fmv}
@@ -156,7 +156,7 @@
 % <name>, <position> [e coorientado(a) pelo(a) Professor(a) Doutor(a)
 % <name>, <position>]."
 \newcommand{\FFULAdviserSentence}{%
-  \GetFFModalityString(\@LANG@COVER,\option{/novathesis/ulisboa/ff/modality})~%
+  \GetFFModalityString(\@LANG@COVER,\option{/novathesis/ulisboa/fful/modality})~%
   \GetFFAdvisedByString(\@LANG@COVER)~%
   \@ntffAdviserList{a}%
   \ifnum\ntpersoncount{adviser}{c}>0
