@@ -1786,6 +1786,17 @@
 \NewMemStore{MinorField}
 \NewMemStore{Specialization}
 
+% Author's date/place of birth: required on the other/huberlin cover only,
+% but declared here (rather than in that school's .clo) so that
+% \SetAuthorBirthDate*/\SetAuthorBirthPlace* are always valid commands in
+% 0-Config/3_cover.tex, regardless of which school is selected -- otherwise
+% switching away from other/huberlin without also removing those lines from
+% 3_cover.tex would fail with "Undefined control sequence". Same reasoning
+% as MajorField/Specialization above: declared globally, only some schools
+% render it.
+\NewMemStore{AuthorBirthDate}
+\NewMemStore{AuthorBirthPlace}
+
 \NewMemStore{Spine}
 \NewMemStore{ThesisCover}
 \NewMemStore{Margin}
