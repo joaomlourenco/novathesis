@@ -1,0 +1,108 @@
+%!TEX root = ../template.tex
+
+%% ----------------------------------------------------------------------------
+%%  novathesis — 2-MainMatter/chapter-styles-showcase.tex
+%% ----------------------------------------------------------------------------
+%%
+%% DEMO ONLY. Cycles through every bundled ChapStyle (novathesisFiles/ChapStyles/
+%% *.sty), one short \chapter{} each, so they can be visually compared side by
+%% side. Not part of the default build -- see the commented-out \ntaddfile
+%% line in 0-Config/4_files.tex; enable it locally to eyeball chapter-style
+%% changes.
+%%
+%% Each style is switched by (1) resetting memoir's chapterstyle state back
+%% to its stock ("default" chapterstyle) values, then (2) \input-ing the
+%% ChapStyle file itself -- exactly what nt-render-matter.sty does for
+%% \ntsetup{style/chapter=...}, just repeated once per style instead of once
+%% for the whole document.
+%%
+%% Step (1) is technically redundant for every style file here that goes
+%% through memoir's \chapterstyle/\makechapterstyle machinery: memoir already
+%% runs this same reset internally before applying a named style's own
+%% overrides (see \@chs@def@ult in memoir.cls, silently prepended by
+%% \makechapterstyle to every style it defines). It is kept explicit below
+%% both to document the intent and as a safety net for any future chapter
+%% style that does not follow that convention.
+%%
+%% CAVEAT: isel, fmv and compact additionally tweak section-heading fonts/
+%% numbering depth as a side effect (\setsecheadstyle, \setsecnumdepth, ...).
+%% Those live outside memoir's chapterstyle system, so the reset below does
+%% NOT undo them -- they will persist into any later \chapter/\section in
+%% the same build. Keep this file last in the build order if that matters.
+%% ----------------------------------------------------------------------------
+
+\typeout{NT FILE 2-MainMatter/chapter-styles-showcase.tex}%
+
+\makeatletter
+% Reset every macro/length memoir's chapterstyle system controls back to
+% memoir's own stock values -- the same internal reset \makechapterstyle
+% silently runs before applying any named style's own clauses.
+\newcommand{\ntshowcaseresetchapterstyle}{\@chs@def@ult}
+\makeatother
+
+% ChapStyle files are normally \input while the class is still loading,
+% where '@' is already a letter; \input from the document body needs
+% \makeatletter itself, since several styles use @-prefixed internals
+% (\chs@ell@helper, \@nt@..., \@chapapp, ...). This must wrap the whole
+% \newcommand definition below, not just its execution: '@'-containing
+% tokens are tokenized once, when this file is read and the macro body is
+% stored, so an inner \makeatletter (taking effect only when the macro
+% later RUNS) would be too late to matter.
+\makeatletter
+\newcommand{\ntshowcasechapterstyle}[1]{%
+  \ntshowcaseresetchapterstyle
+  % The outer \makeatletter (above) only fixes how THIS file's own '@'
+  % tokens were tokenized when this macro was DEFINED. \input below does
+  % its OWN fresh tokenization of the ChapStyle file's characters, at
+  % RUN time, so '@' must ALSO be made a letter again right here, live,
+  % for that nested read -- an executable effect, not just a definition-
+  % time one, hence still needed despite the outer wrap.
+  \makeatletter
+  % ist/ist2 (and elegant) do \RequirePackage{soul} -- harmless while the
+  % class is loading (the normal case), but re-issuing it from the document
+  % body prints a stray "soul" onto the page even though the package is
+  % already preloaded for exactly this purpose (see 0-Config/5_packages.tex)
+  % and the reload itself is a no-op. Silence it just for this \input --
+  % NOT inside a \begingroup/\endgroup, since \chapterstyle's own
+  % \renewcommand's must survive past this macro, not just this group.
+  \let\ntshowcase@RequirePackage\RequirePackage
+  \let\RequirePackage\@gobble
+  \input{\DIRCHAPSTYLES/#1.sty}%
+  \let\RequirePackage\ntshowcase@RequirePackage
+  \makeatother
+  \chapter{Chapter style: \texttt{#1}}
+  \label{cha:style-showcase-#1}
+  This chapter demonstrates the \texttt{#1} chapter style, selected with:
+
+  \texttt{\textbackslash ntsetup\{style/chapter=#1\}}
+
+  \lipsum[1]
+}
+\makeatother
+
+\ntshowcasechapterstyle{bar}
+\ntshowcasechapterstyle{bar-compact}
+\ntshowcasechapterstyle{bluebox}
+\ntshowcasechapterstyle{compact}
+% 'elegant' is skipped here: it has a pre-existing bug independent of this
+% showcase -- \so{\@chapapp} (soul's letter-spacing wrapped around the
+% chapter/appendix/annex name) corrupts babel's \bbl@ensure@english state
+% and crashes the *next* \chapter call, reproducible even as the document's
+% only configured style/chapter (i.e. not a showcase artifact). See the
+% separately-flagged bug report.
+% \ntshowcasechapterstyle{elegant}
+\ntshowcasechapterstyle{fmv}
+\ntshowcasechapterstyle{isel}
+\ntshowcasechapterstyle{ist}
+\ntshowcasechapterstyle{ist2}
+\ntshowcasechapterstyle{vz34}
+\ntshowcasechapterstyle{vz43}
+
+% Restore whatever chapter style the document is actually configured to use,
+% so any real content coming after this demo chapter is not left showing
+% the last showcased style instead of the user's chosen one.
+\ntshowcaseresetchapterstyle
+\makeatletter
+\InputIfFileExists{\DIRCHAPSTYLES/\option{/novathesis/style/chapter}.sty}
+  {}{\chapterstyle{\option{/novathesis/style/chapter}}}
+\makeatother
