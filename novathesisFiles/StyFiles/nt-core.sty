@@ -804,8 +804,15 @@
 \NTOptNewValue{print/aidisclosure}{aidisclose} % use '7-aidisclose.tex' + 'aidisclose' package
 \NTOptNewToggle{print/committee}{false}
 \NTOptNewToggle{print/adviser}{true}    % fake option - adviser should always be printed
-\NTOptNewValue{print/otherlists}{frontmatter}  % print other lists (lof, lof, lol, …) in the front matter
+\NTOptNewValue{print/otherlists}{frontmatter}  % print other lists (lof, lot, loa, lol, …) in the front matter
 \NTOptNewValue{print/glossaries}{frontmatter}  % print glossaries in the front matter
+% Skip individual "list of ..." entries without commenting out lines in
+% 0-Config/6_list_of.tex. Names are whatever \ntaddlistof registers
+% (listoffigures, listoftables, listofalgorithms, listoflistings, or any
+% custom name) plus "glossaries", special-cased to force
+% print/glossaries=false instead (see \myprintglossaries in nt-setup.sty) --
+% there being no \ntaddlistof entry for glossaries to skip in the first place.
+\NTOptNewList{listof/skip}{}
 \NTOptNewToggle{print/frontpage}{false}
 \NTOptNewToggle{print/copyright}{true}
 \NTOptNewToggle{print/timestamp}{true}

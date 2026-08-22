@@ -375,6 +375,22 @@
 
 
 %-------------------------------------------------------------
+% Skip individual "list of ..." entries (list of figures, tables,
+% algorithms, listings, or any custom one \ntaddlistof registers -- see
+% 0-Config/6_list_of.tex) without commenting out their \ntaddlistof line.
+%
+%     DEFAULT: listof/skip <- empty (print everything that was \ntaddlistof'd)
+%.............................................................
+%
+%     "glossaries" is also a valid entry here: it is just a friendlier
+%     spelling of \ntsetup{print/glossaries=false} above, since glossaries
+%     aren't registered via \ntaddlistof in the first place.
+%-------------------------------------------------------------
+% \ntsetup{listof/skip={listoftables,listofalgorithms,glossaries}}
+
+
+
+%-------------------------------------------------------------
 % Print the copyright message
 %     DEFAULT: print/copyright <- true
 %.............................................................

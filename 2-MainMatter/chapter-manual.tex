@@ -442,6 +442,18 @@ generated PDF.  Many have defaults that vary with \texttt{school} and \texttt{do
 \ntsetup{print/glossaries=false}        % do not print
 \end{latexcode}
 
+  \item[\texttt{listof/skip}] Skip individual ``list of \ldots'' entries
+    (\texttt{listoffigures}, \texttt{listoftables}, \texttt{listofalgorithms},
+    \texttt{listoflistings}, or any custom name \verb!\ntaddlistof! registers
+    in \verb!0-Config/6_list_of.tex!) without commenting out their
+    \verb!\ntaddlistof! line. \texttt{glossaries} is also accepted here --
+    it is just a friendlier spelling of \texttt{print/glossaries=false},
+    since glossaries aren't registered via \verb!\ntaddlistof! at all.
+    Default: empty (nothing skipped).
+\begin{latexcode}
+\ntsetup{listof/skip={listoftables,listofalgorithms,glossaries}}
+\end{latexcode}
+
   \item[\texttt{abstract/title}] Print the work title with each abstract,
     before or after the abstract text.  Default: \texttt{none}.
     The alignment of the title block is set with

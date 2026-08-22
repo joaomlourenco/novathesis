@@ -11,6 +11,13 @@
 %         syntax: \ntaddlistof{list-name}
 %   You may add more lists if you want to, but please notice that the
 %   initial "\" is always omited in the "list-name"
+%
+%   To turn one of the lists below OFF, you don't need to comment out its
+%   \ntaddlistof line here -- \ntsetup{listof/skip={...}} in
+%   0-Config/1_novathesis.tex does it without touching this file, e.g.:
+%       \ntsetup{listof/skip={listoftables,listofalgorithms}}
+%   "glossaries" is also a valid name there, even though it has no
+%   \ntaddlistof line of its own (see that option's doc block).
 %=============================================================================
 \makeatletter
 
