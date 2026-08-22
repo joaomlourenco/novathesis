@@ -41,7 +41,32 @@
 % Reset every macro/length memoir's chapterstyle system controls back to
 % memoir's own stock values -- the same internal reset \makechapterstyle
 % silently runs before applying any named style's own clauses.
-\newcommand{\ntshowcaseresetchapterstyle}{\@chs@def@ult}
+%
+% Three things memoir's own 'culver' style (below) deliberately touches are
+% NOT part of that reset, because they aren't scoped to a single chapter's
+% appearance at all -- and since nothing about \chapterstyle ever restores
+% them, culver's choices otherwise leak into EVERY later chapter for the
+% rest of the document, not just culver's own:
+%   \clearforchapter -- the macro \chapter itself calls to decide whether
+%     to start a new page (normally \cleartorecto/\clearpage/\cleartoverso
+%     depending on the openright/openany/openleft class option); culver
+%     sets it to {} for a "no new page" continuous layout. This is what
+%     made chapters stop starting on a new page after 'chappell': the very
+%     next style in the list, 'culver', is the one that actually flips it.
+%   \thechapter -- culver switches chapter numbering to Roman numerals.
+%   \ps@chapter -- \aliaspagestyle{chapter}{headings} makes chapter-opening
+%     pages show a running head; memoir's own default is 'plain' (none).
+% Capture the document's real values once, up front, and restore them on
+% every reset below, so culver's choices stay scoped to its own chapter.
+\let\ntshowcase@clearforchapter\clearforchapter
+\let\ntshowcase@thechapter\thechapter
+\let\ntshowcase@pschapter\ps@chapter
+\newcommand{\ntshowcaseresetchapterstyle}{%
+  \@chs@def@ult
+  \let\clearforchapter\ntshowcase@clearforchapter
+  \let\thechapter\ntshowcase@thechapter
+  \let\ps@chapter\ntshowcase@pschapter
+}
 \makeatother
 
 % ChapStyle files are normally \input while the class is still loading,
@@ -74,7 +99,7 @@
   \input{\DIRCHAPSTYLES/#1.sty}%
   \let\RequirePackage\ntshowcase@RequirePackage
   \makeatother
-  \chapter{Chapter style: \texttt{#1}}
+  \chapter{Example Title in Chapter style: \texttt{#1}}
   \label{cha:style-showcase-#1}
   This chapter demonstrates the \texttt{#1} chapter style, selected with:
 
@@ -116,7 +141,7 @@
 \newcommand{\ntshowcasememoirstyle}[1]{%
   \ntshowcaseresetchapterstyle
   \chapterstyle{#1}
-  \chapter{Memoir style: \texttt{#1}}
+  \chapter{Example Title in Memoir style: \texttt{#1}}
   \label{cha:style-showcase-memoir-#1}
   This chapter demonstrates memoir's built-in \texttt{#1} chapter style,
   selected with:
