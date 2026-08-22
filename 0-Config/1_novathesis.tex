@@ -322,6 +322,22 @@
 
 
 %-------------------------------------------------------------
+% Prefix "Appendix"/"Annex" to the chapter number in appendix/annex
+% headings too
+%     DEFAULT: print/appendixname <- false
+%.............................................................
+%
+%     The PDF bookmarks already show "Appendix A"/"Annex I"; this option
+%     makes the printed chapter heading show it too (e.g. big letter "A"
+%     becomes "Appendix A"). Chapter styles that already print this label
+%     as part of their design (bluebox, elegant) are unaffected -- the
+%     word is never duplicated.
+%-------------------------------------------------------------
+% \ntsetup{print/appendixname=true}
+
+
+
+%-------------------------------------------------------------
 % Print the book spine
 %     DEFAULTS: if status=working:      spine/layout <- false
 %               if status=provisional:  spine/layout <- false

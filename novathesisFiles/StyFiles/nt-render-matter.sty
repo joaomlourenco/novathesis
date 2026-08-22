@@ -327,6 +327,36 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Appendixes and Annexes
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Some chapter styles (bluebox, elegant) already print \@chapapp next to the
+% chapter number for every chapter ("Chapter"/"Appendix"/"Annex"). Such
+% styles set this flag to true right after selecting their \chapterstyle{},
+% so that when print/appendixname is active below, we don't print \@chapapp
+% a second time on top of what the style already draws.
+\newif\if@nt@chapshowsappname
+\@nt@chapshowsappnamefalse
+
+% When print/appendixname is active, prefix "Appendix"/"Annex" to the
+% chapter number in the actual printed heading too -- the PDF bookmark
+% string already contains it (see the \texorpdfstring branches of
+% \thechapter in \ntprintappendices/\ntprintannexes below), so this only
+% affects what is drawn on the page, never causing a double prefix in the
+% bookmarks. This patches \printchapternum, NOT \thechapter: \thechapter
+% also feeds the chapter mark/running head, and embedding \@chapapp (a
+% babel caption) there corrupts \reserved@a (see the comment further down),
+% whereas \printchapternum only runs when the heading is actually typeset --
+% exactly how bluebox/elegant already draw \@chapapp by hand.
+\newif\if@nt@appendixnamepatched
+\newcommand*{\nt@maybeaddappendixname}{%
+  \iftoggle{/novathesis/print/appendixname}{%
+    \if@nt@chapshowsappname\else
+      \if@nt@appendixnamepatched\else
+        \pretocmd{\printchapternum}{\@chapapp\space}{}{}%
+        \@nt@appendixnamepatchedtrue
+      \fi
+    \fi
+  }{}%
+}
+
 \newcommand{\shiftbookmarks}[2][1]{%
   \begingroup
     \@for\@secname:={part,chapter,section,subsection,subsubsection,paragraph,subparagraph}\do{%
@@ -352,6 +382,7 @@
 \newcommand*{\ntprintappendices}{%
   \iffileadded{appendix}{%
     \appendix%
+    \nt@maybeaddappendixname%
     % Both appendix and annex chapters use toclevel@appendix for their bookmark
     % level (memoir sets \anappendixtrue, which makes \@chapter call
     % \addcontentsline{toc}{appendix}{...}; hyperref then resolves the bookmark
@@ -406,6 +437,7 @@
 \newcommand*{\ntprintannexes}{%
   \iffileadded{annex}{%
     \annex%
+    \nt@maybeaddappendixname%
     % Same toclevel@appendix key as for appendices (see comment above).
     \expandafter\def\csname toclevel@appendix\endcsname{1}%
     % Same .toc-marker approach as \ntprintappendices, but switching the

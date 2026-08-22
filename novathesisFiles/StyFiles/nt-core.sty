@@ -813,6 +813,9 @@
 \NTOptNewToggle{print/colophon}{true}   % print a Colophon page in the back matter
 \NTOptNewValue{print/webography}{}      % empty means do not make a separate webography
 \NTOptNewToggle{print/statement}{false}
+% Prefix "Appendix"/"Annex" to the chapter number in appendix/annex headings
+% too, not just in the PDF bookmarks (which already show it by default).
+\NTOptNewToggle{print/appendixname}{false}
 \NTOptNewList{print/sdgs/list}{}      % {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17}
 % The one choice in this codebase whose stored value differs from its
 % user-facing name -- see the comment on \NTOptNewChoice in nt-options.sty.

@@ -371,6 +371,14 @@ generated PDF.  Many have defaults that vary with \texttt{school} and \texttt{do
 \ntsetup{print/copyright=false}
 \end{latexcode}
 
+  \item[\texttt{print/appendixname}] Prefix ``Appendix''/``Annex'' to the
+    chapter number in appendix/annex headings too (the PDF bookmarks
+    already show it -- see \S\ref{sub:appendices}).
+    Default: \texttt{false}.
+\begin{latexcode}
+\ntsetup{print/appendixname=true}
+\end{latexcode}
+
   \item[\texttt{spine/layout}] Print the book spine.
     Default: \texttt{false} for \texttt{working} and \texttt{provisional};
     \texttt{trim} (printed) for \texttt{final}.
@@ -1171,6 +1179,11 @@ To restrict a chapter to specific document types, pass an optional list:
 \end{latexcode}
 
 The same optional doctype filter applies to appendices and annexes.
+
+By default, the appendix/annex chapter heading shows only the number
+(e.g.\ a big ``A''), while the PDF bookmark already reads ``Appendix A''.
+Set \texttt{print/appendixname=true} to also prefix ``Appendix''/``Annex''
+to the printed heading -- see the \texttt{print/appendixname} option.
 
 %%-----------------------------------------------------------------------
 \subsection{Custom Covers}
