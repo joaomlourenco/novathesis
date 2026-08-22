@@ -21,91 +21,52 @@
 %%      \ntshowcasememoirstyle below just calls \chapterstyle{<name>}
 %%      directly -- no \input, no file-loading quirks to work around.
 %%
-%% Both groups reset memoir's chapterstyle state back to its stock ("default"
-%% chapterstyle) values before every switch, via the internal \@chs@def@ult --
-%% the same reset \makechapterstyle silently runs before applying any named
-%% style's own clauses. Doing it explicitly here is redundant for any style
-%% that goes through that machinery (all of them, including every custom one
-%% below) but is kept as a documented safety net.
+%% Both groups wrap each demo chapter in its own \begingroup/\endgroup.
+%% \chapterstyle's \renewcommand's, a plain \setlength (compact/fmv), a
+%% \let (the \RequirePackage-gobbling below) -- all ordinarily-scoped TeX
+%% assignments -- are undone automatically at \endgroup, reverting
+%% EVERYTHING a style touched, not just the handful of macros
+%% \@chs@def@ult happens to cover (\makechapterstyle's own internal reset,
+%% run before every named style's clauses). This matters because at least
+%% one bundled style reaches outside that set: memoir's own 'culver'
+%% (group 2) additionally \renewcommand's \clearforchapter (the macro
+%% \chapter calls to decide whether to start a new page) to {} for its own
+%% "no new page" layout, switches \thechapter to Roman numerals, and
+%% aliases the "chapter" pagestyle to show a running head -- none of which
+%% \@chs@def@ult resets, and none of which is scoped to culver's own
+%% chapter by itself, so without the enclosing group here it would leak
+%% into every chapter for the rest of the document. \addcontentsline's TOC
+%% write is deferred to shipout, past any single \endgroup, but empirically
+%% reads back correctly regardless (verified against culver's Roman
+%% numeral, which the fixed-width TOC number column just wraps to its own
+%% line for either way -- a separate, pre-existing memoir/novathesis
+%% column-width quirk, not caused by the grouping here).
 %%
 %% CAVEAT: isel, fmv and compact (group 1) additionally tweak section-heading
 %% fonts/numbering depth as a side effect (\setsecheadstyle, \setsecnumdepth,
-%% ...). Those live outside memoir's chapterstyle system, so the reset above
-%% does NOT undo them -- they will persist into any later \chapter/\section
-%% in the same build. Keep this file last in the build order if that matters.
+%% ...). Those are scoped to this file's own groups the same as everything
+%% else here, so -- unlike in earlier versions of this file -- they do NOT
+%% leak into later real content either.
 %% ----------------------------------------------------------------------------
 
 \typeout{NT FILE 2-MainMatter/chapter-styles-showcase.tex}%
 
 \makeatletter
-% Reset every macro/length memoir's chapterstyle system controls back to
-% memoir's own stock values -- the same internal reset \makechapterstyle
-% silently runs before applying any named style's own clauses.
-%
-% Three things memoir's own 'culver' style (below) deliberately touches are
-% NOT part of that reset, because they aren't scoped to a single chapter's
-% appearance at all -- and since nothing about \chapterstyle ever restores
-% them, culver's choices otherwise leak into EVERY later chapter for the
-% rest of the document, not just culver's own:
-%   \clearforchapter -- the macro \chapter itself calls to decide whether
-%     to start a new page (normally \cleartorecto/\clearpage/\cleartoverso
-%     depending on the openright/openany/openleft class option); culver
-%     sets it to {} for a "no new page" continuous layout. This is what
-%     made chapters stop starting on a new page after 'chappell': the very
-%     next style in the list, 'culver', is the one that actually flips it.
-%   \thechapter -- culver switches chapter numbering to Roman numerals.
-%   \ps@chapter -- \aliaspagestyle{chapter}{headings} makes chapter-opening
-%     pages show a running head; memoir's own default is 'plain' (none).
-% Capture the document's real values once, up front, and restore them on
-% every reset below, so culver's choices stay scoped to its own chapter.
-\let\ntshowcase@clearforchapter\clearforchapter
-\let\ntshowcase@thechapter\thechapter
-\let\ntshowcase@pschapter\ps@chapter
-\newcommand{\ntshowcaseresetchapterstyle}{%
-  \@chs@def@ult
-  \let\clearforchapter\ntshowcase@clearforchapter
-  \let\thechapter\ntshowcase@thechapter
-  \let\ps@chapter\ntshowcase@pschapter
-}
-\makeatother
-
-% ChapStyle files are normally \input while the class is still loading,
-% where '@' is already a letter; \input from the document body needs
-% \makeatletter itself, since several styles use @-prefixed internals
-% (\chs@ell@helper, \@nt@..., \@chapapp, ...). This must wrap the whole
-% \newcommand definition below, not just its execution: '@'-containing
-% tokens are tokenized once, when this file is read and the macro body is
-% stored, so an inner \makeatletter (taking effect only when the macro
-% later RUNS) would be too late to matter.
-\makeatletter
 \newcommand{\ntshowcasechapterstyle}[1]{%
-  \ntshowcaseresetchapterstyle
-  % The outer \makeatletter (above) only fixes how THIS file's own '@'
-  % tokens were tokenized when this macro was DEFINED. \input below does
-  % its OWN fresh tokenization of the ChapStyle file's characters, at
-  % RUN time, so '@' must ALSO be made a letter again right here, live,
-  % for that nested read -- an executable effect, not just a definition-
-  % time one, hence still needed despite the outer wrap.
-  \makeatletter
-  % ist/ist2 (and elegant) do \RequirePackage{soul} -- harmless while the
-  % class is loading (the normal case), but re-issuing it from the document
-  % body prints a stray "soul" onto the page even though the package is
-  % already preloaded for exactly this purpose (see 0-Config/5_packages.tex)
-  % and the reload itself is a no-op. Silence it just for this \input --
-  % NOT inside a \begingroup/\endgroup, since \chapterstyle's own
-  % \renewcommand's must survive past this macro, not just this group.
-  \let\ntshowcase@RequirePackage\RequirePackage
-  \let\RequirePackage\@gobble
-  \input{\DIRCHAPSTYLES/#1.sty}%
-  \let\RequirePackage\ntshowcase@RequirePackage
-  \makeatother
-  \chapter{Example Title in Chapter style: \texttt{#1}}
-  \label{cha:style-showcase-#1}
-  This chapter demonstrates the \texttt{#1} chapter style, selected with:
+  \begingroup
+    % '@' must be a letter for both this file's own tokens below AND for
+    % \input's fresh tokenization of the ChapStyle file's own content.
+    \makeatletter
+    \let\RequirePackage\@gobble
+    \input{\DIRCHAPSTYLES/#1.sty}%
+    \chapter{Example Title in Chapter style: \texttt{#1}}
+    \label{cha:style-showcase-#1}
+    This chapter demonstrates the \texttt{#1} chapter style, selected with:
 
-  \texttt{\textbackslash ntsetup\{style/chapter=#1\}}
+    \texttt{\textbackslash ntsetup\{style/chapter=#1\}}
 
-  \lipsum[1]
+    \lipsum[1]
+  \endgroup
 }
 \makeatother
 
@@ -138,18 +99,21 @@
 %%    style/chapter value for them; call \chapterstyle{<name>} yourself,
 %%    e.g. right after \documentclass or in your own \ntaddfile'd chapter)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\makeatletter
 \newcommand{\ntshowcasememoirstyle}[1]{%
-  \ntshowcaseresetchapterstyle
-  \chapterstyle{#1}
-  \chapter{Example Title in Memoir style: \texttt{#1}}
-  \label{cha:style-showcase-memoir-#1}
-  This chapter demonstrates memoir's built-in \texttt{#1} chapter style,
-  selected with:
+  \begingroup
+    \chapterstyle{#1}
+    \chapter{Example Title in Memoir style: \texttt{#1}}
+    \label{cha:style-showcase-memoir-#1}
+    This chapter demonstrates memoir's built-in \texttt{#1} chapter style,
+    selected with:
 
-  \texttt{\textbackslash chapterstyle\{#1\}}
+    \texttt{\textbackslash chapterstyle\{#1\}}
 
-  \lipsum[1]
+    \lipsum[1]
+  \endgroup
 }
+\makeatother
 
 % Every \makechapterstyle{<name>}{...} memoir.cls itself defines, in the
 % order they appear there. 'default' is memoir's own bare-bones fallback
@@ -190,11 +154,7 @@
 \ntshowcasememoirstyle{wilsondob}
 
 
-% Restore whatever chapter style the document is actually configured to use,
-% so any real content coming after this demo chapter is not left showing
-% the last showcased style instead of the user's chosen one.
-\ntshowcaseresetchapterstyle
-\makeatletter
-\InputIfFileExists{\DIRCHAPSTYLES/\option{/novathesis/style/chapter}.sty}
-  {}{\chapterstyle{\option{/novathesis/style/chapter}}}
-\makeatother
+% No "restore the real style" step needed anymore: every demo chapter above
+% is wrapped in its own \begingroup/\endgroup, so nothing it does ever
+% escapes to the ambient (real, \ntsetup{style/chapter=...}-configured)
+% state active outside this file in the first place.
