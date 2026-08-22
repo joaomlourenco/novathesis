@@ -4,31 +4,35 @@
 %%  novathesis — 2-MainMatter/chapter-styles-showcase.tex
 %% ----------------------------------------------------------------------------
 %%
-%% DEMO ONLY. Cycles through every bundled ChapStyle (novathesisFiles/ChapStyles/
-%% *.sty), one short \chapter{} each, so they can be visually compared side by
-%% side. Not part of the default build -- see the commented-out \ntaddfile
-%% line in 0-Config/4_files.tex; enable it locally to eyeball chapter-style
-%% changes.
+%% DEMO ONLY. Cycles through every available chapter style, one short
+%% \chapter{} each, so they can be visually compared side by side. Not part
+%% of the default build -- see the commented-out \ntaddfile line in
+%% 0-Config/4_files.tex; enable it locally to eyeball chapter-style changes.
 %%
-%% Each style is switched by (1) resetting memoir's chapterstyle state back
-%% to its stock ("default" chapterstyle) values, then (2) \input-ing the
-%% ChapStyle file itself -- exactly what nt-render-matter.sty does for
-%% \ntsetup{style/chapter=...}, just repeated once per style instead of once
-%% for the whole document.
+%% Two clearly separate groups, in this order:
+%%   1. NOVATHESIS-CUSTOM styles -- novathesisFiles/ChapStyles/*.sty, selected
+%%      in a real thesis with \ntsetup{style/chapter=<name>}. \ntshowcase-
+%%      chapterstyle below \input's each file directly, exactly what
+%%      nt-render-matter.sty does for that key, just repeated once per style
+%%      instead of once for the whole document.
+%%   2. STANDARD MEMOIR styles -- built into memoir.cls itself, selected in a
+%%      real thesis with a plain \chapterstyle{<name>} call (novathesis's own
+%%      style/chapter key only knows its own ChapStyle files, not these).
+%%      \ntshowcasememoirstyle below just calls \chapterstyle{<name>}
+%%      directly -- no \input, no file-loading quirks to work around.
 %%
-%% Step (1) is technically redundant for every style file here that goes
-%% through memoir's \chapterstyle/\makechapterstyle machinery: memoir already
-%% runs this same reset internally before applying a named style's own
-%% overrides (see \@chs@def@ult in memoir.cls, silently prepended by
-%% \makechapterstyle to every style it defines). It is kept explicit below
-%% both to document the intent and as a safety net for any future chapter
-%% style that does not follow that convention.
+%% Both groups reset memoir's chapterstyle state back to its stock ("default"
+%% chapterstyle) values before every switch, via the internal \@chs@def@ult --
+%% the same reset \makechapterstyle silently runs before applying any named
+%% style's own clauses. Doing it explicitly here is redundant for any style
+%% that goes through that machinery (all of them, including every custom one
+%% below) but is kept as a documented safety net.
 %%
-%% CAVEAT: isel, fmv and compact additionally tweak section-heading fonts/
-%% numbering depth as a side effect (\setsecheadstyle, \setsecnumdepth, ...).
-%% Those live outside memoir's chapterstyle system, so the reset below does
-%% NOT undo them -- they will persist into any later \chapter/\section in
-%% the same build. Keep this file last in the build order if that matters.
+%% CAVEAT: isel, fmv and compact (group 1) additionally tweak section-heading
+%% fonts/numbering depth as a side effect (\setsecheadstyle, \setsecnumdepth,
+%% ...). Those live outside memoir's chapterstyle system, so the reset above
+%% does NOT undo them -- they will persist into any later \chapter/\section
+%% in the same build. Keep this file last in the build order if that matters.
 %% ----------------------------------------------------------------------------
 
 \typeout{NT FILE 2-MainMatter/chapter-styles-showcase.tex}%
@@ -80,6 +84,10 @@
 }
 \makeatother
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% 1. NOVATHESIS-CUSTOM CHAPTER STYLES
+%%    \ntsetup{style/chapter=<name>}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \ntshowcasechapterstyle{bar}
 \ntshowcasechapterstyle{bar-compact}
 \ntshowcasechapterstyle{bluebox}
@@ -97,6 +105,65 @@
 \ntshowcasechapterstyle{ist2}
 \ntshowcasechapterstyle{vz34}
 \ntshowcasechapterstyle{vz43}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% 2. STANDARD MEMOIR CHAPTER STYLES
+%%    \chapterstyle{<name>}  (novathesis does not wrap these -- there is no
+%%    style/chapter value for them; call \chapterstyle{<name>} yourself,
+%%    e.g. right after \documentclass or in your own \ntaddfile'd chapter)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\ntshowcasememoirstyle}[1]{%
+  \ntshowcaseresetchapterstyle
+  \chapterstyle{#1}
+  \chapter{Memoir style: \texttt{#1}}
+  \label{cha:style-showcase-memoir-#1}
+  This chapter demonstrates memoir's built-in \texttt{#1} chapter style,
+  selected with:
+
+  \texttt{\textbackslash chapterstyle\{#1\}}
+
+  \lipsum[1]
+}
+
+% Every \makechapterstyle{<name>}{...} memoir.cls itself defines, in the
+% order they appear there. 'default' is memoir's own bare-bones fallback
+% (no visual flourish -- it exists as the base every other style, including
+% novathesis's own, resets to before applying its own overrides); 'section'
+% and 'ell' are the two memoir styles novathesis's own 'compact'/'fmv' and
+% 'bar'/'bar-compact' above are themselves built on -- shown here unpatched,
+% for comparison against those.
+\ntshowcasememoirstyle{default}
+\ntshowcasememoirstyle{section}
+\ntshowcasememoirstyle{article}
+\ntshowcasememoirstyle{reparticle}
+\ntshowcasememoirstyle{hangnum}
+\ntshowcasememoirstyle{companion}
+\ntshowcasememoirstyle{demo}
+\ntshowcasememoirstyle{bianchi}
+\ntshowcasememoirstyle{bringhurst}
+\ntshowcasememoirstyle{brotherton}
+\ntshowcasememoirstyle{chappell}
+\ntshowcasememoirstyle{culver}
+\ntshowcasememoirstyle{dash}
+\ntshowcasememoirstyle{demo2}
+\ntshowcasememoirstyle{demo3}
+\ntshowcasememoirstyle{ell}
+\ntshowcasememoirstyle{ger}
+\ntshowcasememoirstyle{lyhne}
+\ntshowcasememoirstyle{madsen}
+\ntshowcasememoirstyle{pedersen}
+\ntshowcasememoirstyle{southall}
+\ntshowcasememoirstyle{thatcher}
+\ntshowcasememoirstyle{veelo}
+\ntshowcasememoirstyle{verville}
+\ntshowcasememoirstyle{crosshead}
+\ntshowcasememoirstyle{dowding}
+\ntshowcasememoirstyle{komalike}
+\ntshowcasememoirstyle{ntglike}
+\ntshowcasememoirstyle{tandh}
+\ntshowcasememoirstyle{wilsondob}
+
 
 % Restore whatever chapter style the document is actually configured to use,
 % so any real content coming after this demo chapter is not left showing
