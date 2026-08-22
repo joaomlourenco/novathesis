@@ -48,7 +48,15 @@
 \makechapterstyle{ist}{%
   \renewcommand{\chaptitlefont}{\normalfont\huge\bfseries\sffamily}%
   \renewcommand{\printchaptername}{}%
-  \renewcommand{\printchapternum}{\null\hfill\@nt@ist@chm[4cm]\hspace*{14pt}\par}%
+  \renewcommand{\printchapternum}{%
+    % \@nt@ist@chm resizes its content to a FIXED HEIGHT, so embedding
+    % "Appendix"/"Annex" inside it would blow up its width along with it
+    % (much longer string, same height -> huge width). Print it as its
+    % own right-aligned line above the big letter instead.
+    \ifx\ntchapnumappendixname\@empty\else
+      \null\hfill{\normalfont\bfseries\color{istchaptercolor}\ntchapnumappendixname}\par
+    \fi
+    \null\hfill\@nt@ist@chm[4cm]\hspace*{14pt}\par}%
   \renewcommand{\afterchapternum}{\vspace*{-11ex}}%
   \renewcommand{\printchaptertitle}[1]{\color{darkgray}\chaptitlefont\raggedleft ##1\par}%
   %

@@ -327,33 +327,36 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Appendixes and Annexes
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Some chapter styles (bluebox, elegant) already print \@chapapp next to the
-% chapter number for every chapter ("Chapter"/"Appendix"/"Annex"). Such
-% styles set this flag to true right after selecting their \chapterstyle{},
-% so that when print/appendixname is active below, we don't print \@chapapp
-% a second time on top of what the style already draws.
-\newif\if@nt@chapshowsappname
-\@nt@chapshowsappnamefalse
+% Extension point a chapter style can place next to its chapter number
+% (same font, same box) to opt in to the print/appendixname option below.
+% Empty by default -- i.e. inert for every style that never references it.
+% Styles that already print \@chapapp unconditionally as part of their own
+% design (bluebox, elegant: "Chapter"/"Appendix"/"Annex" on every chapter)
+% have no reason to reference it at all.
+%
+% A single \pretocmd{\printchapternum}{\@chapapp\space}{}{} applied equally
+% to every style used to live here instead, but several styles (bar, isel,
+% ist, ist2, vz34, vz43) don't render \thechapter directly inside
+% \printchapternum -- it's nested inside a \hfill-ed box, a \resizebox, or
+% deferred entirely into \printchaptertitle -- so prepending text to the
+% *call* just floats it at the left margin, disconnected from the number
+% (e.g. bar.sty: "Appendix" top-left, the boxed "A" a line below). Each
+% style instead places \ntchapnumappendixname itself, exactly where its
+% own layout wants the label to sit.
+\newcommand*{\ntchapnumappendixname}{}
 
-% When print/appendixname is active, prefix "Appendix"/"Annex" to the
-% chapter number in the actual printed heading too -- the PDF bookmark
-% string already contains it (see the \texorpdfstring branches of
-% \thechapter in \ntprintappendices/\ntprintannexes below), so this only
-% affects what is drawn on the page, never causing a double prefix in the
-% bookmarks. This patches \printchapternum, NOT \thechapter: \thechapter
-% also feeds the chapter mark/running head, and embedding \@chapapp (a
-% babel caption) there corrupts \reserved@a (see the comment further down),
-% whereas \printchapternum only runs when the heading is actually typeset --
-% exactly how bluebox/elegant already draw \@chapapp by hand.
-\newif\if@nt@appendixnamepatched
+% When print/appendixname is active, make \ntchapnumappendixname expand to
+% "Appendix "/"Annex " for the rest of the appendix/annex section -- the
+% PDF bookmark string already contains it (see the \texorpdfstring
+% branches of \thechapter in \ntprintappendices/\ntprintannexes below), so
+% this only affects what is drawn on the page, never causing a double
+% prefix in the bookmarks. This does NOT touch \thechapter itself:
+% \thechapter also feeds the chapter mark/running head, and embedding
+% \@chapapp (a babel caption) there corrupts \reserved@a (see the comment
+% further down).
 \newcommand*{\nt@maybeaddappendixname}{%
   \iftoggle{/novathesis/print/appendixname}{%
-    \if@nt@chapshowsappname\else
-      \if@nt@appendixnamepatched\else
-        \pretocmd{\printchapternum}{\@chapapp\space}{}{}%
-        \@nt@appendixnamepatchedtrue
-      \fi
-    \fi
+    \renewcommand*{\ntchapnumappendixname}{\@chapapp\space}%
   }{}%
 }
 

@@ -32,6 +32,11 @@
         \chaptitlefont ##1%
       \end{tabular}%
     \else
+      % The number column below is a narrow fixed 1cm -- "Appendix"/"Annex"
+      % would never fit inside it, so print it as its own line above instead.
+      \ifx\ntchapnumappendixname\@empty\else
+        {\chapnumfont\ntchapnumappendixname\par}%
+      \fi
       \begin{tabular}{@{}p{1cm}|!{\quad}p{\textwidth-1cm-2em-4\tabcolsep }}%
         \chapnumfont \thechapter%
         & \chaptitlefont ##1%
