@@ -1,0 +1,160 @@
+%!TEX root = ../template.tex
+
+%% ----------------------------------------------------------------------------
+%%  novathesis — 3-BackMatter/app-styles-showcase.tex
+%% ----------------------------------------------------------------------------
+%%
+%% DEMO ONLY. Cycles through every available chapter style, one short
+%% \chapter{} each, so they can be visually compared side by side. Not part
+%% of the default build -- see the commented-out \ntaddfile line in
+%% 0-Config/4_files.tex; enable it locally to eyeball chapter-style changes.
+%%
+%% Two clearly separate groups, in this order:
+%%   1. NOVATHESIS-CUSTOM styles -- novathesisFiles/ChapStyles/*.sty, selected
+%%      in a real thesis with \ntsetup{style/chapter=<name>}. \ntshowcase-
+%%      chapterstyle below \input's each file directly, exactly what
+%%      nt-render-matter.sty does for that key, just repeated once per style
+%%      instead of once for the whole document.
+%%   2. STANDARD MEMOIR styles -- built into memoir.cls itself, selected in a
+%%      real thesis with a plain \chapterstyle{<name>} call (novathesis's own
+%%      style/chapter key only knows its own ChapStyle files, not these).
+%%      \ntshowcasememoirstyle below just calls \chapterstyle{<name>}
+%%      directly -- no \input, no file-loading quirks to work around.
+%%
+%% Both groups wrap each demo chapter in its own \begingroup/\endgroup.
+%% \chapterstyle's \renewcommand's, a plain \setlength (compact/fmv), a
+%% \let (the \RequirePackage-gobbling below) -- all ordinarily-scoped TeX
+%% assignments -- are undone automatically at \endgroup, reverting
+%% EVERYTHING a style touched, not just the handful of macros
+%% \@chs@def@ult happens to cover (\makechapterstyle's own internal reset,
+%% run before every named style's clauses). This matters because at least
+%% one bundled style reaches outside that set: memoir's own 'culver'
+%% (group 2) additionally \renewcommand's \clearforchapter (the macro
+%% \chapter calls to decide whether to start a new page) to {} for its own
+%% "no new page" layout, switches \thechapter to Roman numerals, and
+%% aliases the "chapter" pagestyle to show a running head -- none of which
+%% \@chs@def@ult resets, and none of which is scoped to culver's own
+%% chapter by itself, so without the enclosing group here it would leak
+%% into every chapter for the rest of the document. \addcontentsline's TOC
+%% write is deferred to shipout, past any single \endgroup, but empirically
+%% reads back correctly regardless (verified against culver's Roman
+%% numeral, which the fixed-width TOC number column just wraps to its own
+%% line for either way -- a separate, pre-existing memoir/novathesis
+%% column-width quirk, not caused by the grouping here).
+%%
+%% CAVEAT: isel, fmv and compact (group 1) additionally tweak section-heading
+%% fonts/numbering depth as a side effect (\setsecheadstyle, \setsecnumdepth,
+%% ...). Those are scoped to this file's own groups the same as everything
+%% else here, so -- unlike in earlier versions of this file -- they do NOT
+%% leak into later real content either.
+%% ----------------------------------------------------------------------------
+
+\typeout{NT FILE 3-BackMatter/app-styles-showcase.tex}%
+
+\makeatletter
+\newcommand{\ntshowcasechapterstyle}[1]{%
+  \begingroup
+    % '@' must be a letter for both this file's own tokens below AND for
+    % \input's fresh tokenization of the ChapStyle file's own content.
+    \makeatletter
+    \let\RequirePackage\@gobble
+    \input{\DIRCHAPSTYLES/#1.sty}%
+    \chapter{Example Title in Chapter style: \texttt{#1}}
+    \label{cha:style-showcase-#1}
+    This chapter demonstrates the \texttt{#1} chapter style, selected with:
+
+    \texttt{\textbackslash ntsetup\{style/chapter=#1\}}
+
+    \lipsum[1]
+  \endgroup
+}
+\makeatother
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% 1. NOVATHESIS-CUSTOM CHAPTER STYLES
+%%    \ntsetup{style/chapter=<name>}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\ntshowcasechapterstyle{bar}
+\ntshowcasechapterstyle{bar-compact}
+\ntshowcasechapterstyle{bluebox}
+\ntshowcasechapterstyle{compact}
+% 'elegant' is skipped here: it has a pre-existing bug independent of this
+% showcase -- \so{\@chapapp} (soul's letter-spacing wrapped around the
+% chapter/appendix/annex name) corrupts babel's \bbl@ensure@english state
+% and crashes the *next* \chapter call, reproducible even as the document's
+% only configured style/chapter (i.e. not a showcase artifact). See the
+% separately-flagged bug report.
+% \ntshowcasechapterstyle{elegant}
+\ntshowcasechapterstyle{fmv}
+\ntshowcasechapterstyle{isel}
+\ntshowcasechapterstyle{ist}
+\ntshowcasechapterstyle{ist2}
+\ntshowcasechapterstyle{vz34}
+\ntshowcasechapterstyle{vz43}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% 2. STANDARD MEMOIR CHAPTER STYLES
+%%    \chapterstyle{<name>}  (novathesis does not wrap these -- there is no
+%%    style/chapter value for them; call \chapterstyle{<name>} yourself,
+%%    e.g. right after \documentclass or in your own \ntaddfile'd chapter)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\makeatletter
+\newcommand{\ntshowcasememoirstyle}[1]{%
+  \begingroup
+    \chapterstyle{#1}
+    \chapter{Example Title in Memoir style: \texttt{#1}}
+    \label{cha:style-showcase-memoir-#1}
+    This chapter demonstrates memoir's built-in \texttt{#1} chapter style,
+    selected with:
+
+    \texttt{\textbackslash chapterstyle\{#1\}}
+
+    \lipsum[1]
+  \endgroup
+}
+\makeatother
+
+% Every \makechapterstyle{<name>}{...} memoir.cls itself defines, in the
+% order they appear there. 'default' is memoir's own bare-bones fallback
+% (no visual flourish -- it exists as the base every other style, including
+% novathesis's own, resets to before applying its own overrides); 'section'
+% and 'ell' are the two memoir styles novathesis's own 'compact'/'fmv' and
+% 'bar'/'bar-compact' above are themselves built on -- shown here unpatched,
+% for comparison against those.
+\ntshowcasememoirstyle{default}
+\ntshowcasememoirstyle{section}
+\ntshowcasememoirstyle{article}
+\ntshowcasememoirstyle{reparticle}
+\ntshowcasememoirstyle{hangnum}
+\ntshowcasememoirstyle{companion}
+\ntshowcasememoirstyle{demo}
+\ntshowcasememoirstyle{bianchi}
+\ntshowcasememoirstyle{bringhurst}
+\ntshowcasememoirstyle{brotherton}
+\ntshowcasememoirstyle{chappell}
+\ntshowcasememoirstyle{culver}
+\ntshowcasememoirstyle{dash}
+\ntshowcasememoirstyle{demo2}
+\ntshowcasememoirstyle{demo3}
+\ntshowcasememoirstyle{ell}
+\ntshowcasememoirstyle{ger}
+\ntshowcasememoirstyle{lyhne}
+\ntshowcasememoirstyle{madsen}
+\ntshowcasememoirstyle{pedersen}
+\ntshowcasememoirstyle{southall}
+\ntshowcasememoirstyle{thatcher}
+\ntshowcasememoirstyle{veelo}
+\ntshowcasememoirstyle{verville}
+\ntshowcasememoirstyle{crosshead}
+\ntshowcasememoirstyle{dowding}
+\ntshowcasememoirstyle{komalike}
+\ntshowcasememoirstyle{ntglike}
+\ntshowcasememoirstyle{tandh}
+\ntshowcasememoirstyle{wilsondob}
+
+
+% No "restore the real style" step needed anymore: every demo chapter above
+% is wrapped in its own \begingroup/\endgroup, so nothing it does ever
+% escapes to the ambient (real, \ntsetup{style/chapter=...}-configured)
+% state active outside this file in the first place.

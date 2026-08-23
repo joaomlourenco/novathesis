@@ -90,9 +90,10 @@ and full documentation — see the website.
 * [7\. Supported Schools & Showcase](#7-supported-schools--showcase)
 * [8\. Disclaimer](#8-disclaimer)
 * [9\. Deprecated Word Templates](#9-deprecated-word-templates)
-* [10\. Please give this repository a ⭐️](#10-please-give-this-repository-a-️%EF%B8%8F)
-* [11\. Contributors](#11-contributors-thank-you)
-* [12\. Say thank you! (and how to cite)](#12-say-thank-you-and-how-to-cite)
+* [10\. Related Packages](#10-related-packages)
+* [11\. Please give this repository a ⭐️](#11-please-give-this-repository-a-️%EF%B8%8F)
+* [12\. Contributors](#12-contributors-thank-you)
+* [13\. Say thank you! (and how to cite)](#13-say-thank-you-and-how-to-cite)
 
 ---
 
@@ -319,7 +320,21 @@ The Word templates (unmaintained) can be found at
 
 --------
 
-# 10. Please give this repository a ⭐️
+# 10. Related Packages
+
+Other LaTeX packages by the same author, usable on their own outside novathesis:
+
+| Package | Description |
+| --- | --- |
+| [aidisclose](https://github.com/joaomlourenco/aidisclose) | Generative AI disclosure checklist and statements (bundled in novathesis; see [3-BackMatter/app-aidisclose.tex](3-BackMatter/app-aidisclose.tex)) |
+| [biblatex-cse](https://github.com/joaomlourenco/biblatex-cse) | biblatex support for the Council of Science Editors (CSE) citation style |
+| [biblatex-np405](https://github.com/joaomlourenco/biblatex-np405) | biblatex citation and bibliography style implementing the Portuguese Standard NP 405 |
+| [coloredtheorem](https://github.com/joaomlourenco/coloredtheorem) | A colourful boxed theorem environment |
+| [stocksize](https://github.com/joaomlourenco/stocksize) | Changes the paper (stock) size independently of the text area (bundled in novathesis as `stocksize.sty`) |
+
+--------
+
+# 11. Please give this repository a ⭐️
 
 <!--
 <picture>
@@ -352,7 +367,7 @@ The Word templates (unmaintained) can be found at
 
 ---
 
-# 11. Contributors (thank you!)
+# 12. Contributors (thank you!)
 
 <a href="https://github.com/joaomlourenco/novathesis/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=joaomlourenco/novathesis" />
@@ -363,7 +378,7 @@ Made with [contrib.rocks](https://contrib.rocks).
 
 ---
 
-# 12. Say thank you! (and how to cite)
+# 13. Say thank you! (and how to cite)
 
 <table>
 <tr>
@@ -407,3 +422,4 @@ Anywhere else, use:
 
 GitHub's **“Cite this repository”** button (right-hand sidebar) generates the same reference in BibTeX or APA, from [`CITATION.cff`](CITATION.cff).
 
+    
