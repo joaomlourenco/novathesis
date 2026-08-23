@@ -14,6 +14,7 @@
 
 % All LaTeX engines (pdfLaTeX, XeLaTeX, LuaLaTeX) are accepted
 \AddValidProcessor{ulisboa/ist}{pdf,lua,xe}
+\AddValidDegree{ulisboa/ist}{phd,msc}
 
 % ULISBOA/IST
 \NTOptNewValue{ulisboa/ist/classification}{}

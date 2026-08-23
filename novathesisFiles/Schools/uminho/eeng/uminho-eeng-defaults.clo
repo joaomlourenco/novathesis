@@ -15,6 +15,7 @@
 
 % Only XeLaTeX/LuaLaTeX are accepted (uses an OpenType-only font)
 \AddValidProcessor{uminho/eeng}{lua,xe}
+\AddValidDegree{uminho/eeng}{phd,msc}
 
 
 %%=======================================================================

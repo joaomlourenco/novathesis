@@ -10,6 +10,7 @@
 
 % All LaTeX engines (pdfLaTeX, XeLaTeX, LuaLaTeX) are accepted
 \AddValidProcessor{ips/ests}{pdf,lua,xe}
+\AddValidDegree{ips/ests}{msc}
 
 
 %%=======================================================================

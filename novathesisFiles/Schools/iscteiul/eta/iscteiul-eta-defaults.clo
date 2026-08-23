@@ -14,6 +14,7 @@
 
 % All LaTeX engines (pdfLaTeX, XeLaTeX, LuaLaTeX) are accepted
 \AddValidProcessor{iscteiul/eta}{pdf,lua,xe}
+\AddValidDegree{iscteiul/eta}{phd,msc}
 
 
 %%=======================================================================
