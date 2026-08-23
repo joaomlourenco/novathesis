@@ -315,11 +315,9 @@ Compliance has been ensured to the best extent possible using public documentati
 
 # 9. Deprecated Word Templates
 
-The Word templates (unmaintained) can be found at  
-<https://github.com/joaomlourenco/novathesis_word>
+The Word templates (unmaintained) can be found at <https://github.com/joaomlourenco/novathesis_word>
 
-The Word template for NOVA FCT DI-ADC is available at
-<https://github.com/joaomlourenco/novathesis_word/blob/adc>
+The Word template for NOVA FCT DI-ADC is available at <https://github.com/joaomlourenco/novathesis_word/blob/adc>
 
 --------
 
