@@ -557,6 +557,7 @@
 % ("Can'tmakelistoflistings.").  Not worth an ExplSyntax block here.
 \newcommand*{\ntaddlistof}[2][]{%
   % #2 = the list of SOMETHING without the initial "\"
+  \ifoptioncontains{/novathesis/listof/skip}{#2}{}{%
   \@ifmtarg{#1}{%
     \edef\@listofat{\option{/novathesis/print/otherlists}}%
   }{%
@@ -608,6 +609,7 @@
           }%
       }%
    ]%
+  }%
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -774,7 +776,13 @@
   }
 
 \cs_new_protected:Npn \myprintglossaries
-  { % ignore if no glossaries were defined
+  { % "glossaries" in listof/skip is just a friendlier spelling of
+    % print/glossaries=false -- there being no \ntaddlistof entry for
+    % glossaries to skip in the first place, unlike listoffigures & co.
+    \ifoptioncontains {/novathesis/listof/skip} {glossaries}
+      { \ntsetup{print/glossaries=false} }
+      { }
+    % ignore if no glossaries were defined
     \seq_if_in:NnTF \g__nt_listtypes_seq {glossaries}
       {
         \ifoptionequal {/novathesis/print/glossaries} {false}

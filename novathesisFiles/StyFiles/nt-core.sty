@@ -804,8 +804,15 @@
 \NTOptNewValue{print/aidisclosure}{aidisclose} % use '7-aidisclose.tex' + 'aidisclose' package
 \NTOptNewToggle{print/committee}{false}
 \NTOptNewToggle{print/adviser}{true}    % fake option - adviser should always be printed
-\NTOptNewValue{print/otherlists}{frontmatter}  % print other lists (lof, lof, lol, …) in the front matter
+\NTOptNewValue{print/otherlists}{frontmatter}  % print other lists (lof, lot, loa, lol, …) in the front matter
 \NTOptNewValue{print/glossaries}{frontmatter}  % print glossaries in the front matter
+% Skip individual "list of ..." entries without commenting out lines in
+% 0-Config/6_list_of.tex. Names are whatever \ntaddlistof registers
+% (listoffigures, listoftables, listofalgorithms, listoflistings, or any
+% custom name) plus "glossaries", special-cased to force
+% print/glossaries=false instead (see \myprintglossaries in nt-setup.sty) --
+% there being no \ntaddlistof entry for glossaries to skip in the first place.
+\NTOptNewList{listof/skip}{}
 \NTOptNewToggle{print/frontpage}{false}
 \NTOptNewToggle{print/copyright}{true}
 \NTOptNewToggle{print/timestamp}{true}
@@ -813,6 +820,9 @@
 \NTOptNewToggle{print/colophon}{true}   % print a Colophon page in the back matter
 \NTOptNewValue{print/webography}{}      % empty means do not make a separate webography
 \NTOptNewToggle{print/statement}{false}
+% Prefix "Appendix"/"Annex" to the chapter number in appendix/annex headings
+% too, not just in the PDF bookmarks (which already show it by default).
+\NTOptNewToggle{print/appendixname}{false}
 \NTOptNewList{print/sdgs/list}{}      % {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17}
 % The one choice in this codebase whose stored value differs from its
 % user-facing name -- see the comment on \NTOptNewChoice in nt-options.sty.
@@ -1785,6 +1795,17 @@
 \NewMemStore{MajorField}
 \NewMemStore{MinorField}
 \NewMemStore{Specialization}
+
+% Author's date/place of birth: required on the other/huberlin cover only,
+% but declared here (rather than in that school's .clo) so that
+% \SetAuthorBirthDate*/\SetAuthorBirthPlace* are always valid commands in
+% 0-Config/3_cover.tex, regardless of which school is selected -- otherwise
+% switching away from other/huberlin without also removing those lines from
+% 3_cover.tex would fail with "Undefined control sequence". Same reasoning
+% as MajorField/Specialization above: declared globally, only some schools
+% render it.
+\NewMemStore{AuthorBirthDate}
+\NewMemStore{AuthorBirthPlace}
 
 \NewMemStore{Spine}
 \NewMemStore{ThesisCover}

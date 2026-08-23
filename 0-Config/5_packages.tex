@@ -27,6 +27,10 @@
 \usepackage{xurl}         % FOR DEMO PURPOSES ONLY --- PLEASE REMOVE
 \usepackage{amsfonts}      % FOR DEMO PURPOSES ONLY --- PLEASE REMOVE
 \usepackage{lipsum}       % FOR DEMO PURPOSES ONLY --- PLEASE REMOVE
+% Pre-load 'soul' so that app-chapter-styles-showcase.tex can \input the
+% elegant/ist/ist2 ChapStyle files (each does \RequirePackage{soul}) from
+% the document body -- packages can only be loaded before \begin{document}.
+\usepackage{soul}         % FOR DEMO PURPOSES ONLY --- PLEASE REMOVE
 % Define a professional, muted palette
 \newcommand{\Overleaf}{\href{https://www.overleaf.com?r=f5160636&rm=d&rs=b}{Overleaf}}
 \definecolor{headgray}{gray}{0.9}
@@ -60,6 +64,8 @@
   \endtabularx
 }
 
+
+\usepackage[most]{tcolorbox}
 
 \newenvironment{highlightbox}[1][]
 {%

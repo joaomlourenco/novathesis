@@ -43,7 +43,7 @@
     % It's a numbered chapter (\chapter) AND we aren't in the frontmatter (chapter > 0)
     \ifboolexpr{ bool {iselischapnumbered} and test {\ifnumcomp{\value{chapter}}{>}{0}} }{%
       \noindent
-      {\chaptitlefont \thechapter\hspace{0.8em}\MakeUppercase{##1}\par}%
+      {\chaptitlefont \ntchapnumappendixname\thechapter\hspace{0.8em}\MakeUppercase{##1}\par}%
       \vspace{-4pt}
       \noindent\hspace*{-\dimexpr1in+\hoffset\relax}
       {\color{ISELRed}\rule{\textwidth}{0.5pt}}\par

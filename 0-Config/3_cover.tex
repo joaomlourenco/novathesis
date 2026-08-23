@@ -147,6 +147,26 @@
 
 
 %-------------------------------------------------------------
+% Author's date/place of birth -- OTHER/HUBERLIN ONLY
+%
+%     \SetAuthorBirthDate*()={<ISO date>}
+%     \SetAuthorBirthPlace*(<lang>)={<place>}
+%.............................................................
+%
+% Only the Humboldt-Universität zu Berlin cover (school=other/huberlin)
+% prints this ("geb. am ... in ..."). Leave both commented out for every
+% other school. Notice that the commands exist for any school (see nt-core.sty)
+% but only that school's cover renders them, so setting them elsewhere is
+% simply ignored.
+%
+% \SetAuthorBirthDate*()={1998-03-03}   % ISO format; no language key
+% \SetAuthorBirthPlace*(de)={Berlin}    % one line per cover language you use
+% \SetAuthorBirthPlace*(en)={Berlin}
+%-------------------------------------------------------------
+
+
+
+%-------------------------------------------------------------
 % Author previous highest degree
 %
 %     \ntauthordegree(<lang>){name}

@@ -18,3 +18,4 @@ git push origin -f "$TAG"
 
 # 6. Switch back to develop
 git checkout develop
+git rebase main

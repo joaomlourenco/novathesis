@@ -39,6 +39,11 @@
   \renewcommand\chapnumfont{\Huge\bfseries\centering}
   \renewcommand\chaptitlefont{\Huge\bfseries\raggedright}
   \renewcommand\printchaptertitle[1]{%
+    % The number box below is a narrow fixed .8cm -- "Appendix"/"Annex"
+    % would never fit inside it, so print it as its own line above instead.
+    \ifx\ntchapnumappendixname\@empty\else
+      {\chapnumfont\ntchapnumappendixname\par}%
+    \fi
     \Vlines\hspace*{-2em}%
     \begin{tabular}{@{}p{1cm} p{\textwidth-3cm}}%
       \ifNoChapNumber\relax\else%

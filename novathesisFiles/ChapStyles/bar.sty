@@ -24,7 +24,9 @@
         \\%
       \end{tabular}%
     }{% Numbered chapter
-      \hfill\begin{tabular}{|r@{}}%
+      \hfill\begin{tabular}{r|r@{}}%
+        \leavevmode\chapnumfont\normalfont\ntchapnumappendixname%
+        &
         \leavevmode\chapnumfont\normalfont ~#1\vphantom{1}%
         \hspace*{3.6pt}%
         \rule[-13.5pt]{0pt}{14.8mm}%

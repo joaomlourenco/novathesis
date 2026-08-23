@@ -371,6 +371,14 @@ generated PDF.  Many have defaults that vary with \texttt{school} and \texttt{do
 \ntsetup{print/copyright=false}
 \end{latexcode}
 
+  \item[\texttt{print/appendixname}] Prefix ``Appendix''/``Annex'' to the
+    chapter number in appendix/annex headings too (the PDF bookmarks
+    already show it -- see \S\ref{sub:appendices}).
+    Default: \texttt{false}.
+\begin{latexcode}
+\ntsetup{print/appendixname=true}
+\end{latexcode}
+
   \item[\texttt{spine/layout}] Print the book spine.
     Default: \texttt{false} for \texttt{working} and \texttt{provisional};
     \texttt{trim} (printed) for \texttt{final}.
@@ -432,6 +440,18 @@ generated PDF.  Many have defaults that vary with \texttt{school} and \texttt{do
 \ntsetup{print/glossaries=frontmatter}  % default
 \ntsetup{print/glossaries=backmatter}
 \ntsetup{print/glossaries=false}        % do not print
+\end{latexcode}
+
+  \item[\texttt{listof/skip}] Skip individual ``list of \ldots'' entries
+    (\texttt{listoffigures}, \texttt{listoftables}, \texttt{listofalgorithms},
+    \texttt{listoflistings}, or any custom name \verb!\ntaddlistof! registers
+    in \verb!0-Config/6_list_of.tex!) without commenting out their
+    \verb!\ntaddlistof! line. \texttt{glossaries} is also accepted here --
+    it is just a friendlier spelling of \texttt{print/glossaries=false},
+    since glossaries aren't registered via \verb!\ntaddlistof! at all.
+    Default: empty (nothing skipped).
+\begin{latexcode}
+\ntsetup{listof/skip={listoftables,listofalgorithms,glossaries}}
 \end{latexcode}
 
   \item[\texttt{abstract/title}] Print the work title with each abstract,
@@ -730,6 +750,15 @@ For the author's previous degree (printed on some covers):
 \begin{latexcode}
 \ntauthordegree(en){Master of Science in Computer Science}
 \ntauthordegree(pt){Mestrado em Engenharia Informática}
+\end{latexcode}
+
+For the author's date/place of birth (\texttt{school=other/huberlin} only --
+its cover prints \emph{``geb. am \ldots{} in \ldots{}''}; every other
+school's cover simply ignores these):
+\begin{latexcode}
+\SetAuthorBirthDate*()={1998-03-03}   % ISO format; no language key
+\SetAuthorBirthPlace*(de)={Berlin}    % one line per cover language you use
+\SetAuthorBirthPlace*(en)={Berlin}
 \end{latexcode}
 
 %%-----------------------------------------------------------------------
@@ -1171,6 +1200,11 @@ To restrict a chapter to specific document types, pass an optional list:
 \end{latexcode}
 
 The same optional doctype filter applies to appendices and annexes.
+
+By default, the appendix/annex chapter heading shows only the number
+(e.g.\ a big ``A''), while the PDF bookmark already reads ``Appendix A''.
+Set \texttt{print/appendixname=true} to also prefix ``Appendix''/``Annex''
+to the printed heading -- see the \texttt{print/appendixname} option.
 
 %%-----------------------------------------------------------------------
 \subsection{Custom Covers}

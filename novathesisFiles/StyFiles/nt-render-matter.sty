@@ -327,6 +327,39 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Appendixes and Annexes
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Extension point a chapter style can place next to its chapter number
+% (same font, same box) to opt in to the print/appendixname option below.
+% Empty by default -- i.e. inert for every style that never references it.
+% Styles that already print \@chapapp unconditionally as part of their own
+% design (bluebox, elegant: "Chapter"/"Appendix"/"Annex" on every chapter)
+% have no reason to reference it at all.
+%
+% A single \pretocmd{\printchapternum}{\@chapapp\space}{}{} applied equally
+% to every style used to live here instead, but several styles (bar, isel,
+% ist, ist2, vz34, vz43) don't render \thechapter directly inside
+% \printchapternum -- it's nested inside a \hfill-ed box, a \resizebox, or
+% deferred entirely into \printchaptertitle -- so prepending text to the
+% *call* just floats it at the left margin, disconnected from the number
+% (e.g. bar.sty: "Appendix" top-left, the boxed "A" a line below). Each
+% style instead places \ntchapnumappendixname itself, exactly where its
+% own layout wants the label to sit.
+\newcommand*{\ntchapnumappendixname}{}
+
+% When print/appendixname is active, make \ntchapnumappendixname expand to
+% "Appendix "/"Annex " for the rest of the appendix/annex section -- the
+% PDF bookmark string already contains it (see the \texorpdfstring
+% branches of \thechapter in \ntprintappendices/\ntprintannexes below), so
+% this only affects what is drawn on the page, never causing a double
+% prefix in the bookmarks. This does NOT touch \thechapter itself:
+% \thechapter also feeds the chapter mark/running head, and embedding
+% \@chapapp (a babel caption) there corrupts \reserved@a (see the comment
+% further down).
+\newcommand*{\nt@maybeaddappendixname}{%
+  \iftoggle{/novathesis/print/appendixname}{%
+    \renewcommand*{\ntchapnumappendixname}{\@chapapp\space}%
+  }{}%
+}
+
 \newcommand{\shiftbookmarks}[2][1]{%
   \begingroup
     \@for\@secname:={part,chapter,section,subsection,subsubsection,paragraph,subparagraph}\do{%
@@ -352,6 +385,7 @@
 \newcommand*{\ntprintappendices}{%
   \iffileadded{appendix}{%
     \appendix%
+    \nt@maybeaddappendixname%
     % Both appendix and annex chapters use toclevel@appendix for their bookmark
     % level (memoir sets \anappendixtrue, which makes \@chapter call
     % \addcontentsline{toc}{appendix}{...}; hyperref then resolves the bookmark
@@ -406,6 +440,7 @@
 \newcommand*{\ntprintannexes}{%
   \iffileadded{annex}{%
     \annex%
+    \nt@maybeaddappendixname%
     % Same toclevel@appendix key as for appendices (see comment above).
     \expandafter\def\csname toclevel@appendix\endcsname{1}%
     % Same .toc-marker approach as \ntprintappendices, but switching the

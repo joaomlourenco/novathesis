@@ -33,11 +33,12 @@
 %     DEFAULT: school <- nova/fct
 %.............................................................
 %
-%     NOVA-FCT:   nova/fct, nova/fct/di-adc, nova/fct/cbbi,
-%     NOVA-ITQB:  nova/itqb/gray, nova/itqb/green,
+%     NOVA-FCT:   nova/fct, nova/fct/blue, nova/fct/brown, nova/fct/cbbi,
+%                 nova/fct/di-adc, nova/fct/green, nova/fct/plain, nova/fct/red,
+%     NOVA-ITQB:  nova/itqb, nova/itqb/gray, nova/itqb/green,
 %     NOVA-FCSH:  nova/fcsh,
 %     NOVA-ENSP:  nova/ensp,
-%     ULISBOA:    ulisboa/ist, ulisboa/fcul, ulisboa/fmv, ulisboa/ff, ulisboa/iseg,
+%     ULISBOA:    ulisboa/ist, ulisboa/fcul, ulisboa/fmv, ulisboa/fful, ulisboa/iseg,
 %     ULHT:       ulht/deisi, ulht/mge,
 %     UMINHO:     uminho/eaad, uminho/ese, uminho/eeng, uminho/elach,
 %                 uminho/ed, uminho/ec, uminho/i3bs, uminho/emed,
@@ -46,7 +47,7 @@
 %     ISCTE-IUL:  iscteiul/eta
 %     IPL:        ipl/isel, ipl/isel/meb,
 %     IPS:        ips/ests,
-%     OTHER:      other/esep
+%     OTHER:      other/esep, other/huberlin
 %-------------------------------------------------------------
 % \ntsetup{school=ulisboa/fcul}
 \ntsetup{school = other/novathesis}
@@ -322,6 +323,22 @@
 
 
 %-------------------------------------------------------------
+% Prefix "Appendix"/"Annex" to the chapter number in appendix/annex
+% headings too
+%     DEFAULT: print/appendixname <- false
+%.............................................................
+%
+%     The PDF bookmarks already show "Appendix A"/"Annex I"; this option
+%     makes the printed chapter heading show it too (e.g. big letter "A"
+%     becomes "Appendix A"). Chapter styles that already print this label
+%     as part of their design (bluebox, elegant) are unaffected -- the
+%     word is never duplicated.
+%-------------------------------------------------------------
+% \ntsetup{print/appendixname=true}
+
+
+
+%-------------------------------------------------------------
 % Print the book spine
 %     DEFAULTS: if status=working:      spine/layout <- false
 %               if status=provisional:  spine/layout <- false
@@ -355,6 +372,22 @@
 %-------------------------------------------------------------
 % \ntsetup{print/glossaries=backmatter}
 % \ntsetup{print/glossaries=false}
+
+
+
+%-------------------------------------------------------------
+% Skip individual "list of ..." entries (list of figures, tables,
+% algorithms, listings, or any custom one \ntaddlistof registers -- see
+% 0-Config/6_list_of.tex) without commenting out their \ntaddlistof line.
+%
+%     DEFAULT: listof/skip <- empty (print everything that was \ntaddlistof'd)
+%.............................................................
+%
+%     "glossaries" is also a valid entry here: it is just a friendlier
+%     spelling of \ntsetup{print/glossaries=false} above, since glossaries
+%     aren't registered via \ntaddlistof in the first place.
+%-------------------------------------------------------------
+% \ntsetup{listof/skip={listoftables,listofalgorithms,glossaries}}
 
 
 
