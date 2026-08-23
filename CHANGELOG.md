@@ -1,4 +1,4 @@
-# novathesis Template Release Notes (v1.0.0 - v8.2.0)
+# novathesis Template Changelog (v1.0.0 - v8.2.0)
 
 This document summarizes the changes and improvements made to the **nova**thesis template from version **1.0.0** to the current version **8.2.0**.
 

@@ -63,7 +63,7 @@ The whole manual and the comments in `0-Config/` were audited against the code. 
 
 If you are starting a new thesis, download the latest version from our [GitHub repository](https://github.com/joaomlourenco/novathesis) or clone the branch for your school.
 
-If you are updating an existing document, read the **Breaking change** section above and the *Migrating from 7.10.x* appendix of the manual. `RELEASE_NOTES.md` has the complete list of changes.
+If you are updating an existing document, read the **Breaking change** section above and the *Migrating from 7.10.x* appendix of the manual. `CHANGELOG.md` has the complete list of changes.
 
 ---
 
