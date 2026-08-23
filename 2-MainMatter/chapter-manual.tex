@@ -752,6 +752,15 @@ For the author's previous degree (printed on some covers):
 \ntauthordegree(pt){Mestrado em Engenharia Informática}
 \end{latexcode}
 
+For the author's date/place of birth (\texttt{school=other/huberlin} only --
+its cover prints \emph{``geb. am \ldots{} in \ldots{}''}; every other
+school's cover simply ignores these):
+\begin{latexcode}
+\SetAuthorBirthDate*()={1998-03-03}   % ISO format; no language key
+\SetAuthorBirthPlace*(de)={Berlin}    % one line per cover language you use
+\SetAuthorBirthPlace*(en)={Berlin}
+\end{latexcode}
+
 %%-----------------------------------------------------------------------
 \subsection{Advisers}
 \label{sub:advisers}
