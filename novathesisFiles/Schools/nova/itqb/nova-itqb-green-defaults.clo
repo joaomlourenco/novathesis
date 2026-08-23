@@ -15,6 +15,7 @@
 
 % All LaTeX engines (pdfLaTeX, XeLaTeX, LuaLaTeX) are accepted
 \AddValidProcessor{nova/itqb/green}{pdf,lua,xe}
+\AddValidDegree{nova/itqb/green}{phd,msc}
 
 % NOVA/ITQB
 \NTOptNewChoice{nova/itqb/cover/color}{gray, green}{gray}

@@ -16,6 +16,7 @@
 
 % Times New Roman works with pdfLaTeX too, so all engines are accepted
 \AddValidProcessor{ulisboa/fful}{pdf,lua,xe}
+\AddValidDegree{ulisboa/fful}{phd,msc}
 
 % ulisboa/fful
 % The modality of the final work, printed on the cover/title page

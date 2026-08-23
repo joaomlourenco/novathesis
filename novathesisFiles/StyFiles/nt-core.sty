@@ -262,6 +262,109 @@
       }
   }
 
+% ── \AddValidDegree{key}{degrees} / \ValidateDegree{u}{s}{d} ───────────
+% Same hierarchy-lookup shape as \AddValidProcessor/\ValidateLtxProcessor
+% above (Univ/School/Degree -> Univ/School -> Univ, looked up with the
+% expanding "e" prop-key variant for the same reason noted on
+% \ValidateLtxProcessor), but for which doctypes ("degrees") a school
+% offers rather than which (La)TeX engine it needs. Two doctype-vocabulary
+% rules are baked in here, rather than requiring every declaration to
+% spell every variant out:
+%   - "phd" also covers phdplan/phdprop, and "msc" also covers mscplan --
+%     proposal/plan phases of the same degree, not a separate programme;
+%   - doctype=plain (no specific degree) is never restricted -- it is a
+%     generic fallback, not a school-specific programme.
+
+\prop_new:N \g_novathesis_degree_rules_prop
+\tl_new:N  \l_novathesis_found_degree_tl
+\bool_new:N \l_novathesis_degree_rule_found_bool
+
+% Syntax: \AddValidDegree{key}{list,of,doctypes}
+\NewDocumentCommand { \AddValidDegree } { m m }
+  {
+    \prop_gput:Nnn \g_novathesis_degree_rules_prop { #1 } { #2 }
+  }
+
+% Expands the family shorthands above into \l__nt_degree_expanded_clist,
+% checked instead of the raw declaration; error messages still quote the
+% raw declaration (#1), so what's displayed matches what was written.
+\clist_new:N \l__nt_degree_expanded_clist
+\cs_new_protected:Npn \__nt_expand_degree_families:N #1
+  {
+    \clist_set:NV \l__nt_degree_expanded_clist #1
+    \clist_if_in:NnT #1 { phd }
+      { \clist_put_right:Nn \l__nt_degree_expanded_clist { phdplan, phdprop } }
+    \clist_if_in:NnT #1 { msc }
+      { \clist_put_right:Nn \l__nt_degree_expanded_clist { mscplan } }
+  }
+
+% Same manual clist_map_inline + str_if_eq loop \__nt_check_engine_in_clist:N
+% uses above, for the same reason: catcode-12 str-variable comparisons are
+% unreliable with \clist_if_in. Not actually at risk here (neither side is
+% a \str_new:N variable), but kept consistent with its sibling check.
+\bool_new:N \l__nt_degreeok_bool
+\cs_new_protected:Npn \__nt_check_degree_in_clist:N #1
+  {
+    \__nt_expand_degree_families:N #1
+    \bool_set_false:N \l__nt_degreeok_bool
+    \clist_map_inline:Nn \l__nt_degree_expanded_clist
+      {
+        \str_if_eq:eeT { ##1 } { \option{/novathesis/doctype} }
+          { \bool_set_true:N \l__nt_degreeok_bool \clist_map_break: }
+      }
+  }
+
+\msg_new:nnnn { novathesis } { invalid-degree }
+  { Invalid~degree~for~"#1". }
+  {
+    You~selected~doctype=\option{/novathesis/doctype},~
+    but~"#1"~only~offers:~#2.
+  }
+
+\NewDocumentCommand { \ValidateDegree } { m m m }
+  {
+    % #1 = Univ, #2 = School, #3 = Degree (school-variant, or the current
+    % doctype when the school string had no third segment -- same value
+    % \ValidateLtxProcessor's own third argument already is at the call
+    % site in nt-setup.sty, reused here unchanged)
+
+    \bool_set_false:N \l_novathesis_degree_rule_found_bool
+
+    \str_if_eq:eeTF { \option{/novathesis/doctype} } { plain }
+      { } % plain is never restricted -- see the note above
+      {
+        % A. Hierarchy Lookup (Univ/Sch/Deg -> Univ/Sch -> Univ)
+        \prop_get:NeNTF \g_novathesis_degree_rules_prop { #1/#2/#3 }
+          \l_novathesis_found_degree_tl
+          { \bool_set_true:N \l_novathesis_degree_rule_found_bool }
+          {
+            \prop_get:NeNTF \g_novathesis_degree_rules_prop { #1/#2 }
+              \l_novathesis_found_degree_tl
+              { \bool_set_true:N \l_novathesis_degree_rule_found_bool }
+              {
+                \prop_get:NeNTF \g_novathesis_degree_rules_prop { #1 }
+                  \l_novathesis_found_degree_tl
+                  { \bool_set_true:N \l_novathesis_degree_rule_found_bool }
+                  {
+                    % No rule found: Do nothing (Implicitly Valid)
+                  }
+              }
+          }
+
+        % B. Validation Logic
+        \bool_if:NT \l_novathesis_degree_rule_found_bool
+          {
+            \__nt_check_degree_in_clist:N \l_novathesis_found_degree_tl
+            \bool_if:NF \l__nt_degreeok_bool
+              {
+                \msg_error:nnxx { novathesis } { invalid-degree }
+                  { #1/#2/#3 }
+                  { \clist_use:Nn \l_novathesis_found_degree_tl { ,~ } }
+              }
+          }
+      }
+  }
+
 % ---------------------------------------------------------
 % 5. Engine requirement for individual FontStyles/*.sty files
 % ---------------------------------------------------------

@@ -14,6 +14,7 @@
 
 % Only XeLaTeX/LuaLaTeX are accepted (uses an OpenType-only font)
 \AddValidProcessor{ipl/isel/meb}{lua,xe}
+\AddValidDegree{ipl/isel/meb}{msc}
 
 \input{\DIRSCHOOLS/ipl/isel/ipl-isel-defaults.clo}
 

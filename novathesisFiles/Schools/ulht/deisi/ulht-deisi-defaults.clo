@@ -12,6 +12,7 @@
 
 % All LaTeX engines (pdfLaTeX, XeLaTeX, LuaLaTeX) are accepted
 \AddValidProcessor{ulht/deisi}{pdf,lua,xe}
+\AddValidDegree{ulht/deisi}{phd,msc}
 
 
 %%=======================================================================

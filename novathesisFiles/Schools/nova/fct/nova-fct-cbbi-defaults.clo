@@ -20,6 +20,7 @@
 
 % All LaTeX engines (pdfLaTeX, XeLaTeX, LuaLaTeX) are accepted
 \AddValidProcessor{nova/fct/cbbi}{pdf,lua,xe}
+\AddValidDegree{nova/fct/cbbi}{msc}
 
 % NOVA/FCT
 \NTOptNewValue{nova/fct/company/logo}{}

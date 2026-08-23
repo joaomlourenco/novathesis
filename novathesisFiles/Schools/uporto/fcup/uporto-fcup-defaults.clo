@@ -14,6 +14,7 @@
 
 % All LaTeX engines (pdfLaTeX, XeLaTeX, LuaLaTeX) are accepted
 \AddValidProcessor{uporto/fcup}{pdf,lua,xe}
+\AddValidDegree{uporto/fcup}{phd,msc}
 
 % UPORTO/FC
 \NTOptNewValue{uporto/fcup/classification}{}

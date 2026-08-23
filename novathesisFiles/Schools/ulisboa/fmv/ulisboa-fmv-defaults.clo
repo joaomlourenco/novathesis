@@ -14,6 +14,7 @@
 
 % Only XeLaTeX/LuaLaTeX are accepted (uses an OpenType-only font)
 \AddValidProcessor{ulisboa/fmv}{lua,xe}
+\AddValidDegree{ulisboa/fmv}{phd,msc}
 
 % ULISBOA/FMV
 \NTOptNewChoice{ulisboa/fmv/scientificarea}{C, MF, PASA, SA}{C}

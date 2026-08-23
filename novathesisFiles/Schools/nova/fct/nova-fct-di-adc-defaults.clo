@@ -20,6 +20,7 @@
 
 % All LaTeX engines (pdfLaTeX, XeLaTeX, LuaLaTeX) are accepted
 \AddValidProcessor{nova/fct/di-adc}{pdf,lua,xe}
+\AddValidDegree{nova/fct/di-adc}{bsc}
 
 \def\@novafctcovercolor{red}
 \input{\DIRSCHOOLS/nova/fct/nova-fct-red-defaults.clo}
