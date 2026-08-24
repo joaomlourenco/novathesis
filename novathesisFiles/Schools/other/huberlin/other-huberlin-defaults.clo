@@ -90,11 +90,6 @@
 \SetSubmittedByLabel*(de)={eingereicht\ von}
 \SetSubmittedByLabel*(en)={submitted\ by}
 
-% example values for a proper cover building
-% define the actual birth date in 0-Config/e_cover.tex
-\SetAuthorBirthDate*()={1998-03-03}   % ISO format; no language key
-\SetAuthorBirthPlace*(de)={Berlin}    % one line per cover language you use
-
 %%=======================================================================
 %% EXAMINERS ("Gutachter/in")
 %%=======================================================================
