@@ -46,8 +46,8 @@
 %   \SetSchool*(de)={Philosophische Fakultät}
 %   \SetSchool*(en)={Faculty of Arts and Humanities}
 % (0-Config/3_cover.tex is read AFTER this file, so it takes precedence.)
-\SetSchool*(de)={Fakultät}
-\SetSchool*(en)={Faculty}
+\SetSchool*(de)={Institut für Bibliotheks- und Informationswissenschaft}
+\SetSchool*(en)={Institute of Library and Information Science}
 
 % Institute/department: also override in 0-Config/3_cover.tex if needed,
 % e.g. \SetDepartment*(de)={Institut für Informatik}. Falls back to the
@@ -59,8 +59,10 @@
 %%=======================================================================
 
 % The HU cover sample asks for "geb. am <date> in <place>". Both fields are
-% optional: leave them unset and the line is omitted entirely. To set them,
-% add to 0-Config/3_cover.tex:
+% optional: leave them unset and the line is omitted entirely. The demo
+% values below are just a placeholder so this school's cover is complete
+% out-of-the-box; override per-thesis in 0-Config/3_cover.tex, which loads
+% AFTER this file (see nt-setup.sty), so whatever it sets wins:
 %
 %   \SetAuthorBirthDate*()={1998-03-03}    % ISO format, rendered via \PrintDateISO
 %   \SetAuthorBirthPlace*(de)={Berlin}     % one line per cover language you use
@@ -72,6 +74,9 @@
 % here: they're referenced from 0-Config/3_cover.tex, which loads regardless
 % of the selected school, so the commands must exist unconditionally (see
 % the comment there) even though only this school's cover renders them.
+\SetAuthorBirthDate*()={1998-03-03}
+\SetAuthorBirthPlace*(de)={Berlin}
+\SetAuthorBirthPlace*(en)={Berlin}
 
 \NewMemStore{BirthDateLabel}
 \SetBirthDateLabel*(de)={geb.\ am}
@@ -81,6 +86,14 @@
 \SetBirthPlaceLabel*(de)={in}
 \SetBirthPlaceLabel*(en)={in}
 
+\NewMemStore{SubmittedByLabel}
+\SetSubmittedByLabel*(de)={eingereicht\ von}
+\SetSubmittedByLabel*(en)={submitted\ by}
+
+% example values for a proper cover building
+% define the actual birth date in 0-Config/e_cover.tex
+\SetAuthorBirthDate*()={1998-03-03}   % ISO format; no language key
+\SetAuthorBirthPlace*(de)={Berlin}    % one line per cover language you use
 
 %%=======================================================================
 %% EXAMINERS ("Gutachter/in")
@@ -202,7 +215,7 @@
 }
 
 % University / Faculty / Institute
-\ntaddtocover[vspace=5mm]{1-1,2-1}{%
+\ntaddtocover[vspace=2mm]{1-1,2-1}{%
   \color{huberlinblue}%
   \fontseries{b}\fontsize{13}{15}\selectfont%
   \GetUniversity(\@LANG@COVER)\\[1mm]%
@@ -213,34 +226,57 @@
 }
 
 % Title
-\ntaddtocover[vspace=1.2cm, halign=l]{1-1,2-1}{%
+\ntaddtocover[vspace=3.0cm, halign=l]{1-1,2-1}{%
+  \centering
   \fontseries{b}\fontsize{17}{19}\selectfont%
   \GetDocTitle(\@LANG@COVER,main)%
 }
 
 % Doctype + degree line
-\ntaddtocover[vspace=1.0cm, halign=l]{1-1,2-1}{%
+\ntaddtocover[vspace=3.0cm, halign=l]{1-1,2-1}{%
+  \centering
   \fontsize{12}{14}\selectfont%
   \thepresentationtext%
 }
 
-% Author name (+ optional birth line)
-\ntaddtocover[vspace=1.2cm, halign=l]{1-1,2-1}{%
+% Author name (+ optional birth date/place, each on their own line), two
+% columns like the examiners block: the "eingereicht von"/"submitted by"
+% label sits once in the first column, never repeated on the continuation
+% rows (an empty first-column cell, same idea as the examiners' role
+% string only appearing on that role's own row).
+\ntaddtocover[vspace=3cm, halign=l]{1-1,2-1}{%
   \fontsize{13}{15}\selectfont%
-  \GetDocAuthor(name)\\[1mm]%
-  \IfMemVoidF{AuthorBirthDate}{}{%
-    {\fontsize{10}{12}\selectfont%
-     \GetBirthDateLabel(\@LANG@COVER)\ \PrintDateISO{\GetAuthorBirthDate()}%
-     \IfMemVoidF{AuthorBirthPlace}{\@LANG@COVER}{%
-       \ \GetBirthPlaceLabel(\@LANG@COVER)\ \GetAuthorBirthPlace(\@LANG@COVER)%
-     }%
+  \begin{tabular}[t]{@{}l@{~~}l@{}}
+    \GetSubmittedByLabel(\@LANG@COVER) & \GetDocAuthor(name)%
+    \IfMemVoidF{AuthorBirthDate}{}{%
+      \\
+      & {\fontsize{10}{12}\selectfont
+         \GetBirthDateLabel(\@LANG@COVER)\ \PrintDateISO{\GetAuthorBirthDate()}}%
+      \IfMemVoidF{AuthorBirthPlace}{\@LANG@COVER}{%
+        \\
+        & {\fontsize{10}{12}\selectfont
+           \GetBirthPlaceLabel(\@LANG@COVER)\ \GetAuthorBirthPlace(\@LANG@COVER)}%
+      }{}%
     }%
-  }%
+  \end{tabular}%
 }
 
-% Examiners ("1. Gutachter/in    Name", "2. Gutachter/in    Name")
+% Examiners ("1. Gutachter/in    Name", "2. Gutachter/in    Name").
+% Role strings differ in length ("Gutachter" vs "Gutachterin"); left-align
+% them (default is right) so "1."/"2." line up instead of the colons.
 \ntaddtocover[vspace=1.2cm, halign=l]{1-1,2-1}{%
   \fontsize{11}{13}\selectfont%
+  % The default gap between the 1st/2nd examiner blocks (14pt, see
+  % \@ntprintpersonsastwocolumns in nt-render-persons.sty) reads as too
+  % large at this font size; \baselineskip scales with it instead of a
+  % fixed point size. \MemSet must run before \ntprintpersons, which only
+  % falls back to that 14pt default if nothing has set this key already.
+  \MemSet{persongrouppost}{}{\\[1.5\baselineskip]}%
+  % Same story for the role-string column: it defaults to right-aligned
+  % (see \@ntprintpersonsastwocolumns), which is fine when every role
+  % string is the same length, but "Gutachter"/"Gutachterin" aren't, so
+  % right-aligning them left the "1."/"2." prefixes visually offset.
+  \MemSet{adviserstringalign}{}{l}%
   \ntprintpersons[name]{0.9}{2}{adviser}{a,c}%
 }
 

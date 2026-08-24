@@ -104,36 +104,6 @@
 
 
 %-------------------------------------------------------------
-% Sponsors
-%
-%     \ntsponsors(<order>,<type>,<lang>){name}
-%.............................................................
-%
-% <order>:      -> 1, 2, 3, ...
-%
-% <type>:  text -> Some text (possibly inside a '\parbox' command)
-%          logo -> A proper '\includegraphics' command
-%
-% <lang>:       -> cat (catalan), cz (czech), de (german), dk (danish), en (english), 
-%                  es (spanish), fr (french), gr (greek), it (italian), nl (dutch), 
-%                  pl (polish), pt (portuguese), sk (slovak), uk (ukrainian)
-%
-% Add more lines for other languages
-%-------------------------------------------------------------
-% \ntsponsors(1,logo,en){\includegraphics[height=1.5cm]{republica_portuguesa_CTES}}
-% \ntsponsors(2,logo,en){\includegraphics[height=1.5cm]{FCT_MEC_logo_positive}}
-% \ntsponsors(1,text,en){Funding Agency}
-%
-% \ntsponsors(1,logo,pt){\includegraphics[height=1.5cm]{republica_portuguesa_CTES}}
-% \ntsponsors(2,logo,pt){\includegraphics[height=1.5cm]{FCT_MEC_logo_positive}}
-% \ntsponsors(1,text,pt){Entidade Financiadora}
-
-
-
-
-
-
-%-------------------------------------------------------------
 % Author name
 %
 %     \ntauthorname(<gender>){Full Name}{First Last}
@@ -163,6 +133,8 @@
 % \SetAuthorBirthPlace*(de)={Berlin}    % one line per cover language you use
 % \SetAuthorBirthPlace*(en)={Berlin}
 %-------------------------------------------------------------
+% \SetAuthorBirthDate*()={1998-03-03}   % ISO format; no language key
+% \SetAuthorBirthPlace*(de)={Berlin}    % one line per cover language you use
 
 
 
@@ -197,6 +169,8 @@
 % Add more lines for other languages
 % You may use "\\" to force line breaks
 %-------------------------------------------------------------
+
+
 
 %-------------------------------------------------------------------
 % Relevant dates
@@ -238,14 +212,31 @@
 %
 % You may use "\\" to force line breaks
 %-------------------------------------------------------------
-% Advisers(s)
-\ntaddperson{adviser}(a,f){Mary Doe Adviser Name}
-  [position=Full Professor, institution=NOVA University Lisbon]
-% Co-advisers(s)
-\ntaddperson{adviser}(c,m){John Doe Co-Adviser Name}
-  [position=Associate Professor, institution=NOVA University Lisbon]
-\ntaddperson{adviser}(c,f){John Doe other Co-Adviser Name}
-  [position=Full Professor, institution=NOVA University Lisbon]
+% other/huberlin's cover format ("<akad. Grade/Vorname/Name>") expects an
+% academic-degree title prefixed to the name; every other school's demo
+% preview stays exactly as it was (no title). The [...] bracket is read
+% unexpanded by \ntaddperson (it's passed straight into \keys_set:nn), so
+% a macro placeholder for "title=...," would never expand there -- the
+% two branches below spell out the full bracket content literally instead.
+\ifoptionequal{/novathesis/schoolgiven}{other/huberlin}{%
+  % Advisers(s)
+  \ntaddperson{adviser}(a,f){Mary Doe Adviser Name}
+    [title=Prof.\ Dr., position=Full Professor, institution=NOVA University Lisbon]
+  % Co-advisers(s)
+  \ntaddperson{adviser}(c,m){John Doe Co-Adviser Name}
+    [title=Prof.\ Dr., position=Associate Professor, institution=NOVA University Lisbon]
+  \ntaddperson{adviser}(c,f){John Doe other Co-Adviser Name}
+    [title=Prof.\ Dr., position=Full Professor, institution=NOVA University Lisbon]
+}{%
+  % Advisers(s)
+  \ntaddperson{adviser}(a,f){Mary Doe Adviser Name}
+    [position=Full Professor, institution=NOVA University Lisbon]
+  % Co-advisers(s)
+  \ntaddperson{adviser}(c,m){John Doe Co-Adviser Name}
+    [position=Associate Professor, institution=NOVA University Lisbon]
+  \ntaddperson{adviser}(c,f){John Doe other Co-Adviser Name}
+    [position=Full Professor, institution=NOVA University Lisbon]
+}%
 
 
 
@@ -287,3 +278,30 @@
 \ntaddperson{committee}(m,f){Yet Another Member of the Committee}
   [position=Assistant Professor, institution=Another University]
 % \ntaddperson{committee}(g,m){Guest Member of the Committee, Position, University}
+
+
+
+%-------------------------------------------------------------
+% Sponsors
+%
+%     \ntsponsors(<order>,<type>,<lang>){name}
+%.............................................................
+%
+% <order>:      -> 1, 2, 3, ...
+%
+% <type>:  text -> Some text (possibly inside a '\parbox' command)
+%          logo -> A proper '\includegraphics' command
+%
+% <lang>:       -> cat (catalan), cz (czech), de (german), dk (danish), en (english), 
+%                  es (spanish), fr (french), gr (greek), it (italian), nl (dutch), 
+%                  pl (polish), pt (portuguese), sk (slovak), uk (ukrainian)
+%
+% Add more lines for other languages
+%-------------------------------------------------------------
+% \ntsponsors(1,logo,en){\includegraphics[height=1.5cm]{republica_portuguesa_CTES}}
+% \ntsponsors(2,logo,en){\includegraphics[height=1.5cm]{FCT_MEC_logo_positive}}
+% \ntsponsors(1,text,en){Funding Agency}
+%
+% \ntsponsors(1,logo,pt){\includegraphics[height=1.5cm]{republica_portuguesa_CTES}}
+% \ntsponsors(2,logo,pt){\includegraphics[height=1.5cm]{FCT_MEC_logo_positive}}
+% \ntsponsors(1,text,pt){Entidade Financiadora}

@@ -238,9 +238,29 @@
   \IfMemVoidT{persongrouppost}{}{\MemSet*{persongrouppost}{}{\\[14pt]}}%
   \IfMemVoidT{committeetitlestringpre}{}{\MemSet*{committeetitlestringpre}{}{&}}%
   \IfMemVoidT{committeetitlestringpost}{}{\MemSet*{committeetitlestringpost}{}{\\[5pt]}}%
+  % Role-string column alignment: independent of \ntprintpersons's own #3
+  % (which positions the WHOLE block on the page, l/c/r). Defaults to "r"
+  % (the historical hardcoded behaviour); a school can left-align it (e.g.
+  % when role strings of varying length, like "Gutachter"/"Gutachterin",
+  % should keep their leading number flush) by calling
+  % \MemSet{adviserstringalign}{}{l} (or committeestringalign) in its own
+  % -defaults.clo BEFORE \ntprintpersons runs.
+  \IfMemVoidT{#2stringalign}{}{\MemSet*{#2stringalign}{}{r}}%
   % \typeout{NTPRINTPERSONSASTWOCOLUMNS 1=[#1] 2=[#2] 3=[#3] #2stringpost=[\csuse{the#2stringpost}()]}\NTPRINTPERSONSASTWOCOLUMNS
   \@ntgetmaxlen{#3}{#2}%
-  \begin{tabular}[t]{@{}r@{~~}l@{}}%
+  % \IfStrEqCase doesn't expand its own comparand, so the stored value must
+  % be pre-expanded via \edef first -- passing it inline compared the
+  % literal, unexpanded macro call against "r"/"c"/"l" and always fell
+  % through to the else-branch (\ClassError). \MemGetDefault itself can't be
+  % used here since it's a plain \NewDocumentCommand (not expandable, unlike
+  % \MemGet), so \edef can't unfold it; \MemGet is safe because the key is
+  % never void at this point (just defaulted to "r" above if it was).
+  \edef\@nt@stringalign{\MemGet{#2stringalign}{}}%
+  \IfStrEqCase{\@nt@stringalign}{%
+    {r}{\begin{tabular}[t]{@{}r@{~~}l@{}}}%
+    {c}{\begin{tabular}[t]{@{}c@{~~}l@{}}}%
+    {l}{\begin{tabular}[t]{@{}l@{~~}l@{}}}%
+  }[\ClassError{novathesis}{Invalid alignment "\@nt@stringalign"}{}]%
     \IfStrEq{#2}{committee}{%
       \IfMemVoidF{CommitteeTitleString}{\@LANG@COVER}{%
         \MemGetDefault{#2titlestringpre}{}%
