@@ -2,7 +2,7 @@
 -----------------------------------------------------------------------------
 novathesis — README.md
 
-Version 8.2.0 (2026-08-21)
+Version 8.3.0 (2026-08-29)
 Copyright (C) 2004-26 by João M. Lourenço <joao.lourenco@fct.unl.pt>
 -----------------------------------------------------------------------------
 -->
@@ -222,7 +222,15 @@ make NT="doctype=msc,lang=pt"             # override any \ntsetup option
 make view VIEWER="open -a Skim"           # choose the PDF viewer
 make BATCH=1                              # never stop at errors (good for CI)
 make TL=2024                              # build against a specific TeX Live release
+make SIZE=10                              # cap the final PDF at ~10 MB
 ```
+
+`SIZE=x` is for submission systems with a file-size limit: after the build,
+Ghostscript binary-searches the highest raster-image resolution that still fits
+under *x* megabytes. Text, fonts and vector graphics are untouched, so a
+document with few raster images may not reach a very small target — it says so
+and keeps the smallest it managed. The pre-shrink build is kept alongside as
+`<file>.pdf.orig`. Requires Ghostscript (`gs`) on `PATH`.
 
 The `NT` variable accepts any comma-separated list of `\ntsetup` options and takes precedence over `0-Config/1_novathesis.tex`, without editing any file. This is handy for testing another school, language, or document type. Other variables (`FILE`, `FASTWRITES`, `PAGER`, `FLAGS`) are documented in the header comment of the `Makefile` itself.
 
