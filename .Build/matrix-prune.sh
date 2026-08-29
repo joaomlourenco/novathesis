@@ -15,7 +15,8 @@
 #   1. uminho          keep only the uminho-eeng school, drop the other uminho
 #                      schools; rules 2 and 3 still apply to what is left
 #   2. Portuguese      drop *-pt-*   (the English variants are the samples)
-#   3. pdfLaTeX PDF    drop *pdf.pdf (the LuaLaTeX output is the reference)
+#   3. pdfLaTeX PDF    drop the pdfLaTeX-engine output (the LuaLaTeX one is
+#                      the reference)
 #   4. superseded msc  drop A-msc-B when A-phd-B exists
 #   5. both degrees    nova-fct and uminho-eeng are exempt from rule 4
 #
@@ -23,6 +24,11 @@
 # dashes (nova-fct-di-adc, nova-itqb-gray), so fields are counted from the END.
 # That is why the doctype is "third from last" rather than anything matched by a
 # plain -msc- substitution, which would fire inside a school name.
+#
+# Cover-preview SVGs (Covers/SVG/*) add one more field -- a page/crop suffix
+# ("-1", "-L1", "-S") between the engine and the extension, e.g.
+# "other-huberlin-phd-de-lua-L1.svg". That suffix is stripped before field
+# extraction (see reason()) so the same 4-field id/rules apply there too.
 
 set -uo pipefail
 shopt -s nullglob            # an unmatched glob yields nothing instead of erroring
@@ -55,17 +61,32 @@ if ! compgen -G "$UMINHO_KEEP-*" >/dev/null && compgen -G 'uminho-*' >/dev/null;
 fi
 
 reason() { # <file> -> prints the reason, or nothing if the file is kept
-  local f=$1 school doctype lang
-  lang=${f%-*}; lang=${lang##*-}                       # 2nd field from the end
-  doctype=${f%-*}; doctype=${doctype%-*}; doctype=${doctype##*-}
-  school=${f%-*}; school=${school%-*}; school=${school%-*}
+  local f=$1 parsed school doctype lang engine
+
+  # Cover-preview SVGs (Covers/SVG/*) tack on a page/crop suffix -- "-1"
+  # (page 1), "-L1" (large crop of page 1), "-S" (small thumbnail) -- right
+  # before the extension, e.g. "other-huberlin-phd-de-lua-L1.svg". Parse a
+  # copy of the name with that suffix stripped so school/doctype/lang/engine
+  # line up the same way as for the plain matrix PDFs; without this every
+  # field below would be read one position off and no rule would ever
+  # match. $f itself (suffix intact) is still what gets deleted/compared
+  # against below -- only the field extraction uses $parsed.
+  parsed=$f
+  if [[ $parsed =~ ^(.+)-(L?[0-9]+|S)(\.[^.]+)?$ ]]; then
+    parsed=${BASH_REMATCH[1]}${BASH_REMATCH[3]}
+  fi
+
+  engine=${parsed%.*}; engine=${engine##*-}            # 1st field from the end
+  lang=${parsed%-*}; lang=${lang##*-}                  # 2nd field from the end
+  doctype=${parsed%-*}; doctype=${doctype%-*}; doctype=${doctype##*-}
+  school=${parsed%-*}; school=${school%-*}; school=${school%-*}
 
   # other uminho schools go first; uminho-eeng falls through to the rules below
   if [ "$uminho_rule" = 1 ] && [[ $school == uminho* ]] && [ "$school" != "$UMINHO_KEEP" ]; then
     printf 'uminho: only %s is kept' "$UMINHO_KEEP"; return
   fi
-  if [ "$lang" = pt ];     then printf 'Portuguese variant';  return; fi
-  if [[ $f == *pdf.pdf ]]; then printf 'pdfLaTeX engine PDF'; return; fi
+  if [ "$lang" = pt ];    then printf 'Portuguese variant';  return; fi
+  if [ "$engine" = pdf ]; then printf 'pdfLaTeX engine PDF'; return; fi
   if [ "$doctype" = msc ]; then
     local keep
     for keep in "${BOTH_DEGREES[@]}"; do
