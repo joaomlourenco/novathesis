@@ -16,7 +16,7 @@ This document summarizes the changes and improvements made to the **nova**thesis
 ### What was fixed
 *   **The `school` comment block in `0-Config/1_novathesis.tex` was stale**: `ulisboa/ff` (renamed to `ulisboa/fful` in v8.2.0) was never updated there, and several `nova/fct` colour variants (`blue`, `brown`, `green`, `plain`, `red`) and the bare `nova/itqb` id were missing entirely.
 
-## v8.2.0 (2026-08-21)
+## v8.2.0 — Beija-flor: Travelling Light (2026-08-21)
 
 ### What's new
 *   **New school: ULisboa FFUL** (Faculdade de Farmácia da Universidade de Lisboa) — cover, spine, statement pages and the `modality` choice (`dissertation`, `report`, `project`), with its own citation style. Contributed by **Afonso Nóbrega** ([nobrega8](https://github.com/nobrega8)); select it with `\ntsetup{school=ulisboa/fful}`.
@@ -38,7 +38,7 @@ This document summarizes the changes and improvements made to the **nova**thesis
 
 ---
 
-## v8.1.0 (2026-08-19)
+## v8.1.0 — Pavão: New Plumage (2026-08-19)
 
 The release that renamed the template to **nova**thesis and moved the class off
 its last external dependency.
@@ -92,7 +92,7 @@ resolving. Search your project for `NOVAthesisFiles` and lower-case the `NOVA`.
 
 ---
 
-## v8.0.1 — Andorinha (2026-07-30)
+## v8.0.0 — Andorinha: Migration Season (2026-07-30)
 
 A release focused on **build speed**, a **simpler build system**, and **documentation you can trust**.
 
