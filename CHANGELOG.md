@@ -1,10 +1,10 @@
-# novathesis Template Changelog (v1.0.0 - v8.2.0)
+# novathesis Template Changelog (v1.0.0 - v8.3.0)
 
-This document summarizes the changes and improvements made to the **nova**thesis template from version **1.0.0** to the current version **8.2.0**.
+This document summarizes the changes and improvements made to the **nova**thesis template from version **1.0.0** to the current version **8.3.0**.
 
 ---
 
-## Unreleased
+## v8.3.0 — Stork: Flying International (2026-08-29)
 
 ### What's new
 *   **New school: Humboldt-Universität zu Berlin** (`other/huberlin`) — cover, logo and accent colour modeled on the official title-page sample, supporting every doctype/language the template already knows. Select it with `\ntsetup{school=other/huberlin}`. Its cover is also the only one that prints the author's date/place of birth, via the new `\SetAuthorBirthDate*`/`\SetAuthorBirthPlace*` commands (both are no-ops on every other school).
@@ -20,7 +20,7 @@ This document summarizes the changes and improvements made to the **nova**thesis
 
 ### What's new
 *   **New school: ULisboa FFUL** (Faculdade de Farmácia da Universidade de Lisboa) — cover, spine, statement pages and the `modality` choice (`dissertation`, `report`, `project`), with its own citation style. Contributed by **Afonso Nóbrega** ([nobrega8](https://github.com/nobrega8)); select it with `\ntsetup{school=ulisboa/fful}`.
-*   **Oversized images are downsampled automatically** so a thesis can be kept under a submission size limit without editing the figures by hand.
+*   **`make SIZE=10` caps the final PDF** at a given number of megabytes, for submission systems that enforce a limit. After the build, Ghostscript binary-searches the highest raster-image resolution that still fits; text, fonts and vector graphics are untouched, and the pre-shrink build is kept as `<file>.pdf.orig`. Requires Ghostscript on `PATH`.
 *   **The shipped example PDF is now the manual itself** (`novathesis-manual.pdf`), rather than one school's compiled cover — what you get is the documentation you actually want to read.
 
 ### What was improved

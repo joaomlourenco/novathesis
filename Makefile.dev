@@ -1,6 +1,6 @@
 #-----------------------------------------------------------------------------
 # novathesis — Makefile.dev (maintainer targets)
-# Version 8.2.0 (2026-08-21)
+# Version 8.3.0 (2026-08-29)
 #
 # This file is NOT shipped in releases (excluded from 'make zip').
 # It is loaded automatically by the main Makefile via '-include Makefile.dev'.
@@ -51,7 +51,7 @@
 #   make needlua       regenerate the list of LuaLaTeX-only schools
 #   make zip           release archive novathesis-<version>@<date>.zip
 #   make bump-patch | bump-minor | bump-major
-#                      bump the version (Scripts/bump.py). From 8.0.0:
+#                      bump the version (.Build/bump.py). From 8.0.0:
 #                      bump-patch -> 8.0.1, bump-minor -> 8.1.0,
 #                      bump-major -> 9.0.0.
 #                      Legacy names, kept for compatibility, are numbered from
@@ -110,11 +110,11 @@ zip:
 	@echo "Created $(ZIPNAME)"
 
 # --- Version bump -------------------------------------------------------------------
-# NOTE: Scripts/bump.py counts positions from the RIGHT, so -b 1 is the patch
+# NOTE: .Build/bump.py counts positions from the RIGHT, so -b 1 is the patch
 # level and -b 3 is the major level. Prefer the named aliases below.
 .PHONY: bump1 bump2 bump3 bump-patch bump-minor bump-major
 bump1 bump2 bump3:
-	@Scripts/bump.py -b $(patsubst bump%,%,$@)
+	@.Build/bump.py -b $(patsubst bump%,%,$@)
 
 bump-patch: bump1
 bump-minor: bump2
