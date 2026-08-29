@@ -38,6 +38,60 @@ This document summarizes the changes and improvements made to the **nova**thesis
 
 ---
 
+## v8.1.0 (2026-08-19)
+
+The release that renamed the template to **nova**thesis and moved the class off
+its last external dependency.
+
+### ⚠️ Breaking: `NOVAthesisFiles` is now `novathesisFiles`
+
+The support directory was renamed to lower case. macOS and Windows will not
+notice, but **Linux, Overleaf and CI are case-sensitive**: any local
+customization, script or `.gitignore` rule that spells the old name stops
+resolving. Search your project for `NOVAthesisFiles` and lower-case the `NOVA`.
+
+### What's new
+*   **The template is now written **nova**thesis** — a wordmark with `nova` in
+    semibold and `thesis` in light, shipped as insignia and text SVGs that need
+    no font. `\novathesis` renders the logo under LuaLaTeX/XeLaTeX and the
+    wordmark otherwise.
+*   **A real Colophon page** in the back matter, replacing the old mini-colophon:
+    multilingual, with the template logo, the full citation, the font in use, the
+    PDF/A status and a build id, gated on `docstatus`.
+*   **Citing the template is now the default and the only path.** The reference
+    goes into the document's own bibliography, `CITATION.cff` makes GitHub render
+    a *Cite this repository* button, the entry has a DOI, and the build tells you
+    at the end that the reference was added. The old hidden white 0.01pt citation
+    is gone, as is the opt-out toggle.
+*   **SDG icons download on demand**, chosen by the language code, instead of
+    shipping with the template.
+*   **Jost** joins the font styles.
+*   **Glossaries** gained optional per-type group headings and title overrides.
+*   **uminho** gained a declaration of AI usage.
+
+### What was improved
+*   **The external `options` package is gone**, replaced by an internal `l3keys`
+    engine. Every registry — persons, files, list-of, print order, languages, the
+    private docclass and folder keys — was migrated across, then `options-ext.sty`
+    and the dead code behind it were deleted. `\ntsetup` is unchanged; this is
+    one fewer dependency and one fewer source of surprises.
+*   **Font pretty-names live with the fonts.** Each `FontStyles/*.sty` now
+    registers its own display name instead of a central 21-way lookup table.
+*   **Spine boxes auto-scale** to fill the space available.
+*   **latexmk rebuild triggers for `bib2gls`** are correct, so glossaries no
+    longer go stale between runs.
+*   The maintainer's variant build script prints in colour.
+
+### What was fixed
+*   The shipped custom-glossary-type example was broken, and works again.
+*   The Back Cover bookmark sat at the wrong level in the PDF outline.
+*   Back Matter's bookmark no longer collapses under `\part`.
+*   uminho: the I3Bs school name read "Research Institute 13Bs" — digit one
+    instead of the letter I.
+*   The README's star-history chart pointed at a dead endpoint.
+
+---
+
 ## v8.0.1 — Andorinha (2026-07-30)
 
 A release focused on **build speed**, a **simpler build system**, and **documentation you can trust**.
