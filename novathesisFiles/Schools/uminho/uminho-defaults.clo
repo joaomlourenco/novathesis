@@ -352,7 +352,7 @@ indicada.\\[1ex]
 % Date
 \ntaddtocover[vfill=1,halign=l]{1-1,2-1}{%
   \fontsize{10}{10}\selectfont%
-  \PrintDateISO{\GetDocDate(submission,year)-\GetDocDate(submission,month)}
+  \PrintDateISO[~\GetOfStr(\@LANG@COVER)~]{\GetDocDate(submission,year)-\GetDocDate(submission,month)}
 }
 
 
