@@ -260,7 +260,7 @@ indicada.\\[1ex]
     quote,           % (*) Print the quote
     abstracts,       % Print abstracts in multiple languages.
     alllistof,       % Print all the listof defined in “7_list_of.tex”
-    printglossaries, % Print the Glossary, Acronyms, Symbols, etc…
+    myprintglossaries, % Print the Glossary, Acronyms, Symbols, etc…
 }
 
 \@nt@printorder@set{frontmatter_provisional}{%
@@ -270,7 +270,7 @@ indicada.\\[1ex]
     quote,           % (*) Print the quote
     abstracts,       % Print abstracts in multiple languages.
     alllistof,       % Print all the listof defined in “7_list_of.tex”
-    printglossaries, % Print the Glossary, Acronyms, Symbols, etc…
+    myprintglossaries, % Print the Glossary, Acronyms, Symbols, etc…
 }
 
 \@nt@printorder@set{frontmatter_working}{%
@@ -279,7 +279,7 @@ indicada.\\[1ex]
     quote,           % (*) Print the quote
     abstracts,       % Print abstracts in multiple languages.
     alllistof,       % Print all the listof defined in “7_list_of.tex”
-    printglossaries, % Print the Glossary, Acronyms, Symbols, etc…
+    myprintglossaries, % Print the Glossary, Acronyms, Symbols, etc…
 }
 
 
