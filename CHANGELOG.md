@@ -1,8 +1,16 @@
-# novathesis Template Changelog (v1.0.0 - v8.3.0)
+# novathesis Template Changelog (v1.0.0 - v8.3.1)
 
-This document summarizes the changes and improvements made to the **nova**thesis template from version **1.0.0** to the current version **8.3.0**.
+This document summarizes the changes and improvements made to the **nova**thesis template from version **1.0.0** to the current version **8.3.1**.
 
 ---
+
+## v8.3.1 (2026-09-19)
+
+### What was fixed
+*   **uminho, nova/fct/di-adc and ulisboa/fmv's glossaries, acronyms and symbols were silently empty.** Their frontmatter print-order lists called the base `glossaries-extra` package's `\printglossaries` instead of novathesis's own `\myprintglossaries`; with `record=only` (bib2gls) mode, `\printglossaries` doesn't work and prints nothing, with no error.
+*   **uminho's back cover showed a stray "N-1"** instead of being blank.
+*   **uminho's cover date used a comma in Portuguese** (`, `) instead of the language-appropriate separator (`de`).
+*   **uminho's copyright page failed to load** because it used the `.tex` extension instead of the `.clo` extension the class expects.
 
 ## v8.3.0 — Stork: Flying International (2026-08-29)
 
