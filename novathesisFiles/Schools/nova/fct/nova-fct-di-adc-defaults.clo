@@ -64,7 +64,7 @@
     aidisclose,      % AI disclosure statement
     abstracts,       % Print abstracts in multiple languages.
     alllistof,       % Print all the listof defined in “6_list_of.tex”
-    printglossaries, % Print the Glossary, Acronyms, Symbols, etc…
+    myprintglossaries, % Print the Glossary, Acronyms, Symbols, etc…
 }
 
 \@nt@printorder@set{frontmatter_provisional}{%
@@ -72,7 +72,7 @@
     aidisclose,      % AI disclosure statement
     abstracts,       % Print abstracts in multiple languages.
     alllistof,       % Print all the listof defined in “6_list_of.tex”
-    printglossaries, % Print the Glossary, Acronyms, Symbols, etc…
+    myprintglossaries, % Print the Glossary, Acronyms, Symbols, etc…
 }
 
 \@nt@printorder@set{frontmatter_working}{%
