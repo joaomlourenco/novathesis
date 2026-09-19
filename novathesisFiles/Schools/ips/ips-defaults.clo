@@ -2,7 +2,7 @@
 %% ips/univ-defaults.clo
 %% NOVA thesis configuration file
 %%
-%% Customization for INSTITUTO POLITÉCNICO DE SETÚBAL (strings and cover)
+%% Customization for UNIVERSIDADE POLITÉCNICA DE SETÚBAL (strings and cover)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \typeout{NT FILE ips/univ-defaults.clo}%
@@ -17,10 +17,8 @@
 %%=======================================================================
 
 % University
-\SetUniversity*(pt)={Instituto Politécnico de Setúbal}
-\SetUniversity*(en)={Polytechnic Institute of Setúbal}
-\SetUniversity*(fr)={Polytechnic Institute of Setúbal}
-\SetUniversity*(it)={Polytechnic Institute of Setúbal}
+\SetUniversity*(pt)={Universidade Politécnica de Setúbal}
+\SetUniversity*(en)={Polytechnic University of Setúbal}
 
 % Department
 \SetDepartmentOfString*(pt)={Área Departamental de}
