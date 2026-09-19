@@ -260,7 +260,7 @@ indicada.\\[1ex]
     quote,           % (*) Print the quote
     abstracts,       % Print abstracts in multiple languages.
     alllistof,       % Print all the listof defined in “7_list_of.tex”
-    printglossaries, % Print the Glossary, Acronyms, Symbols, etc…
+    myprintglossaries, % Print the Glossary, Acronyms, Symbols, etc…
 }
 
 \@nt@printorder@set{frontmatter_provisional}{%
@@ -270,7 +270,7 @@ indicada.\\[1ex]
     quote,           % (*) Print the quote
     abstracts,       % Print abstracts in multiple languages.
     alllistof,       % Print all the listof defined in “7_list_of.tex”
-    printglossaries, % Print the Glossary, Acronyms, Symbols, etc…
+    myprintglossaries, % Print the Glossary, Acronyms, Symbols, etc…
 }
 
 \@nt@printorder@set{frontmatter_working}{%
@@ -279,7 +279,7 @@ indicada.\\[1ex]
     quote,           % (*) Print the quote
     abstracts,       % Print abstracts in multiple languages.
     alllistof,       % Print all the listof defined in “7_list_of.tex”
-    printglossaries, % Print the Glossary, Acronyms, Symbols, etc…
+    myprintglossaries, % Print the Glossary, Acronyms, Symbols, etc…
 }
 
 
@@ -288,7 +288,7 @@ indicada.\\[1ex]
 %%=======================================================================
 
 \ntaddtocover{1-2}{}
-\ntaddtocover{N-1}{N-1}
+\ntaddtocover{N-1}{}
 
 % University and School logos
 \ntaddtocover[vspace=-0.6mm,halign=l,height=2.6cm]{1-1}{%
@@ -352,7 +352,7 @@ indicada.\\[1ex]
 % Date
 \ntaddtocover[vfill=1,halign=l]{1-1,2-1}{%
   \fontsize{10}{10}\selectfont%
-  \PrintDateISO{\GetDocDate(submission,year)-\GetDocDate(submission,month)}
+  \PrintDateISO[~\GetOfStr(\@LANG@COVER)~]{\GetDocDate(submission,year)-\GetDocDate(submission,month)}
 }
 
 
