@@ -1,0 +1,91 @@
+name: "🏫 Become a school maintainer"
+description: Volunteer as the point of contact for your institution's novathesis configuration.
+title: "[School Maintainer] <Institution name>"
+labels: ["school-maintainer", "help wanted"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for offering to help! School maintainers are the point of contact for one
+        institution's cover, spine, and formatting rules. You don't need to know LaTeX
+        deeply — mostly you'll be triaging reports from students at your school, checking
+        them against the official formatting guidelines, and occasionally submitting a
+        small PR (or pairing with someone who can).
+
+        Before submitting, please check the [list of schools](https://novathesis.org/en/schools.html)
+        and existing [Discussions](https://github.com/joaomlourenco/novathesis/discussions)
+        to see if your institution already has a maintainer or an open request.
+
+  - type: input
+    id: institution
+    attributes:
+      label: Institution
+      description: Full name of the school/university, plus acronym if there is one.
+      placeholder: e.g. NOVA School of Science and Technology (NOVA FCT)
+    validations:
+      required: true
+
+  - type: input
+    id: program
+    attributes:
+      label: Degree program(s) you're familiar with
+      description: MSc, PhD, integrated master's, etc. — whatever formatting rules you can vouch for.
+      placeholder: e.g. MSc in Computer Science
+    validations:
+      required: true
+
+  - type: dropdown
+    id: status
+    attributes:
+      label: Current status of this school's config in novathesis
+      options:
+        - Already supported, I want to help maintain it
+        - Already supported, but I've found formatting issues
+        - Not supported yet, I want to add it
+    validations:
+      required: true
+
+  - type: textarea
+    id: familiarity
+    attributes:
+      label: What do you already know?
+      description: >
+        Do you have the official formatting/style guide from your school (cover page,
+        margins, fonts, spine, required statements)? Have you already written a thesis
+        with novathesis at this school, or found bugs in the current config?
+      placeholder: Link to the official guidelines if public, and/or describe what you've run into.
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: commitment
+    attributes:
+      label: What you're signing up for
+      description: This is a lightweight, volunteer role — check what you're comfortable with.
+      options:
+        - label: Responding to Issues/Discussions tagged with my school when I can
+          required: false
+        - label: Testing new novathesis releases against my school's config before they ship
+          required: false
+        - label: Submitting small PRs to fix formatting issues (with guidance if needed)
+          required: false
+        - label: Being credited publicly as the maintainer for this school on novathesis.org
+          required: false
+
+  - type: input
+    id: contact
+    attributes:
+      label: Preferred contact
+      description: GitHub handle is enough — no need for email/personal details here.
+      placeholder: "@yourhandle"
+    validations:
+      required: true
+
+  - type: textarea
+    id: notes
+    attributes:
+      label: Anything else?
+      description: Optional — availability, LaTeX experience level, other schools you could also help with, etc.
+    validations:
+      required: false
+
