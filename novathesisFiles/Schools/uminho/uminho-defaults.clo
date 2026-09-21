@@ -16,6 +16,7 @@
 \NTOptNewChoice{uminho/copyrightmodifier}{by-nc-sa, by-sa, by, by-nc, by-nd, by-nc-nd}{by-nc-sa}
 \NTOptNewToggle{uminho/skipblankcovers}{false}
 \NTOptNewToggle{uminho/signatureline}{true}
+\NTOptNewValue{uminho/signatureplace}{}
 
 % Do not accept pdfLaTex
 \AddValidProcessor{uminho}{lua,xe}
