@@ -55,12 +55,19 @@
 \NewMemStore{SignatureLine}
 
 \SetSignatureLine(pt)={%
+  \ifoptionvoid{/novathesis/uminho/signatureplace}{%
+    \begin{tabular}{c@{~}c}%
+      \rule{12em}{0.5pt},         & \rule{16em}{0.5pt}         \\[-1ex]%
+      (\GetPlaceStr(\@LANG@MAIN)) & (\GetDateStr(\@LANG@MAIN)) %
+    \end{tabular}%
+  }{%
+    \begin{tabular}{c}%
+      \option{/novathesis/uminho/signatureplace},~\PrintDateISO{\GetDocDate(submission,year)-\GetDocDate(submission,month)-\GetDocDate(submission,day)} \\[-1ex]%
+      \rule{0pt}{\baselineskip}%
+    \end{tabular}%
+  }%
+  \\[2cm]%
   \begin{center}%
-  \begin{tabular}{c@{~}c}%
-  \rule{16em}{0.5pt}, & \rule{16em}{0.5pt}\\[-1ex]%
-  (\GetPlaceStr(\@LANG@MAIN)) & (\GetDateStr(\@LANG@MAIN))%
-  \end{tabular}%
-  \\[2cm]
     \rule{25em}{0.5pt}\\[-1ex]%
     (\GetDocAuthor(name))%
   \end{center}%

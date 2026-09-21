@@ -9,18 +9,59 @@
 % UNIVERSITY / SCHOOL SPECIFIC STUFF
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%============================================================
-% UMINHO - COPYRIGHT modifier
-%     Please uncomment and select the copyright modifier of your preference
-%------------------------------------------------------------
 
-\ntsetup{uminho/copyrightmodifier=by-nc-sa} % Modifier for the Creative Commons license.
-%                                      %     [ ]
-%                                      %     DEFAULT: CC by-nc-sa license
+%-------------------------------------------------------------
+% Copyright license modifier
+%
+%     \ntsetup{uminho/copyrightmodifier=<modifier>}
+%.............................................................
+%
+% <modifier>: by-nc-sa | by-sa | by | by-nc | by-nd | by-nc-nd
+%
+% DEFAULT: by-nc-sa
+%-------------------------------------------------------------
+% \ntsetup{uminho/copyrightmodifier=by-nc-sa}
 
-% \ntsetup{skipblankcovers=true}       % Skip the “other side” of the covers.
-%                                      %     [true, false]
-%                                      %     DEFAULT: false for main document types, and
-%                                      %              true for other document types
 
-% \ntsetup{signatureline=false}        % Do not print the signature line in the statement of integrity
+
+%-------------------------------------------------------------
+% Skip blank pages on the reverse side of covers
+%
+%     \ntsetup{uminho/skipblankcovers=<true|false>}
+%.............................................................
+%
+% Set to 'true' to skip blank pages on the reverse side of covers.
+%
+% DEFAULT: false for main document types, and
+%          true for other document types
+%-------------------------------------------------------------
+% \ntsetup{uminho/skipblankcovers=true}
+
+
+
+%-------------------------------------------------------------
+% Signature line in the statement of integrity
+%
+%     \ntsetup{uminho/signatureline=<true|false>}
+%.............................................................
+%
+% Set to 'false' to hide the signature block in the statement
+% of integrity.
+%
+% DEFAULT: true
+%-------------------------------------------------------------
+% \ntsetup{uminho/signatureline=false}
+
+
+
+%-------------------------------------------------------------
+% Place in the signature block
+%
+%     \ntsetup{uminho/signatureplace=<place>}
+%.............................................................
+%
+% Set a place (e.g., Braga) to print it together with the
+% submission date. Leave empty or comment out to use the
+% default place/date signature fields.
+%-------------------------------------------------------------
+% \ntsetup{uminho/signatureplace=Braga}
