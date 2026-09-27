@@ -205,7 +205,19 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\ntprintabstracts}{%
   \NTRunHook{abstracts/pre}%
+  % memoir defaults to \flushbottom, which stretches interline/interparagraph
+  % glue so every page reaches exactly the bottom margin -- fine for a full
+  % chapter, but it visibly inflates the gaps between an abstract's own
+  % paragraphs (and before/after the SDG block) whenever their natural
+  % length falls short of a full page. \raggedbottom here (and reverting
+  % right after) keeps that stretch out of abstract/SDG pages specifically,
+  % without changing every other page in the document. Bare, ungrouped
+  % calls: \@textbottom is read by the output routine when a page actually
+  % ships, so a \begingroup/\endgroup here would restore \flushbottom before
+  % that happens and have no visible effect.
+  \raggedbottom
   \@for\nt@tmpi:=\expanded{\GetAbstractOrder(\@LANG@MAIN)}\do{\@ntprintabstract{\nt@tmpi}}%
+  \flushbottom
   \NTRunHook{abstracts/post}%
 }
 
