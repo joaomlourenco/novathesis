@@ -1,8 +1,16 @@
-# novathesis Template Changelog (v1.0.0 - v8.3.1)
+# novathesis Template Changelog (v1.0.0 - v8.4.0)
 
-This document summarizes the changes and improvements made to the **nova**thesis template from version **1.0.0** to the current version **8.3.1**.
+This document summarizes the changes and improvements made to the **nova**thesis template from version **1.0.0** to the current version **8.4.0**.
 
 ---
+
+## v8.4.0 — Crane: Same Flight, New Name (2026-09-27)
+
+### What's new
+*   **Instituto Politécnico de Lisboa and Instituto Politécnico de Setúbal are now Universidade Politécnica de Lisboa/Setúbal.** Their school ids, folders, files and image assets are renamed to match: `school=ipl/isel` → `school=upl/isel`, `ipl/isel/meb` → `upl/isel/meb`, and `ips/ests` → `ups/ests`. ISEL and ESTS keep their own names/ids — only the parent institute's abbreviation changed.
+
+### Breaking changes
+*   **The old `ipl`/`ips` school ids no longer resolve.** A document still using `\ntsetup{school=ipl/isel}` (or `ipl/isel/meb`, `ips/ests`) now fails at compile time with a clear "Missing file" class error naming the old path. There is no backward-compatible alias — switch to `upl/isel`, `upl/isel/meb`, or `ups/ests`.
 
 ## v8.3.1 (2026-09-19)
 
