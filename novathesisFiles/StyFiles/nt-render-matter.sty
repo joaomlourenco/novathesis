@@ -155,6 +155,12 @@
 \newcommand*{\ntprintsdgs}{%
   \ifoptionnil{/novathesis/print/sdgs/list}{}{%
       \vfill%
+      % The heading and the icon row are wrapped in a minipage so they are
+      % never split across a page break -- they either fit together or move
+      % together to the next page. The statement below is ordinary breakable
+      % text and may overflow to the next page on its own.
+      \noindent
+      \begin{minipage}{\linewidth}
       \raggedright\noindent%
       % Fall back to the English SDG heading when the abstract language does
       % not define one (e.g. zhs/zht, whose string files are minimal), so that
@@ -177,6 +183,15 @@
         }%
         \par
       \endgroup
+      \end{minipage}%
+      % Optional statement below the icons, registered with
+      %     \ntaddfile{sdgstatement}[<lang>]{<filename>}
+      % in 0-Config/4_files.tex, right below the abstracts. Falls back to a
+      % language-less file if no per-language one was added; silently prints
+      % nothing if neither was, matching every other \ntaddfile family.
+      \iffileadded[\@LSHORT]{sdgstatement}
+        {\PrintAddedFile[\@LSHORT]{sdgstatement}}
+        {\iffileadded{sdgstatement}{\PrintAddedFile{sdgstatement}}{}}%
   }%
 }
 

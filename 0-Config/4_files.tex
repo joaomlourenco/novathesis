@@ -99,6 +99,23 @@
 
 
 %-------------------------------------------------------------
+% Statement printed below the SDG icons (see print/sdgs/list in
+% 0-Config/1_novathesis.tex). Optional; same <lang> rules as the
+% abstract above. A language-less file (no [<lang>]) is used as a
+% fallback for any abstract language without its own; if neither
+% exists, nothing is printed.
+%
+%     \ntaddfile{sdgstatement}[<lang>]{<filename>}
+%.............................................................
+%
+% <filename>: -> must be '1-Frontmatter/filename.tex'
+%-------------------------------------------------------------
+\ntaddfile{sdgstatement}[pt]{sdg-statement-pt}
+\ntaddfile{sdgstatement}[en]{sdg-statement-en}
+
+
+
+%-------------------------------------------------------------
 % Glossaries (glossary, acronyms, symbols, etc)
 %
 %     \ntaddfile{glossaries}[<type>]{<filename>}
