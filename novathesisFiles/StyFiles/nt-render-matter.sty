@@ -154,20 +154,24 @@
 % doing the wrapping all along.
 \newcommand*{\ntprintsdgs}{%
   \ifoptionnil{/novathesis/print/sdgs/list}{}{%
-      \vfill%
-      % The heading and the icon row are wrapped in a minipage so they are
-      % never split across a page break -- they either fit together or move
-      % together to the next page. The statement below is ordinary breakable
-      % text and may overflow to the next page on its own.
+      \par% End the abstract's last paragraph -- \vfill used to do this as a
+           % side effect (it forces vertical mode), but also stretched to
+           % push the whole block towards the page's bottom, which looked
+           % wrong once it no longer shares a page with the abstract (the
+           % block would then start with a large blank gap at the top of an
+           % otherwise near-empty page instead of flush against the top).
+      % The heading, icon row and statement are all wrapped in a single
+      % minipage so the whole block is never split across a page break --
+      % it either fits together or moves together to the next page.
       \noindent
       \begin{minipage}{\linewidth}
       \raggedright\noindent%
       % Fall back to the English SDG heading when the abstract language does
       % not define one (e.g. zhs/zht, whose string files are minimal), so that
       % SDGs + a Chinese abstract do not raise a memstore "unknown key" error.
-      \textbf{\IfMemVoidTF{SdgString}{\@LSHORT}
+      {\large\bfseries\IfMemVoidTF{SdgString}{\@LSHORT}
                 {\GetSdgString(en)}%
-                {\GetSdgString(\@LSHORT)}:}\\[1ex]
+                {\GetSdgString(\@LSHORT)}:}\\[2ex]
       \edef\@sdgtype{\option{/novathesis/print/sdgs/type}}
       \ntchecksdgs{\@LSHORT}{\@sdgtype}%
       \IfFileExists{\DIRIMAGES/sdg-\@LSHORT/1-\@sdgtype.pdf}
@@ -183,7 +187,6 @@
         }%
         \par
       \endgroup
-      \end{minipage}%
       % Optional statement below the icons, registered with
       %     \ntaddfile{sdgstatement}[<lang>]{<filename>}
       % in 0-Config/4_files.tex, right below the abstracts. Falls back to a
@@ -192,6 +195,7 @@
       \iffileadded[\@LSHORT]{sdgstatement}
         {\PrintAddedFile[\@LSHORT]{sdgstatement}}
         {\iffileadded{sdgstatement}{\PrintAddedFile{sdgstatement}}{}}%
+      \end{minipage}%
   }%
 }
 
