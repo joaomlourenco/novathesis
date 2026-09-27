@@ -1,5 +1,5 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% ipl/isel/ipl-isel-defaults.clo
+%% upl/isel/upl-isel-defaults.clo
 %% NOVA thesis document template
 %%
 %% This work is licensed under the
@@ -11,7 +11,7 @@
 %%      - João Lourenço <joao.lourenco@fct.unl.pt>
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\typeout{NT FILE ipl/isel/defaults.clo}%
+\typeout{NT FILE upl/isel/defaults.clo}%
 
 
 %%=======================================================================
@@ -19,8 +19,8 @@
 %%=======================================================================
 
 % Only XeLaTeX/LuaLaTeX are accepted (uses an OpenType-only font)
-\AddValidProcessor{ipl/isel}{lua,xe}
-\AddValidDegree{ipl/isel}{msc}
+\AddValidProcessor{upl/isel}{lua,xe}
+\AddValidDegree{upl/isel}{msc}
 
 % No PhD degree for ISEL
 \ifmscdoc{}{\ntsetup{doctype=msc}}
@@ -40,8 +40,8 @@
 \ntsetup{style/font=verdana}
 \ntsetup{style/chapter=isel}
 
-\ntaddfile{statement}[en]{ipl-isel/ipl-isel-statement-en}
-\ntaddfile{statement}[pt]{ipl-isel/ipl-isel-statement-pt}
+\ntaddfile{statement}[en]{upl-isel/upl-isel-statement-en}
+\ntaddfile{statement}[pt]{upl-isel/upl-isel-statement-pt}
 
 
 %%=======================================================================
@@ -168,7 +168,7 @@
 
 \SpineSetup[%
 ]{
-  box/logo/bg/image       = {ipl-isel-logo-notext},
+  box/logo/bg/image       = {upl-isel-logo-notext},
   box/logo/bg/image/scale = 0.55,
   % box/logo/bg/image/angle     = {90},
 }
@@ -179,8 +179,8 @@
 
 \SetThesisCover(textcolor)={iselPlum}
 
-\SetThesisCover(wireframe)={ipl-isel-wireframe}
-\SetThesisCover(logo)={ipl-isel-logo}
+\SetThesisCover(wireframe)={upl-isel-wireframe}
+\SetThesisCover(logo)={upl-isel-logo}
 
 
 %%=======================================================================

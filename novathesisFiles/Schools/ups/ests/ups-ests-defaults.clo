@@ -1,16 +1,16 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% ips/ests/defaults.clo
+%% ups/ests/defaults.clo
 %% NOVA thesis configuration file
 %%
-%% Customization for ESTS-IPS (strings and cover)
+%% Customization for ESTS-UPS (strings and cover)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\typeout{NT FILE ips/ests/defaults.clo}%
+\typeout{NT FILE ups/ests/defaults.clo}%
 
 
 % All LaTeX engines (pdfLaTeX, XeLaTeX, LuaLaTeX) are accepted
-\AddValidProcessor{ips/ests}{pdf,lua,xe}
-\AddValidDegree{ips/ests}{msc}
+\AddValidProcessor{ups/ests}{pdf,lua,xe}
+\AddValidDegree{ups/ests}{msc}
 
 
 %%=======================================================================
@@ -24,7 +24,7 @@
 \SetSchool*(it)={Escola Superior de Tecnologia de Setúbal}
 
 % School customization
-\SetSchool*(logo)={ips-ests-logo-vert}
+\SetSchool*(logo)={ups-ests-logo-vert}
 
 
 %%=======================================================================
@@ -33,7 +33,7 @@
 
 \SpineSetup[%
 ]{%
-  box/logo/bg/image           = {ips-logo},
+  box/logo/bg/image           = {ups-logo},
   box/logo/bg/image/angle     = {-90},
   box/title/len               = {18.6cm},
   box/logo/len                = {2.1cm},

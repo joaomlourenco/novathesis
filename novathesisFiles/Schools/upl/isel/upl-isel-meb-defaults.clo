@@ -1,11 +1,11 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% ipl/isel/defaults.clo
+%% upl/isel/defaults.clo
 %% NOVA thesis configuration file
 %%
-%% Customization for ISEL-IPL (strings and cover)
+%% Customization for ISEL-UPL (strings and cover)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\typeout{NT FILE ipl/isel/ipl-isel-meb-defaults.clo}%
+\typeout{NT FILE upl/isel/upl-isel-meb-defaults.clo}%
 
 
 %%=======================================================================
@@ -13,10 +13,10 @@
 %%=======================================================================
 
 % Only XeLaTeX/LuaLaTeX are accepted (uses an OpenType-only font)
-\AddValidProcessor{ipl/isel/meb}{lua,xe}
-\AddValidDegree{ipl/isel/meb}{msc}
+\AddValidProcessor{upl/isel/meb}{lua,xe}
+\AddValidDegree{upl/isel/meb}{msc}
 
-\input{\DIRSCHOOLS/ipl/isel/ipl-isel-defaults.clo}
+\input{\DIRSCHOOLS/upl/isel/upl-isel-defaults.clo}
 
 \ntsetup{print/frontpage=true}
 
@@ -63,7 +63,7 @@ Master in Biomedical Engineering}
 %% SPINE
 %%=======================================================================
 
-\SetSpine(logo)={ipl-logo/0,ipl-isel-logo/0/1.5,ipl-isel-meb-logo/0,2cm/meb-text/0/1.8}
+\SetSpine(logo)={upl-logo/0,upl-isel-logo/0/1.5,upl-isel-meb-logo/0,2cm/meb-text/0/1.8}
 \SetSpine*(box,logo,margin,sep)={5mm}
 
 \SetSpine(box,date,angle)={-90}
@@ -97,9 +97,9 @@ Master in Biomedical Engineering}
 % \NTAddToHook{cover/text/pre}{%
 %   \sffamily%
 % }
-%% IPL
+%% UPL
 \ntaddtocover[vspace=0cm, halign=l, hspace=0.5mm, height=1.225cm, valign=c]{1-1,2-1}{%
-  \includegraphics[height=1.225cm,align=c]{ipl-logo}%
+  \includegraphics[height=1.225cm,align=c]{upl-logo}%
   \hspace*{2.6cm}%
   \fontsize{12.9}{13}\selectfont%
   \textbf{\MakeUppercase{\GetUniversity(pt)}}%
@@ -107,10 +107,10 @@ Master in Biomedical Engineering}
 
 %% ISEL e ESTSL
 \ntaddtocover[vspace=3mm, halign=c, hspace=-0.5mm, height=10mm, valign=c]{1-1,2-1}{%
-  \includegraphics[height=7.7mm,align=c]{ipl-isel-logo}%
+  \includegraphics[height=7.7mm,align=c]{upl-isel-logo}%
   \hspace*{1.5cm}
   % \hspace*{2mm}
-  \includegraphics[height=7.7mm,align=c]{ipl-isel-meb-logo2}%
+  \includegraphics[height=7.7mm,align=c]{upl-isel-meb-logo2}%
   % \hspace*{3.5mm}%
   % \fontsize{12}{12}\selectfont%
   % \begin{tabular}{@{}ll}

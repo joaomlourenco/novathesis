@@ -1,15 +1,15 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% ipl/ipl-defaults.clo
+%% upl/upl-defaults.clo
 %% NOVA thesis configuration file
 %%
 %% Customization for UNIVERSIDADE POLITÉCNICA DE LISBOA (strings and cover)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\typeout{NT FILE ipl/ipl-defaults.clo}%
+\typeout{NT FILE upl/upl-defaults.clo}%
 
 
 % All LaTeX engines (pdfLaTeX, XeLaTeX, LuaLaTeX) are accepted
-\AddValidProcessor{ipl}{pdf,lua,xe}
+\AddValidProcessor{upl}{pdf,lua,xe}
 
 
 % University

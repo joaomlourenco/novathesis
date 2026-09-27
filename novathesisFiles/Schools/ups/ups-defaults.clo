@@ -1,15 +1,15 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% ips/univ-defaults.clo
+%% ups/univ-defaults.clo
 %% NOVA thesis configuration file
 %%
 %% Customization for UNIVERSIDADE POLITÉCNICA DE SETÚBAL (strings and cover)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\typeout{NT FILE ips/univ-defaults.clo}%
+\typeout{NT FILE ups/univ-defaults.clo}%
 
 
 % All LaTeX engines (pdfLaTeX, XeLaTeX, LuaLaTeX) are accepted
-\AddValidProcessor{ips}{pdf,lua,xe}
+\AddValidProcessor{ups}{pdf,lua,xe}
 
 
 %%=======================================================================
@@ -65,7 +65,7 @@
 %% SPINE
 %%=======================================================================
 
-\SetSpine(logo)={ips-logo}
+\SetSpine(logo)={ups-logo}
 
 
 %%=======================================================================
