@@ -165,7 +165,7 @@
       % it either fits together or moves together to the next page.
       \noindent
       \begin{minipage}{\linewidth}
-      \raggedright\noindent%
+      \noindent%
       % Fall back to the English SDG heading when the abstract language does
       % not define one (e.g. zhs/zht, whose string files are minimal), so that
       % SDGs + a Chinese abstract do not raise a memstore "unknown key" error.
@@ -178,6 +178,12 @@
           {\def\@spnfolder{\DIRIMAGES/sdg-\@LSHORT}}
           {\def\@spnfolder{\DIRIMAGES/sdg-en}}
       \begingroup
+        % Raggedright here (not for the whole minipage): the icons are
+        % separated by fixed \hspace, not stretchable interword glue, so
+        % justifying this row has nothing to stretch and just produces
+        % Underfull \hbox warnings. Scoped to \endgroup below so it doesn't
+        % also affect the statement paragraph that follows.
+        \raggedright
         \lineskip=\option{/novathesis/print/sdgs/vspace}\relax
         \noindent
         \optionlistdo{/novathesis/print/sdgs/list}{%
