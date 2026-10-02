@@ -983,7 +983,7 @@
 % 2. Save the image into the box (do this once)
 % We calculate the height based on the current font at the time of definition
 \sbox{\novathesisbox}{%
-  \includegraphics[height=1.2\fontcharht\font`A, vshift=-0.75pt]{\DIRIMAGES/novathesis-text}%
+  \includegraphics[height=1.40\fontcharht\font`A, align=b, vshift=-2.4pt]{\DIRIMAGES/novathesis-text-bar}%
 }
 
 % 3. Define the macros to use the box
@@ -992,11 +992,12 @@
 
 % 4. Select the output method
 % Use \providebox or similar if needed, but \newcommand works here
-\iftutex
-  \newcommand{\novathesis}{\novathesisimg}
-\else
-  \newcommand{\novathesis}{\novathesistxt}
-\fi
+\newcommand{\novathesis}{\texorpdfstring{\novathesisimg}{\novathesistxt}}
+% \iftutex
+%   \newcommand{\novathesis}{\novathesisimg}
+% \else
+%   \newcommand{\novathesis}{\novathesistxt}
+% \fi
 
 
 % --------------------------------------------------------
