@@ -418,16 +418,15 @@ To cite it explicitly in the text, use `\cite{novathesis-manual}` — the biblio
 Anywhere else, use:
 
 ```bibtex
-@Manual{novathesis-manual,
-  title        = {{novathesis}: A {LaTeX} Template for Academic Theses and Dissertations},
-  author       = {João M. Lourenço},
-  organization = {NOVA University Lisbon},
-  year         = {2026},
-  doi          = {10.5281/zenodo.21938603},
+@manual{novathesis-manual:2026:jlourenco,
+  title  = {{novathesis} — The Manual: A {LaTeX} template for theses and dissertations},
+  author = {Lourenço, João M.},
+  doi    = {10.5281/zenodo.21938603},
+  year   = {2026},
 }
 ```
 
-> J. M. Lourenço. *novathesis: A LaTeX Template for Academic Theses and Dissertations.* NOVA University Lisbon, 2026. doi: 10.5281/zenodo.21938603
+> J. M. Lourenço. *novathesis — The Manual: A LaTeX template for theses and dissertations.* 2026. doi: 10.5281/zenodo.21938603
 
 GitHub's **“Cite this repository”** button (right-hand sidebar) generates the same reference in BibTeX or APA, from [`CITATION.cff`](CITATION.cff).
 

@@ -712,12 +712,12 @@
 %
 % It is issued here, immediately before \printbibliography, rather than from
 % \AfterPreamble: at \begin{document} biblatex has not yet read the .bbl, so an
-% earlier \nocite raises a spurious "Citation 'novathesis-manual' undefined"
+% earlier \nocite raises a spurious "Citation 'novathesis-manual:2026:jlourenco' undefined"
 % warning on every single build.
 %
 % Opt out with \ntsetup{cite/template=false}.
 \newcommand*{\@ntcitetemplate}{%
-  \nocite{novathesis-manual}%
+  \nocite{novathesis-manual:2026:jlourenco}%
 }
 
 % Tell the author, once per build, that the reference was added and how to
@@ -950,7 +950,7 @@
       \GetColophonString(\@LANG@MAIN)%
       \@nt@colophonfontdetails%
       \par\bigskip
-        \fullcite{novathesis-manual} %
+        \fullcite{novathesis-manual:2026:jlourenco} %
       \ifdocfinal{%
         \iftoggle{/novathesis/pdfa}%
           {\GetColophonPdfaString(\@LANG@MAIN)}%
