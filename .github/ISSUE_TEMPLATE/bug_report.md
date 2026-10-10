@@ -8,7 +8,8 @@ assignees: ''
 ---
 
 **Which version of the template are you using?**
-A clear and concise description of the **observed** behaviour.
+Paste the output of `make info` (run it in the template folder), or the line starting with `NT VERSION` from your `.log` file.
+If you cannot do either (e.g., Overleaf), say where you got the template and which version number it shows.
 
 **Do you use a cloud-based service?  Which one?**
 Say *yes* and the name of the clod service (e.g., Overleaf)

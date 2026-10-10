@@ -4,7 +4,7 @@
 %%  novathesis — 3-BackMatter/app-migration.tex
 %% ----------------------------------------------------------------------------
 %%
-%% Version 8.4.0 (2026-09-27)
+%% Version 8.5.0 (2026-10-10)
 %% Copyright (C) 2004-26 by João M. Lourenço <joao.lourenco@fct.unl.pt>
 %%
 %% Migration guide: upgrading a document written for novathesis 7.10.x or
@@ -93,9 +93,10 @@ than words.
 
 \paragraph{4. Remove \latexinline{\glsaddall}.}  If your document calls
 \latexinline{\glsaddall}, delete the call.  It has no equivalent in
-\texttt{bib2gls}, which decides inclusion per glossary: the template already
-lists every entry of the glossary and symbols lists, and only the acronyms
-you actually use.
+\texttt{bib2gls}, which decides inclusion per glossary: the template lists
+only the entries you actually use, in every list.  To list every glossary
+and symbol entry whether or not it is cited (what \latexinline{\glsaddall}
+used to do), set \verb!\ntsetup{glossaries/addall=true}!.
 
 \paragraph{5. Delete the old \texttt{.tex} entry files} once the output looks
 right.  They are no longer read.  If one is still registered in

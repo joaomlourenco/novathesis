@@ -9,52 +9,64 @@
 
 
 %%=======================================================================
-%% ENGINE CHECK
+%% FONT CHECK AND FALLBACK STRATEGY
 %%=======================================================================
+% VerdanaPro needs LuaLaTeX or XeLaTeX (fontspec) and its font files are
+% downloaded when needed.  Under pdfLaTeX, or if the files are not available
+% and cannot be downloaded, the fallback strategy applies (see \ntiffontsok
+% in nt-core.sty): by default an error with instructions is printed; with
+% \ntsetup{style/font/fallback=true} only a warning is printed and DejaVu Sans (a
+% font that ships with TeX Live and works with pdfLaTeX, XeLaTeX and LuaLaTeX)
+% is used instead.
 
-\NTRequireEngine{style/font=verdana}{lua,xe}
-
-
-%%=======================================================================
-%% FONT VERIFICATION
-%%=======================================================================
+\ifxeorlua{\RequirePackage{fontspec}}{}% fontspec is needed (Lua/Xe only) for the font and the monospace font below
 
 \ntcheckfonts{VerdanaPro}{Regular,Italic,Bold,BoldItalic}
-
 
 %%=======================================================================
 %% FONT SELECTION
 %%=======================================================================
 
-\setmainfont{VerdanaPro}[
-  Path           = \DIRFONTSTYLES/Fonts/,
-  Extension      = .ttf,
-  Ligatures      = TeX,
-  UprightFont    = *-Regular,
-  ItalicFont     = *-Italic,
-  BoldFont       = *-Bold,
-  BoldItalicFont = *-BoldItalic,
-]
-\renewcommand*{\FontPrettyName}{Verdana}
+\ntiffontsok[VerdanaPro]
+  {%
+    \setmainfont{VerdanaPro}[
+      Path           = \DIRFONTSTYLES/Fonts/,
+      Extension      = .ttf,
+      Ligatures      = TeX,
+      UprightFont    = *-Regular,
+      ItalicFont     = *-Italic,
+      BoldFont       = *-Bold,
+      BoldItalicFont = *-BoldItalic,
+    ]%
+    \renewcommand*{\FontPrettyName}{Verdana}%
+    % Verdana is a sans-serif; use as both roman and sans
+    \setsansfont{VerdanaPro}[
+      Path           = \DIRFONTSTYLES/Fonts/,
+      Extension      = .ttf,
+      Ligatures      = TeX,
+      UprightFont    = *-Regular,
+      ItalicFont     = *-Italic,
+      BoldFont       = *-Bold,
+      BoldItalicFont = *-BoldItalic,
+    ]%
+    \renewcommand*{\FontPrettyNameSans}{Verdana}%
+  }
+  {%
+    \ntfallbackdejavu%
+  }
 
-% Verdana is a sans-serif; use as both roman and sans
-\setsansfont{VerdanaPro}[
-  Path           = \DIRFONTSTYLES/Fonts/,
-  Extension      = .ttf,
-  Ligatures      = TeX,
-  UprightFont    = *-Regular,
-  ItalicFont     = *-Italic,
-  BoldFont       = *-Bold,
-  BoldItalicFont = *-BoldItalic,
-]
-\renewcommand*{\FontPrettyNameSans}{Verdana}
+%%=======================================================================
+%% MONOSPACE AND MATH
+%%=======================================================================
 
-% Use Courier New as fallback for monospace
-\setmonofont[
-  Scale          = 0.95,
-  Ligatures      = TeX,
-]{Courier New}
-\renewcommand*{\FontPrettyNameMono}{Courier New}
+% Courier New for monospace (LuaLaTeX/XeLaTeX only; pdfLaTeX keeps its default typewriter font)
+\ifxeorlua
+  {\setmonofont[
+     Scale          = 0.95,
+     Ligatures      = TeX,
+   ]{Courier New}%
+   \renewcommand*{\FontPrettyNameMono}{Courier New}}
+  {}
 
 % Math font using newtxmath for consistency
 \RequirePackage[libertine]{newtxmath}

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 #-----------------------------------------------------------------------------
 # novathesis — nt-variant.sh
-# Version 8.4.0 (2026-09-27)
+# Version 8.5.0 (2026-10-10)
 #
 # Build one (or all) school variants of the template WITHOUT touching the
 # working copy. Settings are injected at the command line through the
@@ -194,6 +194,22 @@ nt_record() { # <ok|fail> <id> <secs> <reason>
   printf '%s\t%s\t%s\t%s\n' "$1" "$2" "$3" "$4" > "$NT_RESULTS_DIR/$2"
 }
 
+# Progress counter "[N/M] " for each finished variant in matrix mode (prints nothing
+# elsewhere): N counts the variants finished so far -- passed or failed, in the order
+# they finish -- and M = NT_TOTAL is the number of variants the matrix will build.
+# Parallel workers must never get the same N, so the increment is done under a
+# mkdir lock.  Both the lock and the counter are dot-files inside NT_RESULTS_DIR:
+# the "*" globs of the summary skip them, and they go away with the directory.
+nt_progress() {
+  [ -n "${NT_TOTAL:-}" ] && [ -n "${NT_RESULTS_DIR:-}" ] || return 0
+  local lock="$NT_RESULTS_DIR/.lock" cnt="$NT_RESULTS_DIR/.count" n
+  until mkdir "$lock" 2>/dev/null; do sleep 0.05; done
+  n=$(( $(cat "$cnt" 2>/dev/null || echo 0) + 1 ))
+  echo "$n" > "$cnt"
+  rmdir "$lock"
+  printf '[%*d/%s] ' "${#NT_TOTAL}" "$n" "$NT_TOTAL"
+}
+
 # First real TeX error from the logs, condensed to one line, so the summary can
 # say WHY a variant failed instead of only that it did.  Two wrinkles: with
 # -file-line-error the message starts "file:line: ", and TeX hard-wraps the log
@@ -294,9 +310,10 @@ build_one() { # <school> <doctype> <lang> <engine> [shared-aux-dir]
     fi
   fi
 
+  local prog; prog=$(nt_progress)   # "[N/M] " in matrix mode, empty otherwise
   if [ $rc -eq 0 ]; then
     cp -f "$aux/$jobname.pdf" "$OUTDIR/$id.pdf"
-    printf '%s✓ %s.pdf%s  %s(%ss)%s\n' "$C_GREEN" "$id" "$C_RESET" "$C_YELLOW" "$((t1 - t0))" "$C_RESET"
+    printf '%s%s✓ %s.pdf%s  %s(%ss)%s\n' "$prog" "$C_GREEN" "$id" "$C_RESET" "$C_YELLOW" "$((t1 - t0))" "$C_RESET"
     # Record this variant's build time for cost-based (LPT) unit scheduling.
     # One file per variant id => no contention across parallel workers.
     if [ -n "${NT_TIMINGS_DIR:-}" ]; then
@@ -306,7 +323,7 @@ build_one() { # <school> <doctype> <lang> <engine> [shared-aux-dir]
   else
     if [ -f "$aux/$id.glossary.out" ]; then
       cp -f "$aux/$id.glossary.out" "$OUTDIR/$id.glossary.out" 2>/dev/null || true
-      printf '%s✗ %s  (%ss)  — glossary check failed:%s\n' "$C_RED" "$id" "$((t1 - t0))" "$C_RESET" >&2
+      printf '%s%s✗ %s  (%ss)  — glossary check failed:%s\n' "$prog" "$C_RED" "$id" "$((t1 - t0))" "$C_RESET" >&2
       sed 's/^/    /' "$aux/$id.glossary.out" >&2
       nt_record fail "$id" "$((t1 - t0))" 'glossary check'
       return 1
@@ -322,9 +339,9 @@ build_one() { # <school> <doctype> <lang> <engine> [shared-aux-dir]
       saved="${saved:+$saved and }$OUTDIR/$id.build.out"
     fi
     if [ -n "$saved" ]; then
-      printf '%s✗ %s  (%ss)  — see %s%s\n' "$C_RED" "$id" "$((t1 - t0))" "$saved" "$C_RESET" >&2
+      printf '%s%s✗ %s  (%ss)  — see %s%s\n' "$prog" "$C_RED" "$id" "$((t1 - t0))" "$saved" "$C_RESET" >&2
     else
-      printf '%s✗ %s  (%ss)  — FAILED, and no log could be saved%s\n' "$C_RED" "$id" "$((t1 - t0))" "$C_RESET" >&2
+      printf '%s%s✗ %s  (%ss)  — FAILED, and no log could be saved%s\n' "$prog" "$C_RED" "$id" "$((t1 - t0))" "$C_RESET" >&2
     fi
     nt_record fail "$id" "$((t1 - t0))" "$(nt_reason "$OUTDIR/$id.log" "$OUTDIR/$id.build.out")"
   fi
@@ -401,6 +418,7 @@ if [ "$ALL" = 1 ]; then
     rm -rf "$UNITS"; exit 1
   fi
   total=$(cat "$UNITS"/* | wc -l | tr -d ' ')
+  export NT_TOTAL="$total"   # for the "[N/M]" progress counter of each finished variant (nt_progress)
   printf '%s%s▶ Matrix: building %s variant(s)%s with %s job(s)%s\n' \
          "$C_BOLD" "$C_BLUE" "$total" "${FILTER:+ matching '$FILTER'}" "$JOBS" "$C_RESET" >&2
   printf '  output → %s\n' "$OUTDIR" >&2

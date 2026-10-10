@@ -1,6 +1,6 @@
 #-----------------------------------------------------------------------------
 # novathesis — Makefile
-# Version 8.4.0 (2026-09-27)
+# Version 8.5.0 (2026-10-10)
 #
 # The build engine is latexmk; all LaTeX-specific behavior (engine defaults,
 # biber, glossaries, clean lists) lives in ./latexmkrc.
@@ -14,6 +14,7 @@
 #   make glsbib        convert 7.10.x glossary .tex entry files to .bib
 #                      (one-off migration step; see the manual)
 #   make log           show the build log
+#   make info          print version, commit and TeX environment (for bug reports)
 #   make clean         remove build artifacts (keeps the PDF and AUXDIR/matrix/)
 #   make distclean     clean + remove PDF and synctex files
 #   make help          show this help
@@ -172,6 +173,21 @@ glsbib:
 	  fi; \
 	done; \
 	if [ "$$found" = 0 ]; then echo "No glossary .tex files found in $(GLSDIR)/"; fi
+
+# --- Bug-report information ----------------------------------------------------
+# Prints what the maintainers need to know: template version and commit, TeX
+# engine and tool versions, and the operating system.  'unknown' commit means
+# the template was not taken from git (zip download, Overleaf, ...).
+.PHONY: info
+info:
+	@echo "novathesis : $$(sed -n 's/.*novathesisversion}{\(.*\)}.*/\1/p' novathesisFiles/StyFiles/nt-version.sty) ($$(sed -n 's/.*novathesisdate}{\(.*\)}.*/\1/p' novathesisFiles/StyFiles/nt-version.sty))"
+	@echo "commit     : $$(git describe --tags --match 'v[0-9]*' --dirty 2>/dev/null || echo 'unknown (not a git checkout of novathesis; see the log line "NT VERSION")')"
+	@echo "engine     : $$(lualatex --version 2>/dev/null | head -1 || echo 'lualatex not found')"
+	@echo "latexmk    : $$(latexmk -v 2>/dev/null | sed -n 's/.*Latexmk, John Collins, \(.*\)\. Version \(.*\)/\2/p' | head -1)"
+	@echo "biber      : $$(biber --version 2>/dev/null | head -1)"
+	@echo "bib2gls    : $$(bib2gls --version 2>/dev/null | head -1)"
+	@echo "system     : $$(uname -srm)"
+	@echo "Paste the above in your bug report."
 
 # --- Cleaning -------------------------------------------------------------------
 .PHONY: clean distclean

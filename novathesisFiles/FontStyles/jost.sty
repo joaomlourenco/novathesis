@@ -10,63 +10,67 @@
 
 
 %%=======================================================================
-%% ENGINE CHECK
+%% FONT CHECK AND FALLBACK STRATEGY
 %%=======================================================================
+% Jost needs LuaLaTeX or XeLaTeX (fontspec) and its font files are
+% downloaded when needed.  Under pdfLaTeX, or if the files are not available
+% and cannot be downloaded, the fallback strategy applies (see \ntiffontsok
+% in nt-core.sty): by default an error with instructions is printed; with
+% \ntsetup{style/font/fallback=true} only a warning is printed and TeX Gyre Adventor (a
+% font that ships with TeX Live and works with pdfLaTeX, XeLaTeX and LuaLaTeX)
+% is used instead.
 
-\NTRequireEngine{style/font=jost}{lua,xe}
-
-
-%%=======================================================================
-%% FONT VERIFICATION
-%%=======================================================================
+\ifxeorlua{\RequirePackage{fontspec}}{}% fontspec is needed (Lua/Xe only) for the font and the monospace font below
 
 \ntcheckfonts{Jost}{Regular,Bold,Italic,BoldItalic}
-
-
-%%=======================================================================
-%% FONT VERIFICATION
-%%=======================================================================
-
-\RequirePackage{fontspec}
-
 
 %%=======================================================================
 %% FONT SELECTION
 %%=======================================================================
 
-% Jost - Elegant sans serif font
-\setmainfont{Jost}[
-  Path           = \DIRFONTSTYLES/Fonts/,
-  Ligatures = {TeX, Common, Discretionary},
-  Extension      = .ttf,
-  Scale     = MatchLowercase, % Automatically scales to match surrounding text height
-  UprightFont    = *-Regular,
-  ItalicFont     = *-Italic,
-  BoldFont       = *-Bold,
-  BoldItalicFont = *-BoldItalic,
-]
-\renewcommand*{\FontPrettyName}{Jost}
+\ntiffontsok[Jost]
+  {%
+    \setmainfont{Jost}[
+      Path           = \DIRFONTSTYLES/Fonts/,
+      Ligatures = {TeX, Common, Discretionary},
+      Extension      = .ttf,
+      Scale     = MatchLowercase, % Automatically scales to match surrounding text height
+      UprightFont    = *-Regular,
+      ItalicFont     = *-Italic,
+      BoldFont       = *-Bold,
+      BoldItalicFont = *-BoldItalic,
+    ]%
+    \renewcommand*{\FontPrettyName}{Jost}%
+    % Jost for sans
+    \setsansfont{Jost}[
+      Path           = \DIRFONTSTYLES/Fonts/,
+      Ligatures = {TeX, Common, Discretionary},
+      Extension      = .ttf,
+      Scale     = MatchLowercase, % Automatically scales to match surrounding text height
+      UprightFont    = *-Regular,
+      ItalicFont     = *-Italic,
+      BoldFont       = *-Bold,
+      BoldItalicFont = *-BoldItalic,
+    ]%
+    \renewcommand*{\FontPrettyNameSans}{Jost}%
+  }
+  {%
+    \ntfallbacktexgyre{adventor}{TeX Gyre Adventor}%
+  }
 
-% Jost for sans
-\setsansfont{Jost}[
-  Path           = \DIRFONTSTYLES/Fonts/,
-  Ligatures = {TeX, Common, Discretionary},
-  Extension      = .ttf,
-  Scale     = MatchLowercase, % Automatically scales to match surrounding text height
-  UprightFont    = *-Regular,
-  ItalicFont     = *-Italic,
-  BoldFont       = *-Bold,
-  BoldItalicFont = *-BoldItalic,
-]
-\renewcommand*{\FontPrettyNameSans}{Jost}
+%%=======================================================================
+%% MONOSPACE AND MATH
+%%=======================================================================
 
-% JetBrains Mono for monospace
-  \setmonofont{JetBrains Mono}[
-    LetterSpace=-3.0,
-    Ligatures = {TeX},
-    Scale = MatchLowercase, % Automatically scales to match surrounding text height
-  ]
-\renewcommand*{\FontPrettyNameMono}{JetBrains Mono}
+% JetBrains Mono for monospace (LuaLaTeX/XeLaTeX only; pdfLaTeX keeps its default typewriter font)
+\ifxeorlua
+  {\setmonofont{JetBrains Mono}[
+     LetterSpace=-3.0,
+     Ligatures = {TeX},
+     Scale = MatchLowercase, % Automatically scales to match surrounding text height
+   ]%
+   \renewcommand*{\FontPrettyNameMono}{JetBrains Mono}}
+  {}
 
 % Math font with Jost scaling
 % \RequirePackage[utopia]{newtxmath}

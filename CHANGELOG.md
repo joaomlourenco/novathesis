@@ -1,8 +1,30 @@
-# novathesis Template Changelog (v1.0.0 - v8.4.0)
+# novathesis Template Changelog (v1.0.0 - v8.5.0)
 
-This document summarizes the changes and improvements made to the **nova**thesis template from version **1.0.0** to the current version **8.4.0**.
+This document summarizes the changes and improvements made to the **nova**thesis template from version **1.0.0** to the current version **8.5.0**.
 
 ---
+
+## v8.5.0 — Kingfisher: Landing Where There Is No Water (2026-10-10)
+
+### What's new
+*   **The template now knows which commit it was taken from, to make bug reports actionable.** The version, the commit and the date appear on a new `NT VERSION` line in the log and as a custom `Novathesis` entry in the PDF's Document Properties. The commit is shown as `v8.4.0-7-g33c2a9f` (with a trailing `-dirty` if the template files were modified locally) for a git checkout, as `33c2a9f 2026-10-09` for a GitHub zip download, and as `unknown` otherwise (e.g., Overleaf copies not made by the maintainer's script), in which case only the version number is available. A thesis kept in the user's own git repository is not mistaken for the template: only the template's `v*` release tags count.
+*   **`make info`** prints the template version and commit, the LuaLaTeX/latexmk/biber/bib2gls versions and the operating system, ready to paste in a bug report. The bug-report issue template and the Troubleshoot wiki page now ask for it.
+
+### What was fixed
+*   **The `Fonts` folder was missing from the GitHub download** ([#614](https://github.com/joaomlourenco/novathesis/issues/614)). `.gitignore` ignored the whole `novathesisFiles/FontStyles/Fonts` folder, which made the `!…/DO_NOT_REMOVE_THIS_FILE.txt` exception useless (git cannot re-include a file under an ignored folder), so the placeholder was never committed and release zips had no `Fonts` folder at all. It now ignores `Fonts/*`, and the placeholder is tracked.
+*   **Font styles that need LuaLaTeX/XeLaTeX and downloaded fonts now have a fallback strategy.** `\ntcheckfonts` checks the font files even without shell escape (fonts put in place by hand work in any editor, with no "File download requires shell escape" error) and downloads them only when shell escape is on. Under pdfLaTeX the fonts are never used, so it goes straight to the fallback strategy. If the font is available it is used; otherwise: by default (`\ntsetup{style/font/fallback=false}`) **one clear error** says how to get the font (compile with LuaLaTeX/XeLaTeX with `-shell-escape` and network access, or copy the files to `novathesisFiles/FontStyles/Fonts`, or turn the fallback on), instead of a cascade of fontspec errors; with the new option **`style/font/fallback=true`** only a **warning** is printed and a font that ships with TeX Live and works with pdfLaTeX, XeLaTeX and LuaLaTeX is used instead: Jost and Futura → TeX Gyre Adventor, Arial and News Gothic T → TeX Gyre Heros, Calibri → Carlito, Verdana → DejaVu Sans. The same applies to the Jost sans font on the covers of `other/novathesis`.
+*   **A truncated or empty font file is downloaded again.** A file under 1 KB (the leftover of a failed download, e.g. from a OneDrive placeholder or an HTTP error page) is now treated as missing, instead of being kept and failing in fontspec ("metric data not found or bad").
+*   **The SDG icons no longer raise errors without shell escape.** When the icons are not available locally and cannot be downloaded, there is one warning, and the abstract prints the SDG numbers as text instead of one "File not found" error per icon. The manual's table of the 17 icons prints their file names in that case.
+
+### Breaking changes
+*   **The glossary and symbols lists now show only the entries actually cited**, like the acronyms list always did. Until now every entry defined in the glossary and symbols `.bib` files was listed, even if the text never used it. Set `\ntsetup{glossaries/addall=true}` to list them all again.
+
+### Internals
+*   `make matrix` prints a `[N/M]` counter in front of each finished document (N = documents finished so far, passed or failed; M = documents the matrix will build). The counter is incremented under a lock, so parallel jobs (`JOBS>1`) never print the same number.
+*   `make zip` no longer packs the fonts and SDG icons that happen to be in the working copy (`FontStyles/Fonts/*.ttf|otf|ttc`, `Images/sdg-*`); only the `Fonts/DO_NOT_REMOVE_THIS_FILE.txt` placeholder is kept.
+*   `.Build/merge-develop-into-main-and-tag.sh` has a shebang and `set -euo pipefail`: a conflict or a failed pull/push stops it before anything is tagged or pushed.
+*   New `\ntiffontsok[<Font>]{<font code>}{<fallback code>}` (nt-core.sty): runs `<font code>` if the font checked by `\ntcheckfonts` is available; otherwise applies the fallback strategy (an error by default; with `style/font/fallback=true`, a warning and `<fallback code>`). Used by `jost`, `calibri`, `verdana`, `arial`, `futura` and `newsgott` and by `other/novathesis`. The fallback fonts are loaded by `\ntfallbacktexgyre`, `\ntfallbackcarlito` and `\ntfallbackdejavu`.
+*   New `novathesisFiles/StyFiles/nt-gitinfo.sty` (defines `\novathesisgit`); `latexmkrc` writes the git-ignored `nt-gitinfo.def`; `.gitattributes` marks `nt-gitinfo.sty` as `export-subst`; `make zip` stamps the commit into the archived copy.
 
 ## v8.4.0 — Crane: Same Flight, New Name (2026-09-27)
 

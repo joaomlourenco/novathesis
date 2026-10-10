@@ -1,0 +1,69 @@
+%!TEX root=template.tex
+
+%% ----------------------------------------------------------------------------
+%%  novathesis — nt-gitinfo.sty
+%% ----------------------------------------------------------------------------
+%%
+%% Version 8.5.0 (2026-10-10)
+%% Copyright (C) 2004-26 by João M. Lourenço <joao.lourenco@fct.unl.pt>
+%% Departamento de Informática (www.di.fct.unl.pt)
+%% Faculdade de Ciências e Tecnologia (www.fct.unl.pt)
+%% Universidade NOVA de Lisboa (www.unl.pt)
+%%
+%% Identifies the exact commit of the template in use, for bug reports.
+%% Defines \novathesisgit, which expands to one of:
+%%
+%%   1. "v8.4.0-7-g33c2a9f[-dirty]"  (git describe), when the template is
+%%      used from a git checkout.  The value is written to 'nt-gitinfo.def'
+%%      by ./latexmkrc each time latexmk starts (so also by 'make'); "-dirty"
+%%      means there are uncommitted local modifications.
+%%   2. "33c2a9f 2026-10-09"  (short hash, commit date), when the template
+%%      comes from a GitHub .zip/.tar.gz download: ./.gitattributes marks
+%%      THIS file 'export-subst', so git replaces the
+%%      placeholder below when it builds the archive.  A plain clone keeps
+%%      the placeholder, hence source 1.
+%%   3. "unknown", otherwise (e.g., a release zip made by hand, Overleaf
+%%      upload): then only \novathesisversion is available.
+%%
+%% The value is written to the log ("NT VERSION ...") and, as a custom
+%% /Novathesis entry, to the PDF's Document Info dictionary.
+%% ----------------------------------------------------------------------------
+
+% Source 1 (optional file, written by latexmkrc; git-ignored)
+\InputIfFileExists{nt-gitinfo.def}{}{}
+
+% Source 2 -- keep the placeholder text EXACTLY as is: git edits it in place.
+% '%' and '$' must be catcode 12 for the line to survive TeX's comment and
+% math-shift handling.
+\begingroup
+\catcode`\%=12
+\catcode`\$=12
+\gdef\nt@git@export{$Format:%h %cs$}
+\endgroup
+
+% Unexpanded placeholder <=> its first character is still a '$'.
+\edef\nt@git@first{\expandafter\@car\nt@git@export\@nil}
+\edef\nt@git@dollar{\string$}
+
+\ifdefined\ntgitinfo
+  \edef\novathesisgit{\ntgitinfo}%
+\else
+  \ifx\nt@git@first\nt@git@dollar
+    \def\novathesisgit{unknown}%
+  \else
+    \edef\novathesisgit{\nt@git@export}%
+  \fi
+\fi
+
+\typeout{NT VERSION novathesis \novathesisversion\space(\novathesisdate), git \novathesisgit}
+
+% Custom Document Info entry.  Not through hyperref's pdfcreator/pdfinfo:
+% by the time the template could set them, hyperref/pdfx have already
+% consumed (or ignore) them.
+\ifdefined\pdfextension
+  \pdfextension info{/Novathesis (\novathesisversion, git \novathesisgit)}%
+\else
+  \ifdefined\pdfinfo
+    \pdfinfo{/Novathesis (\novathesisversion, git \novathesisgit)}%
+  \fi
+\fi
