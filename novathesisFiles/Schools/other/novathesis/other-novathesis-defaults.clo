@@ -44,18 +44,35 @@
 }
 
 \NTAddToHook{printcovers/pre}{
-% TeX Gyre Heros for sans (pairs well with Jost)
-\setsansfont{Jost}[
-  Path           = \DIRFONTSTYLES/Fonts/,
-  Ligatures = {TeX, Common, Discretionary},
-  Extension      = .ttf,
-  % Scale     = MatchLowercase, % Automatically scales to match surrounding text height
-  Scale          = 1.003764115,
-  UprightFont    = *-Regular,
-  ItalicFont     = *-Italic,
-  BoldFont       = *-Bold,
-  BoldItalicFont = *-BoldItalic,
-]
+% Jost for sans on the covers.  If the Jost files are not available (see \ntcheckfonts),
+% the fallback strategy applies (\ntiffontsok in nt-core.sty): an error by default, or,
+% with \ntsetup{style/font/fallback=true}, a warning and TeX Gyre Heros.
+\ntiffontsok[Jost]
+  {%
+    \setsansfont{Jost}[
+      Path           = \DIRFONTSTYLES/Fonts/,
+      Ligatures = {TeX, Common, Discretionary},
+      Extension      = .ttf,
+      % Scale     = MatchLowercase, % Automatically scales to match surrounding text height
+      Scale          = 1.003764115,
+      UprightFont    = *-Regular,
+      ItalicFont     = *-Italic,
+      BoldFont       = *-Bold,
+      BoldItalicFont = *-BoldItalic,
+    ]%
+  }
+  {%
+    % By file name, so that XeLaTeX (which looks fonts up by name only among the
+    % system fonts) also finds it in the TeX Live tree.
+    \setsansfont{texgyreheros}[
+      Extension      = .otf,
+      Ligatures = {TeX, Common, Discretionary},
+      UprightFont    = *-regular,
+      ItalicFont     = *-italic,
+      BoldFont       = *-bold,
+      BoldItalicFont = *-bolditalic,
+    ]%
+  }
 }
 
 

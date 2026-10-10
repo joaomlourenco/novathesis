@@ -20,6 +20,39 @@
 % Convenience alias: executes #1 for XeTeX/LuaTeX, #2 for pdfTeX
 \newcommand{\ifxeorlua}[2]{\iftutex#1\else#2\fi}
 
+% Fallback fonts for the font styles that need downloaded fonts (see \ntiffontsok):
+% fonts that ship with TeX Live and work with pdfLaTeX, XeLaTeX and LuaLaTeX.  Under
+% XeLaTeX/LuaLaTeX they are selected by FILE NAME with fontspec (XeLaTeX only looks
+% fonts up by name among the system fonts); under pdfLaTeX through their LaTeX
+% package.  Each sets the roman and the sans family, and the names the template prints.
+\newcommand*{\ntfallbacktexgyre}[2]{% #1 = heros | adventor, #2 = pretty name
+  \ifxeorlua
+    {\setmainfont{texgyre#1}[Extension=.otf,UprightFont=*-regular,ItalicFont=*-italic,
+                             BoldFont=*-bold,BoldItalicFont=*-bolditalic]%
+     \setsansfont{texgyre#1}[Extension=.otf,UprightFont=*-regular,ItalicFont=*-italic,
+                             BoldFont=*-bold,BoldItalicFont=*-bolditalic]}%
+    {\RequirePackage{tg#1}\renewcommand*{\familydefault}{\sfdefault}}%
+  \renewcommand*{\FontPrettyName}{#2}\renewcommand*{\FontPrettyNameSans}{#2}%
+}
+\newcommand*{\ntfallbackcarlito}{%
+  \ifxeorlua
+    {\setmainfont{Carlito}[Extension=.ttf,UprightFont=*-Regular,ItalicFont=*-Italic,
+                           BoldFont=*-Bold,BoldItalicFont=*-BoldItalic]%
+     \setsansfont{Carlito}[Extension=.ttf,UprightFont=*-Regular,ItalicFont=*-Italic,
+                           BoldFont=*-Bold,BoldItalicFont=*-BoldItalic]}%
+    {\RequirePackage{carlito}\renewcommand*{\familydefault}{\sfdefault}}%
+  \renewcommand*{\FontPrettyName}{Carlito}\renewcommand*{\FontPrettyNameSans}{Carlito}%
+}
+\newcommand*{\ntfallbackdejavu}{%
+  \ifxeorlua
+    {\setmainfont{DejaVuSans}[Extension=.ttf,UprightFont=*,ItalicFont=*-Oblique,
+                              BoldFont=*-Bold,BoldItalicFont=*-BoldOblique]%
+     \setsansfont{DejaVuSans}[Extension=.ttf,UprightFont=*,ItalicFont=*-Oblique,
+                              BoldFont=*-Bold,BoldItalicFont=*-BoldOblique]}%
+    {\RequirePackage{DejaVuSans}\renewcommand*{\familydefault}{\sfdefault}}%
+  \renewcommand*{\FontPrettyName}{DejaVu Sans}\renewcommand*{\FontPrettyNameSans}{DejaVu Sans}%
+}
+
 % --------------------------------------------------------
 % Change main font size on the fly
 % --------------------------------------------------------
@@ -873,6 +906,9 @@
 \NTOptNewValue{style/chapter}{bar}
 \NTOptNewValue{style/font}{newpx}
 \NTOptNewValue{style/font/attributes}{}
+% Fallback strategy for fonts that are not available (see \ntiffontsok in nt-core.sty):
+% false = print an error; true = print only a warning and use a font that ships with TeX Live.
+\NTOptNewChoice{style/font/fallback}{false, true}{false}
 \NTOptNewCmd{style/url}{\AfterPreamble{\urlstyle{#1}}}
 \NTOptNewCmd{color/links}
   {
@@ -946,6 +982,7 @@
 \NTOptNewToggle{cite/template}{true}  % add 'novathesis-manual' to the bibliography
 % MISC
 \NTOptNewToggle{glossaries/list/reverse}{true}
+\NTOptNewToggle{glossaries/addall}{false}  % list glossary/symbol entries even if never cited
 \NTOptNewValue{glossaries/layout}{lX}
 % Per-type letter-group headings ("A", "B", …) before each alphabetic group.
 % A list of glossary type names (glossary, acronym, symbols, or any custom
@@ -1047,6 +1084,91 @@
 % Automatically download necessary fonts if using lualatex
 % --------------------------------------------------------
 
+% --------------------------------------------------------
+% Font availability and the fallback strategy
+% --------------------------------------------------------
+% \ntcheckfonts{<Font>}{<variants>} (below) records, per font name, whether
+% its files are available ("true") or not ("false"), plus where they come
+% from and why they are not available.  The font style then calls
+%
+%     \ntiffontsok[<Font>]{<code using the font>}{<fallback code>}
+%
+% which runs the first argument if the font is available and otherwise
+% applies the FALLBACK STRATEGY:
+%   * style/font/fallback=false (default): print an error that says how to
+%     get the font, and run neither argument (the document keeps its
+%     default font, so that the missing font causes one clear error instead
+%     of a cascade of fontspec errors);
+%   * style/font/fallback=true: print only a warning and run the second
+%     argument, which loads a font that ships with TeX Live and works with
+%     pdfLaTeX, XeLaTeX and LuaLaTeX.
+% Without the optional argument, the font of the last \ntcheckfonts call is
+% used.  pdfLaTeX never gets the downloaded fonts (they need fontspec), so
+% under pdfLaTeX \ntcheckfonts marks the font as unavailable at once.
+\prop_new:N \g__nt_fonts_status_prop
+\prop_new:N \g__nt_fonts_info_prop
+\tl_new:N \g__nt_fonts_last_tl
+\tl_new:N \l__nt_fonts_name_tl
+\tl_new:N \l__nt_fonts_status_tl
+\tl_new:N \l__nt_fonts_url_tl
+\tl_new:N \l__nt_fonts_dir_tl
+\tl_new:N \l__nt_fonts_reason_tl
+\bool_new:N \g__nt_fonts_tmp_bool
+\cs_generate_variant:Nn \prop_get:NnNTF { NVNTF }
+\cs_generate_variant:Nn \prop_get:NnN { NxN }
+\cs_generate_variant:Nn \prop_gput:Nnn { Nxn }
+
+\msg_new:nnn { ntfonts } { not-available }
+{
+  Font~'#1'~is~not~available:~#4.~\\
+  To~use~it,~either~compile~with~LuaLaTeX~or~XeLaTeX~with~-shell-escape~and~
+  Internet~access,~so~that~it~is~downloaded~automatically,~or~copy~its~files~
+  (#1-Regular.ttf,~...)~from~#2/#1/~into~'#3'.~\\
+  To~use~instead~a~font~that~ships~with~TeX~Live,~turn~on~the~fallback~
+  strategy~with~\string\ntsetup{style/font/fallback=true}.
+}
+\msg_new:nnn { ntfonts } { fallback-used }
+{
+  Font~'#1'~is~not~available:~#4.~\\
+  Using~a~fallback~font~that~ships~with~TeX~Live~instead
+  ~(style/font/fallback=true).
+}
+
+\NewDocumentCommand { \ntiffontsok } { O { } +m +m }
+  {
+    \tl_if_empty:nTF { #1 }
+      { \tl_set_eq:NN \l__nt_fonts_name_tl \g__nt_fonts_last_tl }
+      { \tl_set:Nn \l__nt_fonts_name_tl { #1 } }
+    \prop_get:NVNTF \g__nt_fonts_status_prop \l__nt_fonts_name_tl \l__nt_fonts_status_tl
+      {
+        \str_if_eq:VnTF \l__nt_fonts_status_tl { true }
+          { #2 }
+          { \__nt_fonts_unavailable:nn { #2 } { #3 } }
+      }
+      { #2 }   % no \ntcheckfonts for this name: nothing to check
+  }
+
+\cs_new_protected:Npn \__nt_fonts_unavailable:nn #1 #2
+  {
+    \prop_get:NxN \g__nt_fonts_info_prop { \l__nt_fonts_name_tl /url } \l__nt_fonts_url_tl
+    \prop_get:NxN \g__nt_fonts_info_prop { \l__nt_fonts_name_tl /dir } \l__nt_fonts_dir_tl
+    \prop_get:NxN \g__nt_fonts_info_prop { \l__nt_fonts_name_tl /reason } \l__nt_fonts_reason_tl
+    \ifoptionequal { /novathesis/style/font/fallback } { true }
+      {
+        % Fallback strategy on: only a warning, and use the fallback font.
+        \msg_warning:nnxxxx { ntfonts } { fallback-used }
+          { \l__nt_fonts_name_tl } { \l__nt_fonts_url_tl } { \l__nt_fonts_dir_tl }
+          { \l__nt_fonts_reason_tl }
+        #2
+      }
+      {
+        % Fallback strategy off (default): an error, and no font is changed.
+        \msg_error:nnxxxx { ntfonts } { not-available }
+          { \l__nt_fonts_name_tl } { \l__nt_fonts_url_tl } { \l__nt_fonts_dir_tl }
+          { \l__nt_fonts_reason_tl }
+      }
+  }
+
 \NewDocumentCommand { \ntcheckfonts } {
     O { ttf }
     m
@@ -1060,24 +1182,22 @@
   % #3 = variants (Regular,Italic,Bold,BoldItalic)
   % #4 = base URL
   % #5 = target folder
-
-  % Check if using XeLaTeX or LuaLaTeX
+  \tl_gset:Nn \g__nt_fonts_last_tl { #2 }
+  \prop_gput:Nxn \g__nt_fonts_info_prop { #2 /url } { #4 }
+  \prop_gput:Nxn \g__nt_fonts_info_prop { #2 /dir } { #5 }
   \ifxeorlua
   {
-    % Check if shell escape is enabled (compatible with all engines)
-    \sys_if_shell_unrestricted:TF
-    {
-      \nt_check_fonts:nnnnn { #1 } { #2 } { #3 } { #4 } { #5 }
-    }
-    {
-      \msg_error:nn { ntdownload } { shell-escape-required }
-    }
+    % The check works without shell escape (fonts already in place need no
+    % download); the download itself is only attempted when shell escape is
+    % enabled (see \nt_check_fonts:nnnnn).
+    \nt_check_fonts:nnnnn { #1 } { #2 } { #3 } { #4 } { #5 }
   }
   {
-    \ClassError { novathesis }
-      { Font~style~" #2 "~is~not~compatible~with~pdfLaTeX.~
-        Please~use~XeLaTeX~or~LuaLaTeX }
-      { Please~use~XeLaTeX~or~LuaLaTeX } %
+    % pdfLaTeX cannot use the downloaded fonts: go straight to the fallback
+    % strategy, without trying to download anything.
+    \prop_gput:Nxn \g__nt_fonts_status_prop { #2 } { false }
+    \prop_gput:Nxn \g__nt_fonts_info_prop { #2 /reason }
+      { this~font~needs~LuaLaTeX~or~XeLaTeX,~and~you~are~using~pdfLaTeX }
   }
 }
 
@@ -1178,38 +1298,81 @@
   \seq_map_inline:Nn \l__nt_variants_seq
     { \__nt_download_assert_token:nn { font~variant } { ##1 } }
 
-  % Create target directory if it doesn't exist.  (\sys_shell:n is not a real
-  % l3 function; use \sys_shell_now:x, which is defined and expands #5.)
-  \file_if_exist:nF { #5/DO_NOT_REMOVE_THIS_FILE.txt }
+  % Create the target directory and download what is missing, but only when
+  % shell escape allows it.  (\sys_shell:n is not a real l3 function; use
+  % \sys_shell_now:x, which is defined and expands #5.)
+  \sys_if_shell_unrestricted:T
   {
-    \sys_if_platform_windows:TF
-      { \sys_shell_now:x { mkdir~"#5" } }      % cmd.exe: creates intermediate dirs
-      { \sys_shell_now:x { mkdir~-p~'#5' } }
+    \file_if_exist:nF { #5/DO_NOT_REMOVE_THIS_FILE.txt }
+    {
+      \sys_if_platform_windows:TF
+        { \sys_shell_now:x { mkdir~"#5" } }      % cmd.exe: creates intermediate dirs
+        { \sys_shell_now:x { mkdir~-p~'#5' } }
+    }
+
+    % Process each variant
+    \seq_map_inline:Nn \l__nt_variants_seq
+    {
+      \tl_set:Nn \l__nt_filename_tl { #2-##1.#1 }
+      \tl_set:Nn \l__nt_remote_url_tl { #4/#2/#2-##1.#1 }
+      \tl_set:Nn \l__nt_local_path_tl { #5/#2-##1.#1 }
+
+      \__nt_font_file_valid:nTF { \l__nt_local_path_tl }
+      {
+        \iow_term:x { Font~' \l__nt_filename_tl '~already~exists. }
+      }
+      {
+        % A file that exists but is (almost) empty is the leftover of a failed
+        % transfer: remove it so that it is downloaded again.
+        \__nt_font_file_discard:n { \l__nt_local_path_tl }
+        \iow_term:x { Downloading~font~' \l__nt_filename_tl '~
+                      from~' \l__nt_remote_url_tl '~
+                      to~' \l__nt_local_path_tl '~ }
+
+        % Download the font
+        \nt_download_file:nn { \l__nt_remote_url_tl } { \l__nt_local_path_tl }
+      }
+    }
   }
 
-  % Process each variant
+  % Verify that every variant is now in place (with or without a download) and
+  % record the result for \ntiffontsok.
+  \bool_gset_true:N \g__nt_fonts_tmp_bool
   \seq_map_inline:Nn \l__nt_variants_seq
   {
-    \tl_set:Nn \l__nt_filename_tl { #2-##1.#1 }
-    \tl_set:Nn \l__nt_remote_url_tl { #4/#2/#2-##1.#1 }
-    \tl_set:Nn \l__nt_local_path_tl { #5/#2-##1.#1 }
-
-    % Check if file already exists
-    \file_if_exist:nTF { \l__nt_local_path_tl }
-    {
-      \iow_term:x { Font~' \l__nt_filename_tl '~already~exists. }
-    }
-    {
-      \iow_term:x { Downloading~font~' \l__nt_filename_tl '~
-                    from~' \l__nt_remote_url_tl '~
-                    to~' \l__nt_local_path_tl '~ }
-
-      % Download the font
-      \nt_download_file:nn { \l__nt_remote_url_tl } { \l__nt_local_path_tl }
-    }
+    \__nt_font_file_valid:nF { #5/#2-##1.#1 }
+      { \bool_gset_false:N \g__nt_fonts_tmp_bool }
   }
+  \bool_if:NTF \g__nt_fonts_tmp_bool
+    { \prop_gput:Nxn \g__nt_fonts_status_prop { #2 } { true } }
+    {
+      \prop_gput:Nxn \g__nt_fonts_status_prop { #2 } { false }
+      \prop_gput:Nxn \g__nt_fonts_info_prop { #2 /reason }
+        { its~files~are~not~in~'#5'~and~could~not~be~downloaded }
+    }
 }
 
+% A font file smaller than 1 KB cannot be a font: it is a leftover of a failed
+% download (empty file, error page).  \__nt_font_file_valid:n is true for an
+% existing file of at least 1 KB (it needs no shell escape);
+% \__nt_font_file_discard:n removes an invalid leftover (it needs shell escape) so
+% that it is downloaded again.
+\prg_new_conditional:Npnn \__nt_font_file_valid:n #1 { T , F , TF }
+  {
+    \file_get_size:nNTF { #1 } \l__nt_download_size_str
+      {
+        \int_compare:nNnTF { \l__nt_download_size_str } < { 1024 }
+          { \prg_return_false: }
+          { \prg_return_true: }
+      }
+      { \prg_return_false: }
+  }
+
+\cs_new_protected:Npn \__nt_font_file_discard:n #1
+  {
+    \file_get_size:nNT { #1 } \l__nt_download_size_str
+      { \__nt_download_discard:n { #1 } }
+  }
 
 \tl_new:N \l_nt_cmd_output_tl
 
@@ -1451,6 +1614,16 @@
   available~there,~check~your~network~connection.
 }
 
+\msg_new:nnn { ntdownload } { sdg-no-shell-escape }
+{
+  The~SDG~icons~are~not~available~locally~and~cannot~be~downloaded~without~
+  shell~escape:~the~SDG~numbers~are~printed~as~text~instead.~\\
+  To~print~the~icons,~compile~with~-shell-escape~(and~Internet~access),~or~
+  copy~the~icon~PDFs~from~https://github.com/joaomlourenco/SDGs~into~
+  novathesisFiles/Images/sdg-<lang>/.
+}
+\bool_new:N \g__nt_sdg_noshell_warned_bool
+
 % \__nt_check_sdgs_lang:nn {novathesis-lang} {sdg-type} — ensures every
 % SDG icon in print/sdgs/list, of the given type (i/n/m), is available
 % locally in novathesisFiles/Images/sdg-<lang>, downloading whatever is
@@ -1467,11 +1640,14 @@
     % under PDF/ for every language; compute it once per call.
     \__nt_set_sdg_variant:n { #2 }
     \bool_set_true:N \l__nt_sdg_lang_ok_bool
-    \file_if_exist:nF { \DIRIMAGES/sdg-#1/DO_NOT_REMOVE_THIS_FILE.txt }
+    \sys_if_shell_unrestricted:T
       {
-        \sys_if_platform_windows:TF
-          { \sys_shell_now:x { mkdir~"\DIRIMAGES/sdg-#1" } }
-          { \sys_shell_now:x { mkdir~-p~'\DIRIMAGES/sdg-#1' } }
+        \file_if_exist:nF { \DIRIMAGES/sdg-#1/DO_NOT_REMOVE_THIS_FILE.txt }
+          {
+            \sys_if_platform_windows:TF
+              { \sys_shell_now:x { mkdir~"\DIRIMAGES/sdg-#1" } }
+              { \sys_shell_now:x { mkdir~-p~'\DIRIMAGES/sdg-#1' } }
+          }
       }
     \optionlistdo{/novathesis/print/sdgs/list}
       {
@@ -1489,21 +1665,34 @@
                 \iow_term:x { SDG~icon~' \l__nt_filename_tl '~already~exists. }
               }
               {
-                \iow_term:x { Downloading~SDG~icon~' \l__nt_filename_tl '~
-                              from~' \l__nt_remote_url_tl '~
-                              to~' \l__nt_sdg_local_path_tl '~ }
-                % Quiet: a miss here usually just means "no icons upstream for
-                % this language", which is reported once below, not per icon.
-                \bool_set_true:N \l__nt_download_quiet_bool
-                \nt_download_file:nn
-                  { \l__nt_remote_url_tl }
-                  { \l__nt_sdg_local_path_tl }
-                \bool_set_false:N \l__nt_download_quiet_bool
-                \file_if_exist:nF { \l__nt_sdg_local_path_tl }
+                \sys_if_shell_unrestricted:TF
                   {
+                    \iow_term:x { Downloading~SDG~icon~' \l__nt_filename_tl '~
+                                  from~' \l__nt_remote_url_tl '~
+                                  to~' \l__nt_sdg_local_path_tl '~ }
+                    % Quiet: a miss here usually just means "no icons upstream for
+                    % this language", which is reported once below, not per icon.
+                    \bool_set_true:N \l__nt_download_quiet_bool
+                    \nt_download_file:nn
+                      { \l__nt_remote_url_tl }
+                      { \l__nt_sdg_local_path_tl }
+                    \bool_set_false:N \l__nt_download_quiet_bool
+                    \file_if_exist:nF { \l__nt_sdg_local_path_tl }
+                      {
+                        \bool_set_false:N \l__nt_sdg_lang_ok_bool
+                        \msg_warning:nnxx { ntdownload } { sdg-lang-unavailable }
+                          { #1 } { \l__nt_remote_url_tl }
+                      }
+                  }
+                  {
+                    % No shell escape: nothing can be downloaded.  Say so once
+                    % (a warning, not an error) and stop trying for this language.
                     \bool_set_false:N \l__nt_sdg_lang_ok_bool
-                    \msg_warning:nnxx { ntdownload } { sdg-lang-unavailable }
-                      { #1 } { \l__nt_remote_url_tl }
+                    \bool_if:NF \g__nt_sdg_noshell_warned_bool
+                      {
+                        \bool_gset_true:N \g__nt_sdg_noshell_warned_bool
+                        \msg_warning:nn { ntdownload } { sdg-no-shell-escape }
+                      }
                   }
               }
           }

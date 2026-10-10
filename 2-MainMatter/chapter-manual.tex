@@ -304,6 +304,11 @@ commented-out lines show available values as documentation:
 }}
 \end{latexcode}
 
+  \item[\texttt{style/font/fallback}] What to do when a font style marked~(*) cannot be used: its files are not available and could not be downloaded (see Section~\ref{sub:local_install}), or the document is compiled with \hologo{pdfLaTeX}, which cannot use them.  Default: \texttt{false}, which prints an error that explains how to get the font.  With \texttt{true} only a warning is printed, and a font that ships with \TeX\ Live and works with \hologo{pdfLaTeX}, \hologo{XeLaTeX} and \hologo{LuaLaTeX} is used instead: Calibri $\to$ Carlito, Verdana $\to$ DejaVu Sans, Arial and News Gothic T $\to$ TeX Gyre Heros, Futura and Jost $\to$ TeX Gyre Adventor.
+\begin{latexcode}
+\ntsetup{style/font/fallback=true}
+\end{latexcode}
+
   \item[\texttt{style/chapter}] Chapter heading style.  Default: \texttt{bar}.
 \begin{latexcode}
 \ntsetup{style/chapter=bar}          % (default)
@@ -545,7 +550,11 @@ As for the fonts, this needs \texttt{-{}-shell-escape} (see the warning box in p
 \begin{center}
 \small\rowcolors{2}{rowgray}{white}%
 \renewcommand{\arraystretch}{1.4}%
-\newcommand{\inclsdg}[2]{\sdgstrut\includegraphics[height=\sdgiconheight,align=c]{\DIRIMAGES/sdg-en/#1-#2}}
+% (If the icon is not available -- no shell escape, so it could not be downloaded -- its file name is
+% printed instead of failing with a "file not found" error.)
+\newcommand{\inclsdg}[2]{\sdgstrut\IfFileExists{\DIRIMAGES/sdg-en/#1-#2.pdf}
+  {\includegraphics[height=\sdgiconheight,align=c]{\DIRIMAGES/sdg-en/#1-#2}}
+  {\texttt{\footnotesize sdg-#1-#2}}}
 % NOTE: this must be 'xltabular', not 'tabularx'.  The template loads
 % glossary-xltabular -> xltabular, and xltabular explicitly restores the plain
 % (single-page, no-\caption) tabularx, providing the longtable-backed version

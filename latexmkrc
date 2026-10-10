@@ -15,6 +15,35 @@ $aux_dir = $ENV{AUXDIR} // './AUXDIR';
 $ENV{TEXINPUTS} = './novathesisFiles/StyFiles/:./novathesisFiles/Strings/:'
                 . ($ENV{TEXINPUTS} // '');
 
+# ── Git commit id, for bug reports ────────────────────────────────────────────
+# Writes ./nt-gitinfo.def (read by nt-gitinfo.sty) with the output of
+# 'git describe', e.g. "v8.4.0-7-g33c2a9f-dirty".  Done here, not in the
+# Makefile, so it also works for plain 'latexmk', editors and IDEs.  The tag
+# filter makes this a no-op when the directory is somebody's own thesis
+# repository (which has no novathesis release tags): reporting THEIR commit
+# as the template's would be misleading.  The file is only rewritten when its
+# content changes, so latexmk does not rebuild needlessly.
+{
+    my $def = 'nt-gitinfo.def';
+    my $id  = '';
+    if (-e '.git') {
+        $id = `git describe --tags --match "v[0-9]*" --dirty 2>/dev/null`;
+        $id = '' if $? != 0;
+        $id =~ s/^\s+|\s+$//g;
+        $id = '' unless $id =~ /^[A-Za-z0-9._+-]+$/;
+    }
+    my $new = $id ne '' ? "\\def\\ntgitinfo{$id}\n" : '';
+    my $old = '';
+    if (open(my $fh, '<', $def)) { local $/; $old = <$fh>; close $fh; }
+    if ($new ne $old) {
+        if ($new ne '') {
+            if (open(my $fh, '>', $def)) { print $fh $new; close $fh; }
+        } else {
+            unlink $def;
+        }
+    }
+}
+
 # ── Dependency tracking ───────────────────────────────────────────────────────
 $recorder = 1;
 

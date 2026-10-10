@@ -176,7 +176,9 @@
       \ntchecksdgs{\@LSHORT}{\@sdgtype}%
       \IfFileExists{\DIRIMAGES/sdg-\@LSHORT/1-\@sdgtype.pdf}
           {\def\@spnfolder{\DIRIMAGES/sdg-\@LSHORT}}
-          {\def\@spnfolder{\DIRIMAGES/sdg-en}}
+          {\IfFileExists{\DIRIMAGES/sdg-en/1-\@sdgtype.pdf}
+              {\def\@spnfolder{\DIRIMAGES/sdg-en}}
+              {\def\@spnfolder{}}}% no icons at all (e.g., no shell escape to download them)
       \begingroup
         % Raggedright here (not for the whole minipage): the icons are
         % separated by fixed \hspace, not stretchable interword glue, so
@@ -186,11 +188,18 @@
         \raggedright
         \lineskip=\option{/novathesis/print/sdgs/vspace}\relax
         \noindent
-        \optionlistdo{/novathesis/print/sdgs/list}{%
-          \includegraphics[width=\option{/novathesis/print/sdgs/size}]
-                          {\@spnfolder/##1-\@sdgtype}%
-          \hspace{\option{/novathesis/print/sdgs/hspace}}%
-        }%
+        \ifx\@spnfolder\@empty
+          % No icon files available: print the SDG numbers as text instead of
+          % failing with one "file not found" error per icon.
+          \gdef\@sdgsep{}%
+          \optionlistdo{/novathesis/print/sdgs/list}{\@sdgsep ##1\gdef\@sdgsep{,\space}}%
+        \else
+          \optionlistdo{/novathesis/print/sdgs/list}{%
+            \includegraphics[width=\option{/novathesis/print/sdgs/size}]
+                            {\@spnfolder/##1-\@sdgtype}%
+            \hspace{\option{/novathesis/print/sdgs/hspace}}%
+          }%
+        \fi
         \par
       \endgroup
       % Optional statement below the icons, registered with
@@ -690,10 +699,14 @@
 }
 
 \newcommand*{\@loadglossaryfiles}{%
-  % main + symbols reproduce what \glsaddall[types={main,symbols}] used to do:
-  % every entry is listed whether or not it is cited.  Abbreviations stay
-  % use-based, so unused acronyms do not pad the list.
-  \@nt@glsresource{glossary,symbols}{all}%
+  % Every list is use-based by default: an entry appears only if it is cited
+  % (or a cited entry depends on it).  glossaries/addall=true restores the
+  % \glsaddall[types={main,symbols}] behaviour of v7: every glossary and
+  % symbol entry is listed whether or not it is cited.  Abbreviations always
+  % stay use-based, so unused acronyms never pad the list.
+  \iftoggle{/novathesis/glossaries/addall}
+    {\@nt@glsresource{glossary,symbols}{all}}
+    {\@nt@glsresource{glossary,symbols}{recorded and deps}}%
   \@nt@glsresource{acronym}{recorded and deps}%
 }
 

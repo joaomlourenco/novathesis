@@ -9,16 +9,17 @@
 
 
 %%=======================================================================
-%% ENGINE CHECK
+%% FONT CHECK AND FALLBACK STRATEGY
 %%=======================================================================
+% News Gothic T needs LuaLaTeX or XeLaTeX (fontspec) and its font files are
+% downloaded when needed.  Under pdfLaTeX, or if the files are not available
+% and cannot be downloaded, the fallback strategy applies (see \ntiffontsok
+% in nt-core.sty): by default an error with instructions is printed; with
+% \ntsetup{style/font/fallback=true} only a warning is printed and TeX Gyre
+% Heros (a font that ships with TeX Live and works with pdfLaTeX, XeLaTeX
+% and LuaLaTeX) is used instead.
 
-\NTRequireEngine{style/font=newsgott}{lua,xe}
-
-
-
-%%=======================================================================
-%% FONT VERIFICATION
-%%=======================================================================
+\ifxeorlua{\RequirePackage{fontspec}}{}% fontspec is needed (Lua/Xe only) for the font and the monospace font below
 
 \ntcheckfonts{NewsGotT}{Regular,Bold}
 
@@ -32,24 +33,33 @@
   \RequirePackage{amsthm}% load before newtxmath
   \RequirePackage[libertine,vvarbb]{newtxmath}% does not load minnewsgott because another Roman text package was specified
   \renewcommand*{\FontPrettyNameMath}{Libertine (newtxmath)}
-  \setmonofont{JetBrains Mono}
-  [ LetterSpace=-3.0,
-    Scale = MatchLowercase, % Automatically scales to match surrounding text height
-  ]
-  \renewcommand*{\FontPrettyNameMono}{JetBrains Mono}
+  % JetBrains Mono for monospace (LuaLaTeX/XeLaTeX only; pdfLaTeX keeps its default typewriter font)
+  \ifxeorlua
+    {\setmonofont{JetBrains Mono}
+     [ LetterSpace=-3.0,
+       Scale = MatchLowercase, % Automatically scales to match surrounding text height
+     ]%
+     \renewcommand*{\FontPrettyNameMono}{JetBrains Mono}}
+    {}
   % \setmonofont{Fira Mono}
   % \setmonofont{Fira Mono}[LetterSpace=-2.0]
-  \setmainfont[
-    Path                = \DIRFONTSTYLES/Fonts/,
-    Ligatures           = TeX,
-    UprightFont         = *-Regular.ttf,
-    BoldFont            = *-Bold.ttf,
-    BoldSlantedFont     = *-Bold.ttf,
-    BoldItalicFont      = *-Bold.ttf,
-    AutoFakeSlant       = 0.15,
-    BoldSlantedFeatures = {FakeSlant = 0.15},
-    BoldItalicFeatures  = {FakeSlant = 0.15},
-    Scale               = 1.003764115,
-  ]{NewsGotT}
-  \renewcommand*{\FontPrettyName}{News Gothic T}
+  \ntiffontsok[NewsGotT]
+    {%
+      \setmainfont[
+        Path                = \DIRFONTSTYLES/Fonts/,
+        Ligatures           = TeX,
+        UprightFont         = *-Regular.ttf,
+        BoldFont            = *-Bold.ttf,
+        BoldSlantedFont     = *-Bold.ttf,
+        BoldItalicFont      = *-Bold.ttf,
+        AutoFakeSlant       = 0.15,
+        BoldSlantedFeatures = {FakeSlant = 0.15},
+        BoldItalicFeatures  = {FakeSlant = 0.15},
+        Scale               = 1.003764115,
+      ]{NewsGotT}%
+      \renewcommand*{\FontPrettyName}{News Gothic T}%
+    }
+    {%
+      \ntfallbacktexgyre{heros}{TeX Gyre Heros}%
+    }
 }

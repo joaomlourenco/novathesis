@@ -267,6 +267,21 @@
 
 
 %-------------------------------------------------------------
+% List all glossary/symbol entries, even those never cited
+%
+%     DEFAULT: glossaries/addall <- false
+%.............................................................
+%
+%     By default the glossary and symbols lists only show the entries
+%     cited in the text (\gls, \glsadd, ...), like the acronyms list.
+%     Set to true to list every entry defined in the glossary and
+%     symbols .bib files (the acronyms list is always use-based).
+%-------------------------------------------------------------
+% \ntsetup{glossaries/addall=true}
+
+
+
+%-------------------------------------------------------------
 % Glossary layout (columns width)
 %
 %     DEFAULT: glossaries/layout <- lX
@@ -473,6 +488,11 @@
 %         scholax               -> 
 %         verdana               -> (*)
 %-------------------------------------------------------------
+%
+% If a font marked (*) is not available (no download possible) or you use pdfLaTeX, the default
+% is an error with instructions.  To use a font that ships with TeX Live instead (with only a
+% warning), turn on the fallback strategy:
+% \ntsetup{style/font/fallback=true}
 %
 % -- Example 1 --
 % \ntsetup{style/font=libertine}

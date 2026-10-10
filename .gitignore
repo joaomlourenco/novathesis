@@ -11,13 +11,18 @@ __pycache__
 
 ### novathesis template ###
 
+# Commit id written by latexmkrc (see nt-gitinfo.sty)
+nt-gitinfo.def
+
 # Ignore all template files…
 template.*
 # …except template.tex
 !template.tex
 
-# Ignore all fonts
-novathesisFiles/FontStyles/Fonts
+# Ignore all fonts (downloaded on demand by \ntcheckfonts), but keep the folder in the
+# repository through its placeholder file.  The pattern must end in "/*": git cannot
+# re-include a file whose parent directory itself is ignored.
+novathesisFiles/FontStyles/Fonts/*
 !novathesisFiles/FontStyles/Fonts/DO_NOT_REMOVE_THIS_FILE.txt
 
 # Ignore downloaded SDG icons (fetched automatically by \ntchecksdgs from

@@ -7,6 +7,14 @@ git pull origin main
 # 3. Merge develop into main without fast-forward
 git merge develop --no-ff -m "Merge develop into main"
 
+# 3b. Sanity check: the commit-id placeholder that GitHub's export-subst fills
+#     in for zip downloads (see nt-gitinfo.sty and .gitattributes) must be intact
+if ! grep -qF 'Format:%h %cs$' novathesisFiles/StyFiles/nt-gitinfo.sty \
+   || ! grep -q 'nt-gitinfo.sty export-subst' .gitattributes; then
+  echo "ERROR: nt-gitinfo.sty placeholder or .gitattributes export-subst entry is broken; not tagging." >&2
+  exit 1
+fi
+
 # 4. Extract the version from nt-version.sty and (re)tag current HEAD
 VERSION=$(sed -n 's/.*\\novathesisversion}{\([^}]*\)}.*/\1/p' novathesisFiles/StyFiles/nt-version.sty)
 TAG="v${VERSION}"

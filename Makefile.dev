@@ -107,6 +107,13 @@ ZIPFILES = novathesisFiles [0-5]-* LICENSE Makefile latexmkrc README.md \
 zip:
 	@rm -f "$(ZIPNAME)"
 	zip -rq "$(ZIPNAME)" $(ZIPFILES)
+	@# Stamp the commit into the archived nt-gitinfo.sty (what export-subst
+	@# does for GitHub downloads), replacing the entry zipped above.
+	@d=$$(mktemp -d) && mkdir -p "$$d/novathesisFiles/StyFiles" && \
+	  stamp="$$(git rev-parse --short HEAD)$$(git diff --quiet HEAD || echo -dirty) $$(git log -1 --format=%cs)" && \
+	  sed "s/[$$]Format:[^$$]*[$$]/$$stamp/" novathesisFiles/StyFiles/nt-gitinfo.sty > "$$d/novathesisFiles/StyFiles/nt-gitinfo.sty" && \
+	  (cd "$$d" && zip -q "$(CURDIR)/$(ZIPNAME)" novathesisFiles/StyFiles/nt-gitinfo.sty) && \
+	  rm -rf "$$d" && echo "Stamped commit $$stamp"
 	@echo "Created $(ZIPNAME)"
 
 # --- Version bump -------------------------------------------------------------------
