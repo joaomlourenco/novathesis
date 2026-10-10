@@ -1,10 +1,10 @@
-# novathesis Template Changelog (v1.0.0 - v8.4.0)
+# novathesis Template Changelog (v1.0.0 - v8.5.0)
 
-This document summarizes the changes and improvements made to the **nova**thesis template from version **1.0.0** to the current version **8.4.0**.
+This document summarizes the changes and improvements made to the **nova**thesis template from version **1.0.0** to the current version **8.5.0**.
 
 ---
 
-## Unreleased
+## v8.5.0 — Kingfisher: Landing Where There Is No Water (2026-10-10)
 
 ### What's new
 *   **The template now knows which commit it was taken from, to make bug reports actionable.** The version, the commit and the date appear on a new `NT VERSION` line in the log and as a custom `Novathesis` entry in the PDF's Document Properties. The commit is shown as `v8.4.0-7-g33c2a9f` (with a trailing `-dirty` if the template files were modified locally) for a git checkout, as `33c2a9f 2026-10-09` for a GitHub zip download, and as `unknown` otherwise (e.g., Overleaf copies not made by the maintainer's script), in which case only the version number is available. A thesis kept in the user's own git repository is not mistaken for the template: only the template's `v*` release tags count.
@@ -20,6 +20,9 @@ This document summarizes the changes and improvements made to the **nova**thesis
 *   **The glossary and symbols lists now show only the entries actually cited**, like the acronyms list always did. Until now every entry defined in the glossary and symbols `.bib` files was listed, even if the text never used it. Set `\ntsetup{glossaries/addall=true}` to list them all again.
 
 ### Internals
+*   `make matrix` prints a `[N/M]` counter in front of each finished document (N = documents finished so far, passed or failed; M = documents the matrix will build). The counter is incremented under a lock, so parallel jobs (`JOBS>1`) never print the same number.
+*   `make zip` no longer packs the fonts and SDG icons that happen to be in the working copy (`FontStyles/Fonts/*.ttf|otf|ttc`, `Images/sdg-*`); only the `Fonts/DO_NOT_REMOVE_THIS_FILE.txt` placeholder is kept.
+*   `.Build/merge-develop-into-main-and-tag.sh` has a shebang and `set -euo pipefail`: a conflict or a failed pull/push stops it before anything is tagged or pushed.
 *   New `\ntiffontsok[<Font>]{<font code>}{<fallback code>}` (nt-core.sty): runs `<font code>` if the font checked by `\ntcheckfonts` is available; otherwise applies the fallback strategy (an error by default; with `style/font/fallback=true`, a warning and `<fallback code>`). Used by `jost`, `calibri`, `verdana`, `arial`, `futura` and `newsgott` and by `other/novathesis`. The fallback fonts are loaded by `\ntfallbacktexgyre`, `\ntfallbackcarlito` and `\ntfallbackdejavu`.
 *   New `novathesisFiles/StyFiles/nt-gitinfo.sty` (defines `\novathesisgit`); `latexmkrc` writes the git-ignored `nt-gitinfo.def`; `.gitattributes` marks `nt-gitinfo.sty` as `export-subst`; `make zip` stamps the commit into the archived copy.
 

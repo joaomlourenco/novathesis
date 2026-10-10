@@ -1,6 +1,6 @@
 #-----------------------------------------------------------------------------
 # novathesis — Makefile.dev (maintainer targets)
-# Version 8.4.0 (2026-09-27)
+# Version 8.5.0 (2026-10-10)
 #
 # This file is NOT shipped in releases (excluded from 'make zip').
 # It is loaded automatically by the main Makefile via '-include Makefile.dev'.
@@ -50,6 +50,10 @@
 #                             NT='print/sdgs/list={1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17}'
 #   make needlua       regenerate the list of LuaLaTeX-only schools
 #   make zip           release archive novathesis-<version>@<date>.zip
+#   make manual        build the manual (the template itself, with LuaLaTeX) and copy
+#                      it to novathesis-manual.pdf and to the versioned copy
+#                      novathesis-manual-<version>.pdf, removing the copies of
+#                      older versions.  Run it after the version bump.
 #   make bump-patch | bump-minor | bump-major
 #                      bump the version (.Build/bump.py). From 8.0.0:
 #                      bump-patch -> 8.0.1, bump-minor -> 8.1.0,
@@ -120,6 +124,25 @@ zip:
 	  (cd "$$d" && zip -q "$(CURDIR)/$(ZIPNAME)" novathesisFiles/StyFiles/nt-gitinfo.sty) && \
 	  rm -rf "$$d" && echo "Stamped commit $$stamp"
 	@echo "Created $(ZIPNAME)"
+
+# --- Manual -----------------------------------------------------------------------
+# The manual is the template itself.  'make manual' builds it (as 'make lua' does) and
+# publishes it as novathesis-manual.pdf plus the versioned copy
+# novathesis-manual-<version>.pdf (version from nt-version.sty: bump it first).  The
+# versioned copies of OTHER versions are removed, so each release replaces the previous
+# one -- git sees it as a rename (e.g. novathesis-manual-8.4.0.pdf -> -8.5.0.pdf).
+MANUAL    = novathesis-manual.pdf
+MANUALVER = novathesis-manual-$(VERSION).pdf
+
+.PHONY: manual
+manual: lua
+	@test -s "$(BASE).pdf" || { echo "Error: $(BASE).pdf was not built" >&2; exit 1; }
+	cp -f "$(BASE).pdf" "$(MANUAL)"
+	cp -f "$(BASE).pdf" "$(MANUALVER)"
+	@for f in novathesis-manual-[0-9]*.pdf; do \
+	  [ "$$f" = "$(MANUALVER)" ] || { echo "Removing the old $$f"; rm -f "$$f"; }; \
+	done
+	@echo "Manual: $(MANUAL) and $(MANUALVER)"
 
 # --- Version bump -------------------------------------------------------------------
 # NOTE: .Build/bump.py counts positions from the RIGHT, so -b 1 is the patch
