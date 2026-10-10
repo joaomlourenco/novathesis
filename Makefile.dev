@@ -106,7 +106,12 @@ ZIPFILES = novathesisFiles [0-5]-* LICENSE Makefile latexmkrc README.md \
 .PHONY: zip
 zip:
 	@rm -f "$(ZIPNAME)"
-	zip -rq "$(ZIPNAME)" $(ZIPFILES)
+	@# The fonts and SDG icons are downloaded on demand (and some fonts are not ours to
+	@# redistribute), so the archive must not contain what happens to be in this
+	@# working copy: keep only the placeholder that makes the Fonts folder exist.
+	zip -rq "$(ZIPNAME)" $(ZIPFILES) \
+	    -x 'novathesisFiles/FontStyles/Fonts/*.ttf' 'novathesisFiles/FontStyles/Fonts/*.otf' \
+	       'novathesisFiles/FontStyles/Fonts/*.ttc' 'novathesisFiles/Images/sdg-*' '*.DS_Store'
 	@# Stamp the commit into the archived nt-gitinfo.sty (what export-subst
 	@# does for GitHub downloads), replacing the entry zipped above.
 	@d=$$(mktemp -d) && mkdir -p "$$d/novathesisFiles/StyFiles" && \

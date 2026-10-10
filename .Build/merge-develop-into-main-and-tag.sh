@@ -1,3 +1,12 @@
+#!/usr/bin/env bash
+# Merge develop into main, tag the release with the version in nt-version.sty and push.
+# Run from the repository root, AFTER bumping the version (make bump-minor|bump-patch|bump-major)
+# and committing it on develop.  This script does not bump the version.
+#
+# Stop at the first failing command: without this, a merge conflict (or a failed
+# pull/push) would let the script carry on and tag a commit that is not the release.
+set -euo pipefail
+
 # 1. Switch to main
 git checkout main
 
