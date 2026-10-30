@@ -1,0 +1,36 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% atlantica/cea/atlantica-cea-defaults.clo
+%% NOVA thesis configuration file
+%%
+%% Customization for the BSc in Ciências da Engenharia Aeronáutica (CEA),
+%% Atlântica — Instituto Universitário.  Everything except the name of the
+%% degree is in ../atlantica-defaults.clo.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\typeout{NT FILE schools/atlantica/cea/atlantica-cea-defaults.clo}%
+
+
+%%=======================================================================
+%% METADATA & GLOBAL PROPERTIES
+%%=======================================================================
+
+% All LaTeX engines (pdfLaTeX, XeLaTeX, LuaLaTeX) are accepted
+\AddValidProcessor{atlantica/cea}{pdf,lua,xe}
+
+% The Projecto Final de Licenciatura is the final work of the BSc
+\AddValidDegree{atlantica/cea}{bsc}
+\ntsetup{doctype=bsc}
+
+
+%%=======================================================================
+%% STRINGS (UNIVERSITY & SCHOOL)
+%%=======================================================================
+
+% Set at the end of the preamble so that they win over the placeholders
+% in 0-Config/3_cover.tex
+\AtEndPreamble{
+  \ntdegreename(pt){Ciências da Engenharia Aeronáutica}
+  \ntdegreename(en){Aeronautical Engineering Sciences}
+  \ntauthordegree(pt){}
+  \ntauthordegree(en){}
+}
