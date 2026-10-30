@@ -4,7 +4,7 @@ This document summarizes the changes and improvements made to the **nova**thesis
 
 ---
 
-## v8.6.0 (2026-10-30)
+## v8.6.0 — Albatross: Crossing the Atlantic (2026-10-30)
 
 ### What's new
 *   **Support for Atlântica — Instituto Universitário** (`school=atlantica/cea`, BSc in Ciências da Engenharia Aeronáutica; [#436](https://github.com/joaomlourenco/novathesis/issues/436)), following the school's *Normas para Apresentação e Discussão do Projecto Final de Licenciatura* (February 2019) and the layout of a dozen real Atlântica theses: A4, two-sided, Times New Roman 12pt with 1.5 line spacing and 12pt after paragraphs, footnotes in 8pt, margins 3 / 3.5 / 3.5 (inner) / 2.5 (outer) cm with the header 1.8cm and the footer 1.5cm from the edge of the paper, chapters on right-hand pages, and on every page the title and the degree name in the header and the author, the date and the page in the footer. It has the cover and the title page (without figures), the "sole responsibility" statement on its own right-hand page, an optional dedication, and the optional reproduction declaration on the back of the title page (off by default: enable it with `print/copyright=true`; its text is a generic placeholder, the official one is on Atlântica's intranet).
