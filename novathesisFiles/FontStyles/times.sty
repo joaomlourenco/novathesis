@@ -15,24 +15,56 @@
 
 \ifxeorlua
 {
-  % XeLaTeX/LuaLaTeX version using system fonts
-  \setmainfont{Times New Roman}[
-    Ligatures = {TeX, Common},
-    Scale     = 1.0,
-  ]
-  \renewcommand*{\FontPrettyName}{Times New Roman}
+  % XeLaTeX/LuaLaTeX version using system fonts.  Times New Roman, Helvetica
+  % and Courier New are not installed everywhere (e.g., Overleaf, most Linux
+  % systems): when one is missing, the metric-compatible TeX Gyre clone that
+  % ships with TeX Live is used instead.
+  \IfFontExistsTF{Times New Roman}
+    {%
+      \setmainfont{Times New Roman}[
+        Ligatures = {TeX, Common},
+        Scale     = 1.0,
+      ]%
+      \renewcommand*{\FontPrettyName}{Times New Roman}%
+    }
+    {%
+      \setmainfont{TeX Gyre Termes}[
+        Ligatures = {TeX, Common},
+      ]%
+      \renewcommand*{\FontPrettyName}{TeX Gyre Termes}%
+    }
 
-  \setsansfont{Helvetica}[
-    Ligatures = TeX,
-    Scale     = 0.95,
-  ]
-  \renewcommand*{\FontPrettyNameSans}{Helvetica}
+  \IfFontExistsTF{Helvetica}
+    {%
+      \setsansfont{Helvetica}[
+        Ligatures = TeX,
+        Scale     = 0.95,
+      ]%
+      \renewcommand*{\FontPrettyNameSans}{Helvetica}%
+    }
+    {%
+      \setsansfont{TeX Gyre Heros}[
+        Ligatures = TeX,
+        Scale     = 0.95,
+      ]%
+      \renewcommand*{\FontPrettyNameSans}{TeX Gyre Heros}%
+    }
 
-  \setmonofont{Courier New}[
-    Ligatures = TeX,
-    Scale     = 0.90,
-  ]
-  \renewcommand*{\FontPrettyNameMono}{Courier New}
+  \IfFontExistsTF{Courier New}
+    {%
+      \setmonofont{Courier New}[
+        Ligatures = TeX,
+        Scale     = 0.90,
+      ]%
+      \renewcommand*{\FontPrettyNameMono}{Courier New}%
+    }
+    {%
+      \setmonofont{TeX Gyre Cursor}[
+        Ligatures = TeX,
+        Scale     = 0.90,
+      ]%
+      \renewcommand*{\FontPrettyNameMono}{TeX Gyre Cursor}%
+    }
 
   % Math font
   \RequirePackage[utopia]{newtxmath}

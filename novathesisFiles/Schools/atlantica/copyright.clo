@@ -1,0 +1,16 @@
+%!TEX root=template.tex
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% atlantica/copyright.clo
+%% NOVA thesis configuration file
+%%
+%% The declaration on the conditions of reproduction of the work, printed
+%% on the back of the title page (see atlantica-defaults.clo)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\typeout{NT FILE schools/atlantica/copyright.clo}%
+\makeatletter
+\thispagestyle{plain}%
+\null\vfill%
+\noindent%
+\GetCopyrightTextString(\@LANG@COPYRIGHT)\par%
+\vfill%

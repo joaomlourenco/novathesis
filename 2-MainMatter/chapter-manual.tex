@@ -4,7 +4,7 @@
 %%  novathesis — 2-MainMatter/chapter-manual.tex
 %% ----------------------------------------------------------------------------
 %%
-%% Version 8.5.0 (2026-10-10)
+%% Version 8.6.0 (2026-10-30)
 %% Copyright (C) 2004-26 by João M. Lourenço <joao.lourenco@fct.unl.pt>
 %%
 %% User's manual chapter: complete guide to configuring and using the
@@ -768,6 +768,13 @@ school's cover simply ignores these):
 \SetAuthorBirthDate*()={1998-03-03}   % ISO format; no language key
 \SetAuthorBirthPlace*(de)={Berlin}    % one line per cover language you use
 \SetAuthorBirthPlace*(en)={Berlin}
+\end{latexcode}
+
+For the author's student number (\texttt{school=atlantica/...} only -- its
+cover and title page print \emph{``N\'umero do estudante: \ldots{}''}; every
+other school's cover ignores it, and when it is not set the line is omitted):
+\begin{latexcode}
+\SetAuthorStudentNumber*()={12345}
 \end{latexcode}
 
 %%-----------------------------------------------------------------------

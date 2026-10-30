@@ -1,0 +1,310 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% atlantica/atlantica-defaults.clo
+%% NOVA thesis configuration file
+%%
+%% Customization for Atlântica — Instituto Universitário (strings, layout
+%% and covers)
+%%
+%% Based on the "Normas para Apresentação e Discussão do Projecto Final de
+%% Licenciatura de Ciências da Engenharia Aeronáutica" (February 2019):
+%%
+%%   - A4, two-sided, Times New Roman 12pt, 1.5 line spacing, 12pt after
+%%     each paragraph, footnotes in 8pt;
+%%   - margins: top 3cm, bottom 3.5cm, inner 3.5cm, outer 2.5cm; header 1.8cm
+%%     and footer 1.5cm from the edge of the paper;
+%%   - header "<title> - <degree name>", footer "<author> - <month year>,
+%%     Atlântica - <page>" (Times 10pt) on every page;
+%%   - cover and title page with the contents listed in the Normas (the
+%%     title page has no figures); the reproduction declaration on the back
+%%     of the title page; the "sole responsibility" statement on the next
+%%     (right-hand) page, with a blank back;
+%%   - chapters always start on a right-hand page.
+%%
+%% The Normas were written for the BSc in Ciências da Engenharia Aeronáutica
+%% (see ./cea); everything that is not degree-specific lives in this file, so
+%% that other Atlântica degrees can be added as siblings of ./cea.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\typeout{NT FILE schools/atlantica/atlantica-defaults.clo}%
+
+
+%%=======================================================================
+%% METADATA & GLOBAL PROPERTIES
+%%=======================================================================
+
+% All LaTeX engines (pdfLaTeX, XeLaTeX, LuaLaTeX) are accepted
+\AddValidProcessor{atlantica}{pdf,lua,xe}
+
+% Printed, two-sided: chapters open on right-hand pages, black links
+\ntsetup{media=paper}
+
+% Times New Roman
+\ntsetup{style/font=times}
+
+% The title page ("folha de rosto"), right after the cover
+\ntsetup{print/frontpage=true}
+
+% No spine page (the Normas ask for title, author and year on the spine
+% "whenever possible", which is done when the work is bound)
+\ntsetup{spine/layout=false}
+
+% A4 with the main text at 12pt
+\setmemoirfontsize{12}
+
+
+%%=======================================================================
+%% STRINGS (UNIVERSITY & SCHOOL)
+%%=======================================================================
+
+% University
+\SetUniversity*(pt)={Atlântica -- Instituto Universitário}
+\SetUniversity*(en)={Atlântica -- University Institute}
+\SetUniversity*(es)={Atlântica -- University Institute}
+\SetUniversity*(fr)={Atlântica -- University Institute}
+\SetUniversity*(it)={Atlântica -- University Institute}
+\SetUniversity*(de)={Atlântica -- University Institute}
+\SetUniversity*(logo)={atlantica-logo}
+
+% Faculty / School: Atlântica has no faculties; the school is the university
+\SetSchool*(pt)={\GetUniversity(pt)}
+\SetSchool*(en)={\GetUniversity(en)}
+\SetSchool*(es)={\GetUniversity(en)}
+\SetSchool*(fr)={\GetUniversity(en)}
+\SetSchool*(it)={\GetUniversity(en)}
+\SetSchool*(de)={\GetUniversity(en)}
+
+% Labels used by the cover, the title page and the page footer
+\NewMemStore{Atlantica}
+\SetAtlantica*(project,pt)={Projeto Final de Licenciatura}
+\SetAtlantica*(project,en)={Final Undergraduate Project}
+\SetAtlantica*(by,pt)={Elaborado por}
+\SetAtlantica*(by,en)={Prepared by}
+\SetAtlantica*(number,pt)={Número do estudante}
+\SetAtlantica*(number,en)={Student number}
+\SetAtlantica*(place,pt)={Barcarena}
+\SetAtlantica*(place,en)={Barcarena, Portugal}
+
+\SetDissertationString(bsc,pt)={\GetAtlantica(project,pt)}
+\SetDissertationString(bsc,en)={\GetAtlantica(project,en)}
+
+% The declaration on the back of the title page.  This is NOT the official text
+% (which Atlântica distributes on its intranet, see the Normas, 2.h): replace
+% it, if you have a different one, in 0-Config/9_atlantica.tex.
+\SetCopyrightTextString(pt)={A \GetUniversity(\@LANG@COPYRIGHT)\ tem o direito, perpétuo e sem limites geográficos, de arquivar e publicar este trabalho através de exemplares impressos reproduzidos em papel ou de forma digital, ou por qualquer outro meio conhecido ou que venha a ser inventado, e de o divulgar através de repositórios científicos e de admitir a sua cópia e distribuição com objetivos educacionais ou de investigação, não comerciais, desde que seja dado crédito ao autor.}
+
+\SetCopyrightTextString(en)={\GetUniversity(\@LANG@COPYRIGHT)\ has the right, perpetual and without geographical boundaries, to file and publish this work through printed copies reproduced on paper or on digital form, or by any other means known or that may be invented, and to disseminate it through scientific repositories and admit its copying and distribution for non-commercial, educational or research purposes, as long as credit is given to the author.}
+
+
+%%=======================================================================
+%% FRONT MATTER: the "sole responsibility" statement
+%%=======================================================================
+
+% Printed (right-hand page, blank back) after the declaration on the back of
+% the title page; see 1-FrontMatter/atlantica/atlantica-statement-<lang>.tex
+\ntsetup{print/statement=true}
+\ntaddfile{statement}[en]{atlantica/atlantica-statement-en}
+\ntaddfile{statement}[pt]{atlantica/atlantica-statement-pt}
+
+% The Normas (2.h) ask for a declaration on the conditions of reproduction on
+% the back of the title page, but none of the theses seen so far has one (and
+% its official text is only on Atlântica's intranet), so it is OFF by default.
+% Turn it on with \ntsetup{print/copyright=true} in 0-Config/1_novathesis.tex
+% and replace the placeholder text below by the official one.
+\ntsetup{print/copyright=false}
+
+% The declaration goes on the back of the title page, so it is NOT printed
+% through \ntprintcopyright (which, as a "chapter", would skip to the next
+% right-hand page).  The text is the copyright string below, laid out by
+% ./copyright.clo.
+\newcommand*{\ntprintatlanticadeclaration}{%
+  \ifmaindoc{%
+    \iftoggle{/novathesis/print/copyright}{%
+      \begingroup
+        \ntselectlang{\@LANG@COPYRIGHT}%
+        \ntprintcopyrightpage
+      \endgroup
+    }{}%
+  }{}%
+}
+
+\@nt@printorder@set{frontmatter_final}{%
+    atlanticadeclaration, % The declaration on the back of the title page (off by default)
+    statement,         % The author is the only one responsible for the ideas
+    dedication,        % (*) Optional dedication
+    acknowledgements,  % (*) Acknowledgments and institutional/financial support
+    abstracts,         % Abstracts (in Portuguese and in English)
+    aidisclose,        % AI disclosure statement
+    alllistof,         % Contents and the lists of abbreviations, figures and tables
+    myprintglossaries, % Print the Glossary, Acronyms, Symbols, etc…
+}
+
+\@nt@printorder@set{frontmatter_provisional}{%
+    atlanticadeclaration,
+    statement,
+    dedication,
+    acknowledgements,
+    abstracts,
+    aidisclose,
+    alllistof,
+    myprintglossaries,
+}
+
+
+%%=======================================================================
+%% CUSTOM FIELD: THE STUDENT NUMBER
+%%=======================================================================
+
+% Printed on the cover and on the title page when set, with
+%     \SetAuthorStudentNumber*()={12345}
+% in 0-Config/3_cover.tex (see there).  The store itself is declared in
+% nt-core.sty, so that setting it never breaks other schools.
+
+
+%%=======================================================================
+%% COMMITTEE
+%%=======================================================================
+
+% The jury is designated by the Course Coordinator and is not printed
+\SetCommitteeOrder*()={c,a,m}%
+
+
+%%=======================================================================
+%% LAYOUT (MARGINS)
+%%=======================================================================
+
+% Normal pages: top 3cm, bottom 3.5cm, inner 3.5cm, outer 2.5cm.  (With
+% media=paper, "left" is the inner and "right" the outer margin.)
+\SetMargin*(screen,top)={3.0cm}
+\SetMargin*(screen,bottom)={3.5cm}
+\SetMargin*(screen,left)={3.0cm}
+\SetMargin*(screen,right)={3.0cm}
+\SetMargin*(paper,top)={3.0cm}
+\SetMargin*(paper,bottom)={3.5cm}
+\SetMargin*(paper,left)={3.5cm}
+\SetMargin*(paper,right)={2.5cm}
+
+% Cover pages
+\SetMargin*(cover,top)={2.5cm}
+\SetMargin*(cover,bottom)={2.5cm}
+\SetMargin*(cover,left)={2.5cm}
+\SetMargin*(cover,right)={2.5cm}
+
+% No indentation, 12pt after each paragraph
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{12pt}
+
+% Footnotes: 8pt, single spaced
+\renewcommand*{\foottextfont}{\fontsize{8}{9.6}\selectfont}
+
+
+%%=======================================================================
+%% HEADER AND FOOTER
+%%=======================================================================
+
+% Header: "<title>" on the left and "<degree name>" on the right; footer:
+% "<author> - <month year>, Atlântica" on the left and the page on the right,
+% all in Times 10pt, on every page of the report.  The Normas ask for
+% "<title> - <degree>" and "<author> - <month year>, Atlântica - <page>";
+% the real theses split them left/right, which is what is done here.
+\newcommand*{\@atl@header}{\GetDocTitle(\@LANG@MAIN,main,plain)}
+\newcommand*{\@atl@degree}{\GetDegreeName(\@LANG@MAIN)}
+
+\newcommand*{\@atl@footer}{%
+  \GetDocAuthor(name)\ -- %
+  \PrintDateISO{\GetDocDate(submission,year)-\GetDocDate(submission,month)},
+  Atlântica}
+
+% Times 10pt, single spaced, whatever the line spacing of the text
+\newcommand*{\atl@hf}{\renewcommand*{\baselinestretch}{1}\fontsize{10}{12}\selectfont}
+
+\newcommand*{\@atl@pagestyle}[1]{%
+  \makeevenhead{#1}{\atl@hf\parbox[t]{.62\textwidth}{\raggedright\@atl@header}}{}%
+                    {\atl@hf\parbox[t]{.36\textwidth}{\raggedleft\@atl@degree}}%
+  \makeoddhead{#1}{\atl@hf\parbox[t]{.62\textwidth}{\raggedright\@atl@header}}{}%
+                   {\atl@hf\parbox[t]{.36\textwidth}{\raggedleft\@atl@degree}}%
+  \makeevenfoot{#1}{\atl@hf\@atl@footer}{}{\atl@hf\thepage}%
+  \makeoddfoot{#1}{\atl@hf\@atl@footer}{}{\atl@hf\thepage}%
+  \makeheadrule{#1}{\textwidth}{0pt}%
+}
+
+% Header: top of its box 1.8cm from the top edge of the paper; footer:
+% 1.5cm from the bottom edge.  Applied after the template's own geometry
+% (\ntsetlayout, at the end of the preamble).  \newgeometry resets the head
+% height, hence it is given here, with room for a two-line header (30pt).
+\AddToHook{begindocument/end}{%
+  \newgeometry{%
+    lmargin=\expanded{\GetMargin(\option{/novathesis/media},left)},
+    rmargin=\expanded{\GetMargin(\option{/novathesis/media},right)},
+    tmargin=\expanded{\GetMargin(\option{/novathesis/media},top)},
+    bmargin=\expanded{\GetMargin(\option{/novathesis/media},bottom)},
+    headheight=30pt,
+    headsep=\dimexpr 1.2cm-30pt\relax,
+    footskip=2.0cm,
+  }%
+}
+
+% The page styles are (re)defined by the template after this file is read
+\AtEndPreamble{%
+  \@atl@pagestyle{novathesis@mainmatter}%
+  \@atl@pagestyle{novathesis@frontmatter}%
+  \@atl@pagestyle{plain}%
+}
+
+
+%%=======================================================================
+%% COVER PAGE (1-1) AND TITLE PAGE (2-1)
+%%=======================================================================
+
+\SetThesisCover*(1-1,bgcolor)={white}
+\SetThesisCover*(2-1,bgcolor)={white}
+
+% Logo (the title page has no figures)
+\ntaddtocover[halign=c,valign=t,height=4cm]{1-1}{%
+  \includegraphics[height=3.4cm]{\GetUniversity(logo)}%
+}
+
+% Name of the degree
+\ntaddtocover[vfill=1]{1-1,2-1}{%
+  \fontsize{16}{20}\selectfont%
+  \textbf{\GetDegreeName(\@LANG@COVER)}%
+}
+
+% Title of the work
+\ntaddtocover[vfill=2]{1-1,2-1}{%
+  \fontsize{22}{26}\selectfont\bfseries%
+  \GetDocTitle(\@LANG@COVER,main)%
+  \IfMemVoidTF{DocTitle}{sub,\@LANG@COVER}{}{%
+    \\[1ex]\fontsize{16}{20}\selectfont\mdseries\GetDocTitle(\@LANG@COVER,sub)}%
+}
+
+% Kind of work
+\ntaddtocover[vfill=2]{1-1,2-1}{%
+  \fontsize{16}{20}\selectfont\bfseries%
+  \GetAtlantica(project,\@LANG@COVER)%
+}
+
+% Author and student number
+\ntaddtocover[vfill=2]{1-1,2-1}{%
+  \fontsize{14}{18}\selectfont%
+  \GetAtlantica(by,\@LANG@COVER)\\[1ex]
+  \textbf{\GetDocAuthor(name)}%
+  \IfMemVoidTF{AuthorStudentNumber}{}{}{%
+    \\[1ex]\GetAtlantica(number,\@LANG@COVER): \GetAuthorStudentNumber()}%
+}
+
+% Advisers
+\ntaddtocover[vfill=2]{1-1,2-1}{%
+  \fontsize{14}{18}\selectfont%
+  \MemSet{adviserstringfont}{}{\mdseries}%
+  \MemSet{advisernamefont}{}{\bfseries}%
+  \IfMemVoidT{persongrouppost}{}{\MemSet*{persongrouppost}{}{\\[4pt]}}%
+  \IfMemVoidT{personpost}{}{\MemSet*{personpost}{}{\\[0pt]}}%
+  \ntprintpersons[list]{1}[c]{2}{adviser}{a,c}%
+}
+
+% Place and date
+\ntaddtocover[vfill=2]{1-1,2-1}{%
+  \fontsize{14}{18}\selectfont%
+  \GetAtlantica(place,\@LANG@COVER)\\
+  \PrintDateISO{\GetDocDate(submission,year)-\GetDocDate(submission,month)}%
+}
